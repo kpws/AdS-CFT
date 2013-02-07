@@ -1,5 +1,21 @@
 *.py[cod]
 
+#backup
+*~
+*.swp
+
+#not mine
+tobiasKod
+
+#latex
+*.pdf
+*.bbl
+*.log
+*.backup
+*.toc
+*.aux
+*.blg
+
 # C extensions
 *.so
 

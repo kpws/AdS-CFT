@@ -3,11 +3,17 @@ import tensor
 import eulerLagrange
 import sympy as sp
 
+d=len(AdS.x)
+
 m=sp.symbols('m')
 phi=sp.symbols('phi')(*AdS.x)
+A=[sp.symbols('A'+str(i))(*AdS.x) for i in range(d)]
 
+F=[[A[i].diff(AdS.x[j])-A[j].diff(AdS.x[j]) for i in range(d)] for j in range(d)]
 sqrtg=sp.sqrt(sp.Abs(AdS.g.det()))
-L=sqrtg*(tensor.sqr([phi.diff(i) for i in AdS.x],AdS.ginv)+m**2*phi**2)
+Lphi=sqrtg*(tensor.sqr([phi.diff(i) for i in AdS.x],AdS.ginv)+m**2*phi**2)
+LEM=-sqrtg*(tensor.sqr(F,AdS.ginv))/4
+L=LEM
 #sp.pprint(L)
 
 eqn=eulerLagrange.fieldEqn(L,phi,AdS.x)
@@ -31,13 +37,3 @@ kke=tensor.sqr(k,tensor.eta3)
 
 keq=keq.collect(f).subs(((AdS.z/AdS.Lr)**2*kke).expand(),(AdS.z/AdS.Lr)**2*kk)
 #sp.pprint(keq)
-
-Delta=sp.Symbol('Delta')
-Dkeq=(keq/f).subs(f,AdS.z**Delta).doit().expand()
-DeltaSol=sp.solve(Dkeq.limit(AdS.z,0),Delta)
-if sp.solve((DeltaSol[0]-DeltaSol[1]).subs(AdS.Lr*m,sp.Dummy(positive=True))>0):
-    Deltap,Deltam=DeltaSol
-else:
-    Deltam,Deltap=DeltaSol
-sp.pprint(sp.Eq(sp.Dummy('Delta_0'),Deltam))
-sp.pprint(sp.Eq(sp.Dummy('Delta_1'),Deltap))
