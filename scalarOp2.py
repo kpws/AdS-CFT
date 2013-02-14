@@ -60,6 +60,12 @@ def boundarySol(mu,rho,p1,p2,z):
 def boundarySolD(mu,rho,p1,p2,z):
     return [-rho,p1+2*p2*z]
 
+def horizonSol(phiD, psi, z):
+    return [(z-1)*phiD, psi+(z-1)*(2./3*psi)]
+
+def horizonSolD(phiD, psi, z):
+    return [phiD, 2./3*psi]
+
 def getHorizonPhi(mu,p2,rho,plot=False):
     print(p2)
     if p2<0: return 1e100
@@ -85,29 +91,62 @@ def getHorizonPhi(mu,p2,rho,plot=False):
         pl.plot(start,p1*start+p2*start**2,linestyle='-')
     return phiend
 
-from scipy.optimize import brentq
+def getBoundary(phiD,psi,plot=False):
+    eps=0.001
+    p1=0
+    f=horizonSol(phiD,psi,1-eps)
+    fD=horizonSolD(phiD,psi,1-eps)
+    zs=np.linspace(1-eps,eps,1000)
+    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-8, with_jacobian=False)
+    r.set_initial_value([f[0],fD[0],f[1],fD[1]], zs[0])
+    y=[r.y]
+    for t in zs[1:]:
+        r.integrate(t)
+        y.append(r.y)
+    psiEndDD=yprim(eps,y[-1])[3]#(y[-1][3]-y[-2][3])/(zs[-1]-zs[-2])
+    psiEndD=y[-1][3]
+    phiEnd=y[-1][0]
+    phiEndD=y[-1][1]
+    p2=psiEndDD/2
+    p1=psiEndD-2*eps*p2
+    rho=-phiEndD
+    mu=phiEnd+rho*eps
+    if plot:
+        start=np.linspace(0,eps,100)
+        end=np.linspace(1-eps,1,100)
+        pl.plot(zs,[i[0] for i in y],label='$\phi(z)$',linestyle='-',marker='')
+        pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='-')
+        pl.plot(start,mu-start*rho,linestyle='-')
+        pl.plot(zs,[i[2] for i in y],label='$\psi(z)$',linestyle='--')
+        pl.plot(start,p1*start+p2*start**2,linestyle='-')
+        pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
+    print p1
+    return [mu,rho,p1,p2]
+#phiD=0.01
+#psi=1
+#getBoundary(phiD,psi,plot=True)
+
+from scipy.optimize import brentq, newton
 mus=np.linspace(0.8,1.2,5)
-mus=[0.001]
+mus=[1.]
 for mu in mus:
-    rhos=np.linspace(0.5,4.0,20)
-    p2s=[]
-    for rho in rhos:
-        print str(rho)+':'
-        if p2s==[]:
-            p2guess=2.1
-            #p2guess=1800.
-        else:
-            p2guess=p2s[-1]
-        if len(p2s)>2:
-            if p2s[-1]+(p2s[-1]-p2s[-2])*2<0:
-                rhos=rhos[:len(p2s)]
-                break
-        p2s.append(brentq(lambda p2:getHorizonPhi(mu,p2,rho),0.,p2guess,xtol=p2guess*1e-4))
+    psis=np.linspace(0.1,7.0,100)
+    ys=[]
+    for psi in psis:
+        print str(psi)+':'
+        f=lambda phiD:getBoundary(phiD,psi)[2]
+        a=f(0)
+        end=-0.1
+        while a*f(end)>=0:
+            end=end*1.2
+        sol=brentq(f,0,end,xtol=1e-4)
         pl.figure(2)
-        getHorizonPhi(mu,p2s[-1],rho,plot=True)
-        print(p2s[-1])
+        y=mu,rho,p1,p2=getBoundary(sol,psi,plot=True)
+        ys.append(y)
     pl.figure(1)
-    pl.plot(np.sqrt(rhos),np.sqrt(p2s),'-o')
+    pl.plot([y[1] for y in ys],[y[3] for y in ys],'-o')
+    pl.plot([y[1] for y in ys],[y[0] for y in ys],'-o')
+    pl.plot([y[1] for y in ys],[y[2] for y in ys],'-o')
 #pl.legend()
-#pl.xlabel('$'+sp.latex(M.x[0])+'$')
+#pl.xlabel('$'+sp.latex(M.x[0])+'$')'''
 pl.show()

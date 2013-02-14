@@ -59,40 +59,38 @@ def changeOfVars(m,x,old,name=''):
     d=range(len(x))
     dummies=[sp.Dummy() for i in d]
     oldg=m.g.subs(zip(m.x,dummies)).subs(zip(dummies,old))
-    g=sp.Matrix([[sum(sum(m.g[A,B]*old[A].diff(x[a])*old[B].diff(x[b]) for A in d)for B in d) for a in d]for b in d])
+    g=sp.Matrix([[sum(sum(oldg[A,B]*old[A].diff(x[a])*old[B].diff(x[b]) for A in d)for B in d) for a in d]for b in d])
     return Metric(x,g,name)
 
 x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
-Lr=sp.Symbol('Lr',positive=True)
 AdS=Metric(x, (1/x[0])**2*sp.diag(1,-1,1,1), name='AdS')
-AdS.z=AdS.x[0]
-
-#zh=sp.Symbol('zh',positive=True)
-f=1-(x[0])**(len(x)-1)
-AdSBH=Metric(x, (1/x[0])**2*sp.diag(1/f,-f,1,1), name='AdSBH')
-AdSBH.z=AdSBH.x[0]
-
-f=sp.Symbol('f')(x[0])
-AdSf=Metric(x, (Lr/x[0])**2*sp.diag(1/f,-f,1,1))
-AdSf.z=AdSf.x[0]
-AdSf.f=f
-
+'''
+#used by hartnoll, tobias
 x=[sp.Symbol('r',positive=True)]+sp.symbols(['t','x1','x2'])
 f=sp.Symbol('f')(x[0])
 AdSfr=Metric(x, sp.diag(1/f,-f,x[0]**2,x[0]**2))
-AdSfr.r=AdSfr.x[0]
 AdSfr.f=f
 
+#used by mcgreevy, hereby shown to be equivalent
 xn=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
-AdSfz=changeOfVars(AdSf,xn,[1/xn[0]]+x[1:])
-AdSfz.z=AdSfz.x[0]
-AdSfz.f=f
+AdSfz=changeOfVars(AdSfr,xn,[1/xn[0]]+xn[1:])
+AdSfz.f=sp.Symbol('f')(1/xn[0])
+
+#scwarzchild f
+w=sp.Wild('w')
+AdSBHz=Metric(AdSfz.x, AdSfz.g.applyfunc(lambda i:i.replace(sp.Symbol('f')(w),w**2-1/w) ), name='AdSBH')
+'''
+x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
+f=1-x[0]**(len(x)-1)
+AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)/x[0]**2,'AdSBHz')
 
 if __name__=="__main__":
     sp.pprint(AdSfz.g)
-    sp.pprint(AdSBH.R)
+    sp.pprint(AdSfr.R.subs(AdSfr.f,AdSfr.r**2-1/AdSfr.r).doit().ratsimp())
+    w=sp.Wild('w')
+    sp.pprint(AdSfz.R.replace(sp.Symbol('f')(w),w**2-1/w).doit().ratsimp())
     #sp.pprint(AdSBH.C)
     AdS.test()
-    AdSBH.test()
-    AdSf.test()
-    AdSfr.test()
+    #AdSfr.test()
+    #AdSfz.test()
+    AdSBHz.test()
