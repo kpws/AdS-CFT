@@ -44,6 +44,7 @@ def yprim(z,y):
 from scipy.integrate import ode
 import numpy as np
 import pylab as pl
+from fig import fig, saveFig
 
 def boundarySol(mu,rho,p1,p2,z):
     return [mu-rho*z,p1*z+p2*z**2]
@@ -60,7 +61,7 @@ def getBoundary(phiD,psi,plot=False):
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
     zs=np.linspace(1-eps,eps,1000)
-    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-8, with_jacobian=False)
+    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-9, with_jacobian=False)
     r.set_initial_value([f[0],fD[0],f[1],fD[1]], zs[0])
     y=[r.y]
     for t in zs[1:]:
@@ -89,9 +90,9 @@ def getBoundary(phiD,psi,plot=False):
 from scipy.optimize import brentq, newton
 from random import random
 #psis=np.linspace(1e-7,12.0,40)
-psis=np.logspace(-7,1.2,150)
+psis=np.logspace(-7,1.3,300)
 ys=[]
-sol=-0.6
+end=-0.6
 sols=[]
 for psii in range(len(psis)):
     psi=psis[psii]
@@ -106,9 +107,7 @@ for psii in range(len(psis)):
     maxEnd=None
     factor=1.1
     if len(sols)>1:
-        end=-abs(  sols[-1]+(sols[-1]-sols[-2])/(psis[psii-1]-psis[psii-2])*(psis[psii]-psis[psii-1]) )*factor
-    else:
-        end=sol*factor
+        end=sols[-1]#-abs(  sols[-1]+(sols[-1]-sols[-2])/(psis[psii-1]-psis[psii-2])*(psis[psii]-psis[psii-1]) )*factor
     while a*f(end)>=0:
         start=end
         end=end*factor
@@ -126,16 +125,21 @@ for psii in range(len(psis)):
                 break
             end=random()*sol
             print('rand: '+str(end/sol))
-        sol=brentq(f,0,end,xtol=abs(end)*1e-5)
+        sol=brentq(f,0,end,xtol=abs(end)*1e-7)
         y=mu,rho,p1,p2,osc=getBoundary(sol,psi)
-    pl.figure(2)
+    fig(2)
     getBoundary(sol,psi,plot=True)
     ys.append(y)
     sols.append(sol)
-pl.figure(1)
+fig(1)
 T=[1/np.sqrt(y[1]) for y in ys]
-pl.plot(T,T*np.sqrt([y[expect] for y in ys]),'-o')
+Tc=max(T)
+pl.plot(T/Tc,T*np.sqrt([y[expect] for y in ys]),'k-')
+pl.xlabel('$\\frac{T}{T_c}$')
+pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
 #pl.plot(T,[y[0] for y in ys],'--o')
-pl.figure(4)
+pl.xlim([0,1.2])
+saveFig('O2_T')
+fig(4)
 pl.plot(psis,sols)
 pl.show()

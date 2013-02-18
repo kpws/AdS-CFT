@@ -33,7 +33,8 @@ def getLagrangian(metric, m2, gamma, alpha1, alpha2, psi, *A):
            ).simplify()
 
 if __name__=="__main__":
-    from metric import AdSBH as m
-    sp.pprint(getLagrangian(m
-        ,[f(*m.x) for f in sp.symbols(['Az','phi','A1','A2'])]
-        ,*sp.symbols(['psi','m2','gamma','alpha1','alpha2'])))
+    from metric import AdSBHz as m
+    sp.pprint(sp.sqrt(abs(m.g.det())))
+    psi=sp.Symbol('psi')(*m.x)
+    A=[f(m.x[0],m.x[1]) for f in sp.symbols(['Az','phi','A1','A2'])]
+    sp.pprint(getLagrangian(m,sp.Symbol('m2'),sp.Symbol('gamma'),sp.Symbol('alpha1'),sp.Symbol('alpha2'),psi,A[0],A[1],A[2],A[3]))
