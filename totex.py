@@ -4,7 +4,7 @@ def sumBreak(e,l=100):
     part=e[0]
     for i in range(1,len(e)):
         if len(str(sum(e[:i+1])))>l:
-            return [sum(e[:i])]+sumBreak(e[i:])
+            return [sum(e[:i])]+sumBreak(e[i:],l=l)
     return [sum(e)]
 
 def save(e,name=''):
