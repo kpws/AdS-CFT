@@ -1,6 +1,6 @@
 import sympy as sp
 from sympy.solvers.ode import constantsimp
-from metric import AdSfr as M
+from metric import AdSBHz as M
 from lagrangian import getLagrangian
 from eulerLagrange import fieldEqn
 import totex
