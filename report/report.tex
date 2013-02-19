@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -111,33 +111,59 @@ The partition function of the bulk theory must then be calculated. This is in ou
 \subsection{Metric}
 The precise form of the bulk Lagrangian that corresponds to the boundary theory we are interested in is unknown. The string theory is gravitational and the Lagrangian thus has an unknown parameter that is the Newton's constant $G$. This is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted, TODO. The prope limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole, the Schwarzschild metric in AdS space. The metric looks like this in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
- \d s^2=g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d \mathbf{x}^2\right).
+ \d s^2=g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d \mathbf{x}^2\right).\label{metric}
 \end{equation}
-Here $f(z)=1-z^dz_h^{-d}$ and $d$ is the dimension of the boundary.
+Here $f(z)=1-z^dz_h^{-d}$ and $d$ is the dimension of the boundary. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS.
 \subsection{Boundary Behaviour}
-The bulk Lagrangian considered will contain different fields and depend both on the fields and their first derivatives. Consider a field $\psi$ with a mass term $-\partial_a\psi^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
+The bulk Lagrangian considered will contain different fields and depend both on the fields and their first derivatives. Consider a field $\psi$ with a mass term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
 \begin{equation}
  S=\int\d x\sqrt{|\det g_{ab}|}\L.
 \end{equation}
-The Euler-Lagrange equation is obtained by varying the action. The integration measure can then be regarded as part of the Lagrangian or covariant derivatives can be used in the derivation of the Euler-Lagrange equation. The end result is in any case
-\begin{equation}
-\frac{2\partial_a\partial^a\psi}{z^2}-\frac{4\partial^z\psi}{z^3}-\partial_\psi V(\psi)=0.
-\end{equation}
-We will be interested in boundary systems with translation symmetry so $\psi$ is assumed to be a function of $z$, TODO motivate more. The equation of motion then becomes
+The Euler-Lagrange equation is obtained by varying the action. The integration measure can then be regarded as part of the Lagrangian or covariant derivatives can be used in the derivation of the Euler-Lagrange equation. The measure becomes when using the metric \eqref{metric} $L^{d+1}z^{-d-1}$. The Euler-Lagrange equation gives
 \begin{equation}
 \begin{split}
-\frac{2\psi''(z)g^{zz}}{z^2}-\frac{4\psi'(z)g^{zz}}{z^3}-\partial_\psi V(\psi(z))=\\
-=\frac{2\psi''(z)f(z)}{L^2}-\frac{4\psi'(z)f(z)}{zL^2}-\partial_\psi V(\psi(z))=\\
-=\frac{2\psi''(z)(1-z^dz_h^{-d})}{L^2}-\frac{4\psi'(z)(1-z^dz_h^{-d})}{zL^2}-\partial_\psi V(\psi(z))
+ 0=\partial_a\left(\frac{\partial (z^{-d-1}(V(\psi)-(\partial_b\psi)^2)) }{\partial(\partial_a\phi)}\right)-\frac{\partial  (z^{-d-1}(V(\psi)-(\partial_b\psi)^2) )}{\partial\phi}=\\
+ =-\partial_a\left(z^{-d-1}2\partial^a\psi\right)-z^{-d-1}V'(\psi)\\
 \end{split}
 \end{equation}
-
-\section{Application}
-Classicallity
-scalar example
-show 4.68 from GKPW and classicallity assumption. Possible for general lagrangian?
-\section{Application to Superconductor}
-The Lagrangian used is
+We will be interested in boundary systems with translational symmetry so $\psi$ is assumed to be a function of $z$, TODO motivate more. The equation of motion then becomes
+\begin{equation}
+\begin{split}
+0=-\partial_z\left(z^{-d-1}2g^{zz}\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
+-\partial_z\left(z^{-d-1}2(z^2L^{-2}f(z))\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
+-z^{-d-1}2z^2L^{-2}f(z)\psi''-L^{-2}\left((-d+1)z^{-d}2f(z) + z^{-d+1}2f'(z)\right)\psi' -\frac{V'(\psi)}{z^{d+1}}
+\end{split}
+\end{equation}
+This gives a second order differential equation for $\psi(z)$
+\begin{equation}
+\begin{split}
+0=-z^22f(z)\psi''-\left((-d+1)z2f(z) + z^22f'(z)\right)\psi' -L^2V'(\psi)
+\end{split}
+\end{equation}
+Now consider the boundary, $z=0$. Our metric is required to be asymptotically AdS so $f(0)\rightarrow1, zf'(0)\rightarrow0$. $\psi$ can be expanded at the boundary as a Laurent series. Call the lowest exponent in this series $\Delta$. $\psi$ will then behave as $z^\Delta$ near the boundary. This should solve the differential equation in the near boundary limit. Insertion of $z^\Delta$ into the differential equation and taking the limit of small $z$ gives
+\begin{equation}
+\begin{split}
+0&=-z^22\Delta(\Delta-1)z^{\Delta-2}-\left((-d+1)2z + z^22f'(z)\right)\Delta z^{\Delta-1} -L^2V'(z^{\Delta})\\
+&=z^{\Delta}\left(-2\Delta(\Delta-1)-2(-d+1)\Delta\right)-L^2V'(z^{\Delta}).
+\end{split}
+\end{equation}
+Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2$. We then get the following equation for $\Delta$
+\begin{equation}
+\begin{split}
+%0=\Delta(\Delta-1)-(d-1)\Delta-L^2m^2=\\
+0=\Delta^2-d\Delta-L^2m^2
+\end{split}
+\end{equation}
+with solutions
+\begin{equation}
+\begin{split}
+\Delta=\frac{d\pm\sqrt{d^2+4L^2m^2}}{2}.
+\end{split}
+\end{equation}
+$\psi$ thus goes as $z^{\Delta_1}$ where $\Delta_1$ is the smaller solution and $\Delta_2$ the larger.
+TODO, continue
+\section{Application to Two Dimensional Electron Condensates}
+TODO, motivate. The Lagrangian used is
 \begin{eqnarray}
  \mathcal{L}=&-\frac{1}{4}F_{ab}F^{ab}-m^2\psi\overline{\psi}-D_a\psi\overline{D^a\psi}
 +\gamma C_{abcd}F^{ab}F^{cd}+\alpha_1(F_{ab}F^{ab})^2\nonumber\\
@@ -150,6 +176,20 @@ where $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iA_a$ and $F_{ab}=\p
 \end{eqnarray}
 This lets us make a choice of gauge, $\nabla_aA^a=0$, the Lorentz gauge. The gauge is still not completely fixed, a gauge transformation $\theta(x)$ such that $\nabla_a\nabla^a\theta(x)=0$ can still be done without violating the gauge condition.
 The Lagrangian is also evidently Lorentz invariant imposing Lorentz invariance of the boundary theory.
+\subsection{Parameters}
+There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the paramters $G, L, m^2, \alpha_1, \alpha_2, \gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different rescalings of fields, coordinate transformations.\\
+
+The Breitenlohner-Freedman bound (BF) is a lower bound on $m^2$ of a massive scalar field in AdS space. It requires
+\begin{equation}
+ L^2m^2\geq-4d^2\label{BF}
+\end{equation}
+for a stability\cite{Kleban:2004bv}, TODO explain. 
+\section{Application}
+Classicallity
+scalar example
+show 4.68 from GKPW and classicallity assumption. Possible for general lagrangian?
+\section{Application to Superconductor}
+
 \section{Numerical solution of bulk equations}
 The bulk field equations are obtained by varying the bulk Lagrangian with respect to all the fields. This can be done with the Euler-Lagrange equation since the action does not contain any higher derivatives. The Euler-Lagrange equation for a scalar field $\phi$ states
 \begin{equation}

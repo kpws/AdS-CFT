@@ -9,17 +9,10 @@ psi=sp.Symbol('psi')(M.x[0])
 
 #parameters
 m2,gamma,alpha1,alpha2=sp.symbols(['m2','gamma','alpha1','alpha2'],real=True)
-d=sp.Dummy()
 
 L=getLagrangian(M,m2,gamma,alpha1,alpha2,psi,*A)
-
 L=L.subs({m2:-sp.S(2),gamma:0,alpha1:0,alpha2:0,A[0]:0,A[2]:0,A[3]:0}).doit()
-
-psieqm=fieldEqn(L,psi,M.x).expand().collect(psi)
-phieqm=fieldEqn(L,A[1],M.x).expand().collect(A[1])
-eqm=[psieqm,phieqm]
-
-#boundary cond: phi=0 on hz
+eqm=psieqm, phieqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in [psi,A[1]]]
 
 singularities=[]
 for s in singularities:
@@ -35,7 +28,6 @@ for s in singularities:
     sols=sp.solve(leadingTerms,*D)
     sp.pprint(sols)
 
-
 def getBis(z,dofs, em, fields):
     sols=sp.solve(em, [f.diff(z,2) for f in fields],dict=True)
     assert type(sols)==dict
@@ -49,65 +41,105 @@ phibisf,psibisf=getBis(M.x[0], dofs, eqm, [A[1], psi])
 def yprim(z,y):
     return [y[1], phibisf(z,y[1],y[0],y[3],y[2]), y[3], psibisf(z,y[1],y[0],y[3],y[2])]
 
-
 from scipy.integrate import ode
 import numpy as np
 import pylab as pl
+from fig import fig, saveFig
 
 def boundarySol(mu,rho,p1,p2,z):
     return [mu-rho*z,p1*z+p2*z**2]
-
 def boundarySolD(mu,rho,p1,p2,z):
     return [-rho,p1+2*p2*z]
 
-def getHorizonPhi(mu,p2,rho,plot=False):
-    print(p2)
-    if p2<0: return 1e100
-    eps=0.025
-    p1=0
-    f=boundarySol(mu,rho,p1,p2,eps)
-    fD=boundarySolD(mu,rho,p1,p2,eps)
-    zs=np.linspace(np.sqrt(eps),np.sqrt(1-eps),10000)**2
-    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-8, with_jacobian=False)
+def horizonSol(phiD, psi, z):
+    return [(z-1)*phiD, psi+(z-1)*(2./3*psi)]
+def horizonSolD(phiD, psi, z):
+    return [phiD, 2./3*psi]
+
+def getBoundary(phiD,psi,plot=False):
+    eps=0.002
+    f=horizonSol(phiD,psi,1-eps)
+    fD=horizonSolD(phiD,psi,1-eps)
+    zs=np.linspace(1-eps,eps,1000)
+    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-9, with_jacobian=False)
     r.set_initial_value([f[0],fD[0],f[1],fD[1]], zs[0])
     y=[r.y]
     for t in zs[1:]:
         r.integrate(t)
         y.append(r.y)
-    phiend=y[-1][0]+(y[-1][0]-y[-2][0])/(zs[-1]-zs[-2])*eps
-    print '\t'+str(y[-1][0])
+    psiEndDD=yprim(eps,y[-1])[3]
+    psiEndD=y[-1][3]
+    phiEnd=y[-1][0]
+    phiEndD=y[-1][1]
+    p2=psiEndDD/2
+    p1=psiEndD-2*eps*p2
+    rho=-phiEndD
+    mu=phiEnd+rho*eps
     if plot:
-        pl.plot(zs,[i[0] for i in y],label='$\phi(z)$',linestyle='-',marker='o')
-        pl.plot([1-eps,1],[y[-1][0],phiend],linestyle='-')
         start=np.linspace(0,eps,100)
+        end=np.linspace(1-eps,1,100)
+        pl.plot(zs,[i[0] for i in y],label='$\phi(z)$',linestyle='-',marker='')
+        pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='-')
         pl.plot(start,mu-start*rho,linestyle='-')
         pl.plot(zs,[i[2] for i in y],label='$\psi(z)$',linestyle='--')
         pl.plot(start,p1*start+p2*start**2,linestyle='-')
-    return phiend
+        pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
+    print p1
+    return [mu,rho,p1,p2,min(i[2] for i in y)*max(i[2] for i in y)<0]
 
-from scipy.optimize import brentq
-mus=np.linspace(0.8,1.2,5)
-mus=[0.001]
-for mu in mus:
-    rhos=np.linspace(0.5,4.0,20)
-    p2s=[]
-    for rho in rhos:
-        print str(rho)+':'
-        if p2s==[]:
-            p2guess=2.1
-            #p2guess=1800.
-        else:
-            p2guess=p2s[-1]
-        if len(p2s)>2:
-            if p2s[-1]+(p2s[-1]-p2s[-2])*2<0:
-                rhos=rhos[:len(p2s)]
+from scipy.optimize import brentq, newton
+from random import random
+#psis=np.linspace(1e-7,12.0,40)
+psis=np.logspace(-7,1.3,300)
+ys=[]
+end=-0.6
+sols=[]
+for psii in range(len(psis)):
+    psi=psis[psii]
+    print(str(psii+1)+'/'+str(len(psis))+'#'*100)
+    print(str(psi)+':')
+    source=2
+    expect=3
+    f=lambda phiD:getBoundary(phiD,psi)[source]
+    start=0
+    a=f(start)
+    osc=True
+    maxEnd=None
+    factor=1.1
+    if len(sols)>1:
+        end=sols[-1]#-abs(  sols[-1]+(sols[-1]-sols[-2])/(psis[psii-1]-psis[psii-2])*(psis[psii]-psis[psii-1]) )*factor
+    while a*f(end)>=0:
+        start=end
+        end=end*factor
+    sol=brentq(f,start,end,xtol=abs(end)*1e-5)
+    y=mu,rho,p1,p2,osc=getBoundary(sol,psi)
+    while osc:
+        print 'Osc..'*20
+        #x=np.linspace(0,sol,20)
+        #pl.figure(3)
+        #pl.plot(x,[f(i) for i in x])
+        #pl.show()
+        end=sol*0.3
+        while True:
+            if a*f(end)<0:
                 break
-        p2s.append(brentq(lambda p2:getHorizonPhi(mu,p2,rho),0.,p2guess,xtol=p2guess*1e-4))
-        pl.figure(2)
-        getHorizonPhi(mu,p2s[-1],rho,plot=True)
-        print(p2s[-1])
-    pl.figure(1)
-    pl.plot(np.sqrt(rhos),np.sqrt(p2s),'-o')
-#pl.legend()
-#pl.xlabel('$'+sp.latex(M.x[0])+'$')
+            end=random()*sol
+            print('rand: '+str(end/sol))
+        sol=brentq(f,0,end,xtol=abs(end)*1e-7)
+        y=mu,rho,p1,p2,osc=getBoundary(sol,psi)
+    fig(2)
+    getBoundary(sol,psi,plot=True)
+    ys.append(y)
+    sols.append(sol)
+fig(1)
+T=[1/np.sqrt(y[1]) for y in ys]
+Tc=max(T)
+pl.plot(T/Tc,T*np.sqrt([y[expect] for y in ys]),'k-')
+pl.xlabel('$\\frac{T}{T_c}$')
+pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
+#pl.plot(T,[y[0] for y in ys],'--o')
+pl.xlim([0,1.2])
+saveFig('O2_T')
+fig(4)
+pl.plot(psis,sols)
 pl.show()
