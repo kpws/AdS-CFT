@@ -192,7 +192,7 @@ What will the contribution to the action from this solution be? Consider the act
 =&V\left(-\frac{d\Delta_0L^{-2}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}-\frac{d\Delta_1L^{-2}\psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
 \end{split}
 \end{equation}
-Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=L^2m^2$ has been used. One of these two terms diverges as $\epsilon\rightarrow0$. Which one depends on the sign of $2\Delta_0-d$.
+Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. Which one depends on the sign of $2\Delta_0-d$.
 The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence. 
 \subsection{Horizon Beaviour}
 TODO: Wilson loop=>$\phi=0$. Ingoing boundary conditions.
@@ -247,9 +247,9 @@ First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by va
 \subsection{Parameters}
 There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the paramters $\kappa$,$ L$, $m^2$, $q$, $\alpha_1$, $\alpha_2$, and $\gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged. The physics are independent of the exact value of $\kappa$ as long as we are in the probe limit.\\
 
-The horizon $z_h$ and the curvature length $L$ set length scales in the metric. Units of the coordinates can be chosen such that $z_h=1$. This means that we for different temperatures have different units since $z_h$ is related to the temperature. We will have to convert between these units when comparing results from different temperatures.\\
+The horizon $z_h$ and the curvature length $L$ set length scales in the metric. Length units in the numerical solution can be chosen such that $z_h=1$. This means that we for different temperatures have different units since $z_h$ is related to the temperature. We will have to convert between these units when comparing results from different temperatures.\\
 
-The factor $L^2$ in the metric does not affect the theory since the Lagrangian has conformal invariance. Let $L=1$ hereafter.\\
+The factor $L^2$ in the metric does not affect the theory since the Lagrangian has conformal invariance. TODO, true? Let $L=1$ hereafter.\\
 
 Considering $q\psi$ and $qA_a$ as the fields gives a Lagrangian of the same form but with different constants $\alpha_1$, $\alpha_2$, and $\gamma$ and the whole Lagrangian is divided by $q^2$ except for the term originally containing $q^2$ which is divided by $q^4$. Multiplying the Lagrangian by a constant doesn't affect the equations of motion so $q=1$ can be assumed without getting a less general Lagrangian. It should be noted that a different value of $q$ would give $q\psi$ as solution instead where $\psi$ is the solution of the equations of motion when $q=1$. The same is true for $A_a$.\\
 
@@ -283,16 +283,19 @@ The metric now becomes
 &=\frac{L^2}{z_h^2}\left(\frac{z_h\d s^2}{ds}-\frac{ds\d t^2}{z_h}+\d \mathbf{x}^2\right)
 \end{split}
 \end{equation}
+\\
+Summary, fields, parameters, units
 \subsection{Free Energy}
 
 \subsection{Expectation Values}
 The field 
 \section{Numerical solution of bulk equations}
+\subsection{Condensate}
+TODO, write in more detail. TODO, write in some clear way about the dimensionless quantities.
+The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\phi=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read of at the boundary.\\
 
-
+The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
 \fig{O2_T}{A picture}
-\section{test}
-
 
 \begin{figure}
 \centering

@@ -16,6 +16,7 @@ metricCache
 *.toc
 *.aux
 *.blg
+*.kate-swp
 
 # C extensions
 *.so

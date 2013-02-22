@@ -132,9 +132,10 @@ for psii in range(len(psis)):
     ys.append(y)
     sols.append(sol)
 fig(1)
-T=[1/np.sqrt(y[1]) for y in ys]
+T=[1/np.sqrt(y[1])*3/(4*np.pi) for y in ys]
 Tc=max(T)
-pl.plot(T/Tc,T*np.sqrt([y[expect] for y in ys]),'k-')
+pl.plot(T/Tc,np.sqrt([y[expect] for y in ys])*T,'k-')
+#pl.plot(T/Tc,np.array([y[0] for y in ys])*T,'k--')
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
 #pl.plot(T,[y[0] for y in ys],'--o')
