@@ -62,8 +62,8 @@ def changeOfVars(m,x,old,name=''):
     g=sp.Matrix([[sum(sum(oldg[A,B]*old[A].diff(x[a])*old[B].diff(x[b]) for A in d)for B in d) for a in d]for b in d])
     return Metric(x,g,name)
 
-x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
-AdS=Metric(x, (1/x[0])**2*sp.diag(1,-1,1,1), name='AdS')
+#x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
+#AdS=Metric(x, (1/x[0])**2*sp.diag(1,-1,1,1), name='AdS')
 '''
 #used by hartnoll, tobias
 x=[sp.Symbol('r',positive=True)]+sp.symbols(['t','x1','x2'])
@@ -80,17 +80,22 @@ AdSfz.f=sp.Symbol('f')(1/xn[0])
 w=sp.Wild('w')
 AdSBHz=Metric(AdSfz.x, AdSfz.g.applyfunc(lambda i:i.replace(sp.Symbol('f')(w),w**2-1/w) ), name='AdSBH')
 '''
+zh,L=sp.symbols(['zh','L'],positive=True)
 x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
-f=1-x[0]**(len(x)-1)
-AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)/x[0]**2,'AdSBHz')
+f=1-(x[0]/zh)**(len(x)-1)
+AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2,'AdSBHz')
+AdSBHz.zh,AdSBHz.L=(zh,L)
 
 if __name__=="__main__":
-    sp.pprint(AdSfz.g)
-    sp.pprint(AdSfr.R.subs(AdSfr.f,AdSfr.r**2-1/AdSfr.r).doit().ratsimp())
-    w=sp.Wild('w')
-    sp.pprint(AdSfz.R.replace(sp.Symbol('f')(w),w**2-1/w).doit().ratsimp())
+    #sp.pprint(AdSfr.R.subs(AdSfr.f,AdSfr.r**2-1/AdSfr.r).doit().ratsimp())
+    #w=sp.Wild('w')
+    #sp.pprint(AdSfz.R.replace(sp.Symbol('f')(w),w**2-1/w).doit().ratsimp())
     #sp.pprint(AdSBH.C)
-    AdS.test()
+    #AdS.test()
     #AdSfr.test()
     #AdSfz.test()
     AdSBHz.test()
+    sp.pprint(AdSBHz.R2)
+    sp.pprint(AdSBHz.R)
+    Lam=-3/AdSBHz.L**2
+    sp.pprint([[sp.simplify(-AdSBHz.R*AdSBHz.g[a,b]/2+AdSBHz.R2[a][b]+AdSBHz.g[a,b]*Lam)  for b in range(4)]for a in range(4)])

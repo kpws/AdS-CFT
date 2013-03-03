@@ -14,20 +14,6 @@ L=getLagrangian(M,m2,gamma,alpha1,alpha2,psi,*A)
 L=L.subs({m2:-sp.S(2),M.L:1,M.zh:1,gamma:0,alpha1:0,alpha2:0,A[0]:0,A[2]:0,A[3]:0}).doit()
 eqm=psieqm, phieqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in [psi,A[1]]]
 
-singularities=[]
-for s in singularities:
-    D=sp.symbols('Delta1:3',positive=True)#assumes positive <=> fields don't diverge
-    bAnsatz={psi:(M.x[0]-s)**D[0], A[1]:(M.x[0]-s)**D[1]}#assume analytic at boundary
-    t=sp.Symbol('t')
-    beqm=[sp.fraction(e.subs(bAnsatz).subs(M.x[0],s+t).doit().together())[0] for e in eqm]
-    sp.pprint(beqm)
-    leadingExponents=[(e.diff(t)*t/e).expand().limit(t,0).simplify() for e in beqm]
-    sp.pprint(leadingExponents)
-    leadingTerms=[(beqm[i]/t**leadingExponents[i]).limit(t,0) for i in range(len(beqm))]
-    sp.pprint(leadingTerms)
-    sols=sp.solve(leadingTerms,*D)
-    sp.pprint(sols)
-
 def getBis(z,dofs, em, fields):
     sols=sp.solve(em, [f.diff(z,2) for f in fields],dict=True)
     assert type(sols)==dict
@@ -57,12 +43,11 @@ def horizonSolD(phiD, psi, z):
     return [phiD, 2./3*psi]
 
 def getBoundary(phiD,psi,plot=False):
-    eps=0.0002
+    eps=0.00007
     f=horizonSol(phiD,psi,1-eps)
-    fD=horizonSolD(phiD,psi,1-eps)
-    zs=np.linspace(1-eps,eps,1000)
+    zs=np.linspace(0.3,eps,500)
     r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-9, with_jacobian=False)
-    r.set_initial_value([f[0],fD[0],f[1],fD[1]], zs[0])
+    r.set_initial_value([-phiD*0.1,phiD,psi,-1], zs[0])
     y=[r.y]
     osc=0
     for t in zs[1:]:
@@ -94,8 +79,8 @@ def getBoundary(phiD,psi,plot=False):
 from scipy.optimize import brentq, newton
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-6,1.1,200)
-oscN=4
+psis=np.logspace(-6,1.2,60)
+oscN=1
 lss=['-', '--', '-.', ':']
 ys=[]
 end=-1.0
@@ -168,7 +153,7 @@ fig(1)
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
 pl.xlim([0,1.2])
-saveFig('O2Tzeros')
+#saveFig('O2Tzeros')
 fig(4)
 rho=np.linspace(rhoc*0.2,rhoc*10,1000)
 mu=rho*zh
@@ -179,7 +164,7 @@ pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\mu}{T_c}$')
 pl.xlim([0,1.2])
 pl.ylim([0,40])
-saveFig('muTzeros')
+#saveFig('muTzeros')
 
 fig(5)
 pl.plot(psis,sols)

@@ -11,7 +11,7 @@ def getLagrangian(metric, m2, gamma, alpha1, alpha2, psi, *A):
     F2=sum(F[i][j]*F[I][J]*gi[i,I]*gi[j,J] for i,j,I,J in product(r,r,r,r)).simplify()
     eabs=lambda a:a
     if metric.g.is_diagonal():
-        return sp.Abs(metric.g.det())**(sp.S(1)/2)*(-F2/4
+        return ((-metric.g.det())**(sp.S(1)/2)).simplify()*(-F2/4
            -m2*eabs(psi)**2
            -sqr([eabs(psi.diff(x[i])) for i in r],gi)
            -sqr([eabs(-A[i]*psi) for i in r],gi)

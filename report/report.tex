@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -6,6 +6,8 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{tikz}
+\usepackage[tc]{titlepic}
+
 %\usepackage{bbm}
 %\usepackage[swedish]{babel}
 \newcommand{\N}{\ensuremath{\mathbbm{N}}}
@@ -17,6 +19,7 @@
 \newcommand{\e}{\ensuremath{\mathrm{e}}}
 \renewcommand{\L}{\ensuremath{\mathcal{L}}}
 \renewcommand{\i}{\ensuremath{i}}
+%\renewcommand{\i}{\ensuremath{\mathrm{i}}}
 \newcommand{\ket}[1]{|#1\rangle}
 \newcommand{\bra}[1]{\langle#1|}
 \newcommand{\braket}[2]{\bra{#1}#2\rangle}
@@ -33,10 +36,24 @@
 \title{Holographic Superconductivity}
 \author{Petter Säterskog}
 \begin{document}
+
+\titlepic{
+\centering
+\begin{tikzpicture}
+    \draw[->] (0,3) -- (1,3) node[right] {$z$};
+    \draw[-,thick] (0,-1.5) -- (0,4) node[above] {Boundary};
+    \draw[-,thick] (6,-1.5) -- (6,4) node[above] {Horizon};
+    \draw[-] (6,0) -- (-0.5,0) node[left] {$m_{\mathrm{eff}}^2=0$};
+    \draw[-] (6,1) -- (-0.5,1)[dashed] node[left] {$m_{\mathrm{eff}}^2=m^2$};
+    \draw[-] (6,-1) -- (-0.5,-1)[dashed] node[left] {BF bound};
+    \draw[dotted] plot[domain=1:0.5,samples=100] (\x*6,{4*(1-\x)})node[above] {$\phi$};
+    \draw[-] (6,0) node[right] {$\phi=0$, $\phi^\prime>0$};
+    \draw[solid] plot[domain=0:1,samples=100] (\x*6,{1-2*\x*\x/(1-\x*\x*\x)*4*(1-\x)*4*(1-\x)});
+\end{tikzpicture}
+}
 \maketitle
 \tableofcontents
-
-\section{Introduction}
+\chapter{Introduction}
 The AdS-CFT correspondence was conjectured in 1997 \cite{Maldacena:1997re}. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space.
 
 Strong coupling
@@ -45,13 +62,13 @@ High TC Superconductors
 \section{The Correspondence}
 The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
 \begin{equation}
- Z_{\text{cft}}=Z_{\text{strings}}
+ Z_{\text{CFT}}=Z_{\text{strings}}
 \label{GKPW}
 \end{equation}
-where $Z_{\text{cft}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The relation between the Lagrangians of the theories are unknown but the boundary values of fields in the bulk theory correspond to fields in the CFT.
-\subsection{Restrictions}
+where $Z_{\text{CFT}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The relation between the Lagrangians of the theories are unknown but the boundary values of fields in the bulk theory correspond to fields in the CFT.
+\section{Restrictions}
 Lorentz invariance, relativity, causality, locality?
-\subsection{Partition Function}
+\section{Partition Function}
 The partition function is a concept from statistical physics. It is for a quantum-mechanical system defined as
 \begin{equation}
  Z(\beta)=\mathrm{tr}(\e^{-\beta\hat{H}})
@@ -90,7 +107,7 @@ The partition function is in the classical limit
  Z(\beta)=f(-\i\beta)\stackrel{\mathrm{classical}}{=} \e^{i S_c}\label{classical}
 \end{equation}
 where $S_c$ is the action of classical periodic path with period $-\i\beta$.
-\subsection{Expectation Values}
+\section{Expectation Values}
 The boundary values of the bulk fields correspond to fields in the CFT. Expectation values of observables in the CFT can be calculated using a generating functional $Z[J]$. This is a partition function for a system with a perturbed Lagrangian $\L_J(x)=\L(x)+J(x)O(x)$. Here $O(x)$ is a local operator on the fields. The generating functional can be regarded an expectation value of a system with the original Lagrangian $\L$.
 \begin{equation}
 \begin{split}
@@ -107,21 +124,49 @@ Taking a functional derivative of this gives:
 \end{split}
 \end{equation}
 The partition functions of the bulk and boundary theories are the same even for a perturbed Lagrangian. Both Lagrangians are then perturbed. Expectation values of operators of the boundary theory can thus be calculated using the partition function for the bulk theory. It is though not trivial to figure out what fields in the bulk theory corresponds to what operators in the boundary theory
-\section{Solution}
+\chapter{Solution of the Classical Bulk Theory}
 We wish to compute expectation values of the CFT. The field theory is a strongly coupled quantum field theory and the expectation values are thus difficult to compute directly. The expectation values can though be calculated using \eqref{expectation} and the partition function can be obtained from the GKPW equation, \eqref{GKPW}.\\
 
 The partition function of the bulk theory must then be calculated. This is in our case easier, TODO reference, since this theory can be treated in a classical limit. But the equations of motion must still be calculated and the solutions must be translated to expectation values for the CFT. This section is devoted to the theory of how this is done.
-\subsection{Metric}
-The precise form of the bulk Lagrangian that corresponds to the boundary theory we are interested in is unknown. The string theory is gravitational and the Lagrangian thus has an unknown parameter that is the Newton's constant $G$. This is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted, TODO. The prope limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole, the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
+\section{Metric}
+The precise form of the bulk Lagrangian that corresponds to the boundary theory we are interested in is unknown. The string theory is gravitational and the space is asymptotically AdS. The action contains an Einstein-Hilbert term with a cosmological constant $\Lambda$. A Gibbons-Hawking-York boundary term is also needed \cite{PhysRevD.15.2752}, \cite{PhysRevLett.28.1082} TODO, read, comment.
+\begin{equation}
+ S_{\mathrm{grav}}=\frac{1}{2\kappa}\int \d^{d+1}x\sqrt{-g}\left(R-2\Lambda\right)-\frac{1}{2\kappa}\int \d^dx\sqrt{\gamma}\left(-2\gamma^{ab}\nabla_an_b+2\sqrt{-2\Lambda(d-1)/d}\right)
+\end{equation}
+Here $R$ is the Ricci scalar. The gravitational constant $\kappa$ (related to Newton's constant by $\kappa=8\pi G$) is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted, TODO. The probe limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole(TODO ref), the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
  g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d \mathbf{x}^2\right).\label{metric}
 \end{equation}
-Here $f(z)=1-z^dz_h^{-d}$ and $d$ is the dimension of the boundary. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS. All coordinates are evidently of the same unit. The gravitational part of the Lagrangian can now be removed and this background metric can be used instead of solving the equations of motion for the metric together with the fields. TODO, imaginary time, deficit angle gives $T$.
+Here $f(z)=1-z^dz_h^{-d}$ and $d$ is the dimension of the boundary. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS. Here the length $L$ is introduced as
 \begin{equation}
- T=\frac{d}{4\pi  z_h}
+L^2=-\frac{d(d-1)}{2\Lambda}.
+\end{equation}
+All coordinates are evidently of the same unit. The gravitational part of the Lagrangian can now be removed and this background metric can be used instead of solving the equations of motion for the metric together with the fields. This gravitational part of the Lagrangian must though be kept when calculating the value of the total action. The Ricci scalar of this metric is
+\begin{equation}
+ R=-\frac{d(d+1)}{L^2}=2\Lambda\frac{d+1}{d-1}
+\end{equation}
+TODO: does the region behind the horizon contribute?
+The action can be calculated using this. Consider the space $(z,t,\mathbf{x})\in[\epsilon,z_h]\times V$ corresponding to a $d$-volume of the boundary theory $V$. The action boundary density is then
+\begin{equation}
+\begin{split}
+ \frac{S_{\mathrm{grav}}}{V}&=\frac{\Lambda}{\kappa}\left(\frac{d+1}{d-1}-1\right)\int_\epsilon^{z_h}\d z\sqrt{-g}+
+\frac{1}{2\kappa}\sqrt{\gamma}\left(-2\gamma^{ab}\partial_a\d z_b+2\sqrt{-2\Lambda(d-1)/d}\right)\\
+&=\frac{\Lambda}{\kappa}\frac{2}{d-1}\int_\epsilon^{z_h}\d z\left(\frac{L}{z}\right)^{d+1}+
+\frac{1}{\kappa}\left(\frac{\epsilon}{L}\right)^{-d}\sqrt{-2\Lambda(d-1)/d}\\
+&=\frac{L\Lambda}{\kappa}\frac{2}{d(d-1)}\left(\left(\frac{\epsilon}{L}\right)^{-d}-\left(\frac{z}{L}\right)^{-d}\right)\\
+&=\frac{1}{\kappa}\sqrt{\frac{-2\Lambda}{d(d-1)}}\left(\left(\frac{\epsilon}{L}\right)^{-d}-\left(\frac{z_h}{L}\right)^{-d}\right)
+\end{split}
+\end{equation}
+
+The total action density is obtained as $\epsilon\rightarrow0$.
+.  TODO, imaginary time, deficit angle gives $T$.
+
+
+\begin{equation}
+ T=\frac{d}{4\pi  z_h}\label{T}
 \end{equation}
 %This $T$ in units of energy is also in units of inverse length since we chose the energy unit to the inverse time it 
-\subsection{Boundary Behaviour}
+\section{Boundary Behaviour}
 The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{|\det g_{ab}|}\L\equiv\int\d^{d+1} x\sqrt{g}\L.
@@ -154,14 +199,14 @@ Now consider the boundary, $z=0$. Our metric is required to be asymptotically Ad
 &=z^{\Delta}\left(-2\Delta(\Delta-1)-2(-d+1)\Delta\right)-L^2V'(z^{\Delta}).
 \end{split}
 \end{equation}
-Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2$. We then get the following equation for $\Delta$
+Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2+\mathcal{O}(\psi^3)$. We then get the following equation for $\Delta$
 \begin{equation}
 \begin{split}
 %0=\Delta(\Delta-1)-(d-1)\Delta-L^2m^2=\\
 0=\Delta^2-d\Delta-L^2m^2
 \end{split}
 \end{equation}
-with solutions
+in the limit $z\rightarrow0$. This has solutions
 \begin{equation}
 \begin{split}
 \Delta=\frac{d\pm\sqrt{d^2+4L^2m^2}}{2}.
@@ -173,7 +218,7 @@ $\psi$ thus goes as $z^{\Delta_0}$ where $\Delta_0$ is the smaller solution and 
 \end{equation}
 unless $\Delta_1-\Delta_0>=1$ and further terms from the series corresponding to $\Delta_0$ must be included.\\
 
-What will the contribution to the action from this solution be? Consider the action contribution from the region $z\in[\epsilon,\delta]$ where $\epsilon<\delta$ and $\epsilon\rightarrow0$.
+What will the contribution to the action from this solution be? Consider the action contribution from the region $z\in[\epsilon,\delta]$ where $\delta$ is small and $\epsilon\rightarrow0$.
 \begin{equation}
 \begin{split}
  S_{[\epsilon,\delta]}=&\int_{z\in[\epsilon,\delta]}\d^{d+1} x\sqrt{g}\L=\\
@@ -189,18 +234,36 @@ What will the contribution to the action from this solution be? Consider the act
 2L^2m^2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\Big]=\\
 =&V\int_\epsilon^\delta\d z \left((m^2-\Delta_0^2L^{-2})\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+(m^2-\Delta_1^2L^{-2})\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
 =&V\int_\epsilon^\delta\d z \left(-d\Delta_0L^{-2}\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}-d\Delta_1L^{-2}\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
-=&V\left(-\frac{d\Delta_0L^{-2}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}-\frac{d\Delta_1L^{-2}\psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
+=&V\left(\frac{d\Delta_0L^{-1}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}+\frac{d\Delta_1L^{-1}\psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
 \end{split}
 \end{equation}
-Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. Which one depends on the sign of $2\Delta_0-d$.
-The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence. 
-\subsection{Horizon Beaviour}
+Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. The term with $\psi_0$ diverges since $2\Delta_0-d=-\sqrt{d^2+4L^2m^2}$. The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence.\\
+The boundary term must thus evaluate to
+\begin{equation}
+-V\frac{d\Delta_0L^{-1}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}
+\end{equation}
+near the boundary. A boundary term like this can be constructed using $\psi=\psi_0L^{-\Delta_0}\epsilon^{\Delta_0}$ near the boundary and $\sqrt{\gamma}=L^dz^{-d}$ where $\gamma$ is the determinant of the metric induced on the boundary by $g_{ab}$.
+The boundary term then becomes
+\begin{equation}
+\begin{split}
+ S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dx\frac{d\Delta_0L^{-1}\psi^2}{2\Delta_0-d}\sqrt{\gamma}\\
+&=-\int_{z=\epsilon}\d^dx\frac{d(d-\Delta_1)L^{-1}\psi^2}{d-2\Delta_1}\sqrt{\gamma}\\
+&=-\frac{d(d-\Delta_1)}{(d-2\Delta_1)L}\int_{z=\epsilon}\d^dx\psi^2\sqrt{\gamma}
+\label{Sbdy}
+\end{split}
+\end{equation}
+This is a addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
+\\
+Consider another possible term in the Lagrangian, an electromagnetic field $A_\mu$. The Lagrangian is $-\frac{1}{4}F_{ab}F^{ab}$ where $F_{ab}=\partial_aA_b-\partial_bA_a$. Consider fields with $t$, $x_1$, and $x_2$ symmetry.
+\\
+TODO, check. It is easily shown that the behaviour of these fields is the same when there is an interaction present as will be considered later.
+\section{Horizon Beaviour}
 TODO: Wilson loop=>$\phi=0$. Ingoing boundary conditions.
-\subsection{Expectation Values of Boundary Operators}
+\section{Expectation Values of Boundary Operators}
 These expectation values are calculated using \eqref{expectation} and \eqref{classical}.
 \begin{equation}
 \begin{split}
-\langle O(\psi(x))\rangle\label{expectation}=-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{GKPW}}{=}-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{classical}}{=}\frac{\delta}{\delta J(x)}S_c|_{J=0}
+\langle O(\psi(x))\rangle=-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{GKPW}}{=}-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{classical}}{=}\frac{\delta}{\delta J(x)}S_c|_{J=0}
 \end{split}
 \end{equation}
 The functional derivative is thus the change in the classical action when the boundary value of the fields are changed. The total change in the partition function is needed and the whole field solutions change when changing the boundary conditions so this must be taken into account. The derivative becomes
@@ -218,7 +281,7 @@ where $i$ goes over all fields. Here the Lagrangian is assumed to only depend on
 \end{equation}
 where $n_a$ is an outward normal to the boundary of AdS.
 The first integral vanishes since the fields obey the Euler-Lagrange equation.
-\section{Application to Two-Dimensional Electron Condensates}
+\chapter{Application to Two-Dimensional Electron Condensates}
 TODO, Strong coupling, classical limit.
 TODO, motivate, reference. The Lagrangian used is
 \begin{eqnarray}
@@ -227,6 +290,7 @@ TODO, motivate, reference. The Lagrangian used is
 &+\alpha_1(F_{ab}F^{ab})^2+\alpha_2F^a_bF^b_cF^c_dF^d_a
 \end{eqnarray}
 TODO, describe term by term.
+The first term is an Einstein-Hilbert term with a cosmological constant $\Lambda$.
 where $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$ and $F_{ab}=\partial_aA_b-\partial_bA_a$. This Lagrangian is invariant under a U(1) gauge transformation
 \begin{eqnarray}
  \psi&\rightarrow&\mathrm{e}^{i\theta(x)}\psi\\
@@ -234,8 +298,8 @@ where $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$ and $F_{ab}=\
 \end{eqnarray}
 This lets us make a choice of gauge, $\nabla_aA^a=0$, the Lorentz gauge. The gauge is still not completely fixed, a gauge transformation $\theta(x)$ such that $\nabla_a\nabla^a\theta(x)=0$ can still be done without violating the gauge condition.
 The Lagrangian is also evidently Lorentz invariant imposing Lorentz invariance of the boundary theory. This Lagrangian also posseses conformal invariance. This means that the Lagrangian is unchanged by the transformation $g_{ab}\rightarrow f(x)g_{ab}$.
-\subsection{Symmetry Assumptions}
-\subsection{Equations of motion}
+\section{Symmetry Assumptions}
+\section{Equations of motion}
 Describe why $\psi$ can be considered real.\\
 First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by varying the fields $\psi$, $\phi$ are respectively
 \begin{eqnarray}
@@ -244,8 +308,8 @@ First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by va
 \begin{eqnarray}
 0=\input{eqns/phieqm.tex}.
 \end{eqnarray}
-\subsection{Parameters}
-There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the paramters $\kappa$,$ L$, $m^2$, $q$, $\alpha_1$, $\alpha_2$, and $\gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged. The physics are independent of the exact value of $\kappa$ as long as we are in the probe limit.\\
+\section{Parameters}
+There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the parameters $\kappa$, $L$, $m^2$, $q$, $\alpha_1$, $\alpha_2$, and $\gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged. The physics are independent of the exact value of $\kappa$ as long as we are in the probe limit.\\
 
 The horizon $z_h$ and the curvature length $L$ set length scales in the metric. Length units in the numerical solution can be chosen such that $z_h=1$. This means that we for different temperatures have different units since $z_h$ is related to the temperature. We will have to convert between these units when comparing results from different temperatures.\\
 
@@ -264,6 +328,38 @@ for stability\cite{Kleban:2004bv}, TODO explain. The scalar field $\psi$ should 
 %=m^2+g^{tt}\phi^2
 =m^2-\frac{z^2}{L^2(1-z^dz_h^{-d})}\phi^2
 \end{equation}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \draw[->] (0,3) -- (1,3) node[right] {$z$};
+    \draw[-,thick] (0,-1.5) -- (0,4) node[above] {Boundary};
+    \draw[-,thick] (6,-1.5) -- (6,4) node[above] {Horizon};
+    \draw[-] (6,0) -- (-0.5,0) node[left] {$m_{\mathrm{eff}}^2=0$};
+    \draw[-] (6,1) -- (-0.5,1)[dashed] node[left] {$m_{\mathrm{eff}}^2=m^2$};
+    \draw[-] (6,-1) -- (-0.5,-1)[dashed] node[left] {BF bound};
+    \draw[dotted] plot[domain=1:0.5,samples=100] (\x*6,{2*(1-\x)/((1-\x)/2+0.1)})node[above] {$\phi$};
+    \draw[-] (6,0) node[right] {$\phi=0$, $\phi^\prime>0$};
+    \draw[solid] plot[domain=0:1,samples=100] (\x*6,{1-2*\x*\x*(1-\x)/((1-\x)/2+0.1)*(1-\x)/((1-\x)/2+0.1)/(1-\x*\x*\x)});
+\end{tikzpicture}
+\caption{Schematic plot of how the the effective mass breaks the BF bound outside the horizon. A value of $\phi$ has been assumed.}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \draw[->] (0,3) -- (1,3) node[right] {$z$};
+    \draw[-,thick] (0,-1.5) -- (0,4) node[above] {Boundary};
+    \draw[-,thick] (6,-1.5) -- (6,4) node[above] {Horizon};
+    \draw[-] (6,0) -- (-0.5,0) node[left] {$m_{\mathrm{eff}}^2=0$};
+    \draw[-] (6,1) -- (-0.5,1)[dashed] node[left] {$m_{\mathrm{eff}}^2=m^2$};
+    \draw[-] (6,-1) -- (-0.5,-1)[dashed] node[left] {BF bound};
+    \draw[dotted] plot[domain=1:0.5,samples=100] (\x*6,{4*(1-\x)})node[above] {$\phi$};
+    \draw[-] (6,0) node[right] {$\phi=0$, $\phi^\prime>0$};
+    \draw[solid] plot[domain=0:1,samples=100] (\x*6,{1-2*\x*\x/(1-\x*\x*\x)*4*(1-\x)*4*(1-\x)});
+\end{tikzpicture}
+\caption{Schematic plot of how the the effective mass breaks the BF bound outside the horizon. A value of $\phi$ has been assumed.}
+\end{figure}
 
 The bulk field equations are obtained by varying the bulk Lagrangian with respect to all the fields. This can be done with the Euler-Lagrange equation since the action does not contain any higher derivatives. The Euler-Lagrange equation for a scalar field $\phi$ states
 \begin{equation}
@@ -285,17 +381,42 @@ The metric now becomes
 \end{equation}
 \\
 Summary, fields, parameters, units
-\subsection{Free Energy}
-
-\subsection{Expectation Values}
-The field 
-\section{Numerical solution of bulk equations}
-\subsection{Condensate}
+\section{Thermodynamic Variables}
+The free energy, $A=-T\log{Z}$, is through the GKPW equation the same for the bulk and the boundary theory. This can be calculated in the classical limit in the bulk.
+\begin{equation}
+ A=-T\log{Z}\stackrel{\mathrm{classical}}{=}-\i T S_c
+\end{equation}
+Here $S_c$ is the classical periodic time action. The classical field solutions only depend on the $z$ coordinate and are thus proportional to $V=-\i\beta V_2$ where $V_2$ is the area considered in coordinats $x_1$, $x_2$. This gives the free energy per surface area
+\begin{equation}
+ \frac{A}{V_2}=-\int_0^{z_h}\d z \sqrt{-g}\L+V^{-1}S_{\mathrm{bdy}}
+\end{equation}
+Consider the case where $m^2=-2$. Then $\Delta_0=1$ and the boundary term is given by \eqref{Sbdy}.\\
+The action is dominated by the gravitational part since we are in the probe limit. 
+The expression for the temperature \eqref{T} can be used to calculate the free energy from the action at finite temperature
+\begin{equation}
+\begin{split}
+ \frac{A_\mathrm{grav}}{V_2}&=-T\frac{-1}{\kappa}\sqrt{\frac{-2\Lambda}{d(d-1)}}\left(\frac{d}{4\pi TL}\right)^{-d}\\
+&=\frac{(4\pi)^dT^dL^{d-1}}{d^{d}\kappa}
+\end{split}
+\end{equation}
+\\
+The entropy $S$ can now be calculated from the free energy
+\begin{equation}
+ S=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
+\end{equation}
+TODO, Beckenstein-Hawking
+\section{Operator Expectation Values}
+\section{Conductivity}
+\chapter{Numerical Solution of Bulk Equations of Motion}
+\section{Condensate}
 TODO, write in more detail. TODO, write in some clear way about the dimensionless quantities.
 The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\phi=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read of at the boundary.\\
 
 The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
-\fig{O2_T}{A picture}
+\fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
+
+\fig{muTzeros}{Curves corresponding to different solutions at the same temperature.}
+%\fig{O2_T}{A picture}
 
 \begin{figure}
 \centering

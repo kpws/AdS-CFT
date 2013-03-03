@@ -11,7 +11,7 @@ psi=sp.Symbol('psi')(M.x[0])
 m2,gamma,alpha1,alpha2=sp.symbols(['m2','gamma','alpha1','alpha2'],real=True)
 
 L=getLagrangian(M,m2,gamma,alpha1,alpha2,psi,*A)
-L=L.subs({m2:-sp.S(2),M.L:1,M.zh:1,gamma:0,alpha1:0,alpha2:0,A[0]:0,A[2]:0,A[3]:0}).doit()
+L=L.subs({m2:-sp.S(2),gamma:0,alpha1:0,alpha2:0,A[0]:0,A[2]:0,A[3]:0}).doit()
 eqm=psieqm, phieqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in [psi,A[1]]]
 
 singularities=[]
@@ -94,7 +94,7 @@ def getBoundary(phiD,psi,plot=False):
 from scipy.optimize import brentq, newton
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-6,1.1,200)
+psis=np.logspace(-6,1.0,20)
 oscN=4
 lss=['-', '--', '-.', ':']
 ys=[]
@@ -144,41 +144,33 @@ for psii in range(len(psis)):
             #assert osc>=osci*2-1
             first=False
         start=sol*1.001#assumption
-        fig(2)
-        getBoundary(sol,psi,plot=True)
+        #fig(2)
+        #getBoundary(sol,psi,plot=True)
         ys[-1].append(y)
         if osci==0:
             sols.append(sol)
 
 mu, rho, p1, p2 =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(4)]
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
-print 'rhoc: '+str(rhoc)
-zh=1.#choice of length units makes zh numerically constant
-T=3./(zh*4.*np.pi)#temp of solution in units used, this is constant by choice of units
 for osci in range(oscN):
+    #-1, -2, -1, -2
+    zh=1.#choice of length units makes zh numerically constant
+    T=3./(zh*4.*np.pi)#temp of solution in units used, this is constant by choice of units
     Tc=T*np.sqrt(rho[osci]/rhoc)#critical temp, in units used for all solutions
     
     fig(1)
     pl.plot(T/Tc,np.sqrt(np.abs(p2[osci])*np.sqrt(2.))/Tc,c='k',ls=lss[osci])
     fig(4)
     pl.plot(T/Tc,mu[osci]/Tc,c='k',ls=lss[osci])
-    print 'mu/rho'+str(mu[osci][-1]/rho[osci][-1])
-    print 'p2/rho'+str(p2[osci][-1]/rho[osci][-1])
 fig(1)
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
 pl.xlim([0,1.2])
 saveFig('O2Tzeros')
 fig(4)
-rho=np.linspace(rhoc*0.2,rhoc*10,1000)
-mu=rho*zh
-Tc=T*np.sqrt(rho/rhoc)#critical temp, in units used for all solutions
-pl.plot(T/Tc,mu/Tc,c='k',ls='-')
-pl.plot()
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\mu}{T_c}$')
 pl.xlim([0,1.2])
-pl.ylim([0,40])
 saveFig('muTzeros')
 
 fig(5)
