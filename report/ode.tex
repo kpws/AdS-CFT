@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+%\usepackage{ae}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage[tc]{titlepic}
+
+%\usepackage{bbm}
+%\usepackage[swedish]{babel}
+\newcommand{\N}{\ensuremath{\mathbbm{N}}}
+\newcommand{\Z}{\ensuremath{\mathbbm{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbbm{Q}}}
+\newcommand{\R}{\ensuremath{\mathbbm{R}}}
+\newcommand{\C}{\ensuremath{\mathbbm{C}}}
+\renewcommand{\d}{\ensuremath{\mathrm{d}}}
+\newcommand{\e}{\ensuremath{\mathrm{e}}}
+\renewcommand{\L}{\ensuremath{\mathcal{L}}}
+\renewcommand{\i}{\ensuremath{i}}
+%\renewcommand{\i}{\ensuremath{\mathrm{i}}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\braket}[2]{\bra{#1}#2\rangle}
+\newcommand{\bracket}[3]{\bra{#1}#2\ket{#3}}
+\newcommand{\fig}[3]{
+\begin{figure}
+\centering
+\includegraphics{figs/#1}
+\caption{#2}
+\end{figure}
+}
+\title{Boundary Behaviour of Differential Equation for AdS/CFT Superconductivity}
+\author{Petter Säterskog}
+
+\begin{document}
+\maketitle
+The differential equation of interest
+\begin{equation}
+ \begin{split}
+  (-2z^3+z^2\phi^2+2)\psi+(z^7+z^4-2z)\psi^\prime+(z^8-2z^5+z^2)\psi^{\prime\prime}&=0\\
+  (z^5-z^2)\phi^{\prime\prime}+2\phi\psi^2&=0\\
+ \end{split}
+\end{equation}
+or
+\begin{equation}
+ \begin{split}
+  (-2z^3+z^2\phi^2+2)\psi+z\left((z^3-1)^2+3(z^3-1)\right)\psi^\prime+z^2(z^3-1)^2\psi^{\prime\prime}&=0\\
+  z^2(z^3-1)\phi^{\prime\prime}+2\phi\psi^2&=0\\
+ \end{split}
+\end{equation}
+The expansions of the solution at $z=0$ given boundary conditions $\mu$, $\rho$, $\psi_2$ and that $\psi^\prime(0)=0$ is
+\begin{equation}
+ \begin{split}
+  \psi(z)&=\psi_2z^2-4\mu^2\psi_2\frac{z^4}{4!}+20\psi_2(2+\mu\rho)\frac{z^5}{5!}+ \mathcal{O}(z^6)\\
+\phi(z)&=\mu-\rho z+4\mu\psi_2^2\frac{z^4}{4!}-12\rho\psi_2^2\frac{z^5}{5!} +\mathcal{O}(z^6)
+ \end{split}
+\end{equation}
+It has numerically been found that starting at finite $z$ and integrating down towards $z=0$ with starting values such that $\psi^\prime(0)=0$ and $\rho$ is big gives $\rho/\psi_2=\sqrt{2}$.
+\end{document}

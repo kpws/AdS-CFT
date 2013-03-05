@@ -28,18 +28,22 @@ for s in singularities:
     sols=sp.solve(leadingTerms,*D)
     sp.pprint(sols)
 
+dofs=[A[1], A[1].diff(M.x[0]), psi, psi.diff(M.x[0])]
+dummies=[sp.Dummy() for i in range(len(dofs))]
+sp.pprint(L)
+Lfun=sp.lambdify([M.x[0]]+dummies, L.subs(zip(dofs, dummies)[::-1]))
+
 def getBis(z,dofs, em, fields):
     sols=sp.solve(em, [f.diff(z,2) for f in fields],dict=True)
     assert type(sols)==dict
     dummies=[sp.Dummy() for i in range(len(dofs))]
-    return [sp.lambdify([z]+dummies,sols[f.diff(z,2)].subs(zip(dofs,dummies))) for f in fields]
+    return [sp.lambdify([z]+dummies,sols[f.diff(z,2)].subs(zip(dofs,dummies)[::-1])) for f in fields]
 
-dofs=[A[1].diff(M.x[0]), A[1], psi.diff(M.x[0]), psi]
 phibisf,psibisf=getBis(M.x[0], dofs, eqm, [A[1], psi])
 
 #y=[phi,phi',psi,psi']
 def yprim(z,y):
-    return [y[1], phibisf(z,y[1],y[0],y[3],y[2]), y[3], psibisf(z,y[1],y[0],y[3],y[2])]
+    return [y[1], phibisf(z,*y), y[3], psibisf(z,*y)]
 
 from scipy.integrate import ode
 import numpy as np
@@ -56,7 +60,7 @@ def horizonSol(phiD, psi, z):
 def horizonSolD(phiD, psi, z):
     return [phiD, 2./3*psi]
 
-def getBoundary(phiD,psi,plot=False):
+def getBoundary(phiD,psi,plot=False,returnSol=False):
     eps=0.0002
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
@@ -89,12 +93,16 @@ def getBoundary(phiD,psi,plot=False):
         pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
     print p1
     print osc
-    return [mu,rho,p1,p2,osc]
+    if returnSol:
+        return [mu,rho,p1,p2,osc,(zs,y)]
+    else:
+        return [mu,rho,p1,p2,osc]
 
 from scipy.optimize import brentq, newton
+from scipy.integrate import cumtrapz
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-6,1.1,200)
+psis=np.logspace(-5,1.1,200)
 oscN=4
 lss=['-', '--', '-.', ':']
 ys=[]
@@ -145,12 +153,16 @@ for psii in range(len(psis)):
             first=False
         start=sol*1.001#assumption
         fig(2)
-        getBoundary(sol,psi,plot=True)
-        ys[-1].append(y)
+        mu,rho,p1,p2,osc,fields=getBoundary(sol,psi,plot=True,returnSol=True)
+        A=[0]+list(cumtrapz([-Lfun(fields[0][i],*fields[1][i]) for i in range(len(fields[0]))][::-1], x=fields[0][::-1]))
+        fig(6)
+        pl.plot(fields[0][::-1],A,ls=lss[osci])
+        ys[-1].append(y+[A[-1]])
+
         if osci==0:
             sols.append(sol)
 
-mu, rho, p1, p2 =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(4)]
+mu, rho, p1, p2, _ ,A =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(6)]
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 print 'rhoc: '+str(rhoc)
 zh=1.#choice of length units makes zh numerically constant
@@ -162,24 +174,36 @@ for osci in range(oscN):
     pl.plot(T/Tc,np.sqrt(np.abs(p2[osci])*np.sqrt(2.))/Tc,c='k',ls=lss[osci])
     fig(4)
     pl.plot(T/Tc,mu[osci]/Tc,c='k',ls=lss[osci])
+    fig(7)
+    pl.plot(T/Tc,A[osci]/Tc,c='k',ls=lss[osci])
     print 'mu/rho'+str(mu[osci][-1]/rho[osci][-1])
     print 'p2/rho'+str(p2[osci][-1]/rho[osci][-1])
 fig(1)
+pl.plot([0,2], [0,0], c='k', lw=0.8)
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
 pl.xlim([0,1.2])
+pl.ylim([-1,10])
 saveFig('O2Tzeros')
 fig(4)
 rho=np.linspace(rhoc*0.2,rhoc*10,1000)
 mu=rho*zh
 Tc=T*np.sqrt(rho/rhoc)#critical temp, in units used for all solutions
-pl.plot(T/Tc,mu/Tc,c='k',ls='-')
-pl.plot()
+pl.plot(T/Tc,mu/Tc,c='k',ls='-',lw=0.8)
 pl.xlabel('$\\frac{T}{T_c}$')
 pl.ylabel('$\\frac{\\mu}{T_c}$')
 pl.xlim([0,1.2])
 pl.ylim([0,40])
 saveFig('muTzeros')
+
+fig(7)
+pl.xlabel('$\\frac{T}{T_c}$')
+pl.ylabel('$\\frac{A}{T_c}$')
+Atriv=-4*np.pi*T/3*mu**2/2
+pl.plot(T/Tc, Atriv/Tc,c='k',ls='-',lw=0.8)
+pl.xlim([0,1.2])
+pl.ylim([-1e3,0])
+saveFig('A')
 
 fig(5)
 pl.plot(psis,sols)

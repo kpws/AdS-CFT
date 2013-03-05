@@ -65,7 +65,7 @@ The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
  Z_{\text{CFT}}=Z_{\text{strings}}
 \label{GKPW}
 \end{equation}
-where $Z_{\text{CFT}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The relation between the Lagrangians of the theories are unknown but the boundary values of fields in the bulk theory correspond to fields in the CFT.
+where $Z_{\text{CFT}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The relation between the Lagrangians of the theories is unknown but the boundary values of fields in the bulk theory correspond to fields in the CFT.
 \section{Restrictions}
 Lorentz invariance, relativity, causality, locality?
 \section{Partition Function}
@@ -129,18 +129,20 @@ We wish to compute expectation values of the CFT. The field theory is a strongly
 
 The partition function of the bulk theory must then be calculated. This is in our case easier, TODO reference, since this theory can be treated in a classical limit. But the equations of motion must still be calculated and the solutions must be translated to expectation values for the CFT. This section is devoted to the theory of how this is done.
 \section{Metric}
-The precise form of the bulk Lagrangian that corresponds to the boundary theory we are interested in is unknown. The string theory is gravitational and the space is asymptotically AdS. The action contains an Einstein-Hilbert term with a cosmological constant $\Lambda$. A Gibbons-Hawking-York boundary term is also needed \cite{PhysRevD.15.2752}, \cite{PhysRevLett.28.1082} TODO, read, comment.
+The precise form of the bulk Lagrangian that corresponds to the boundary theory we are interested in is unknown. The string theory is gravitational and the space is asymptotically AdS. The action contains an Einstein-Hilbert term with a cosmological constant
 \begin{equation}
- S_{\mathrm{grav}}=\frac{1}{2\kappa}\int \d^{d+1}x\sqrt{-g}\left(R-2\Lambda\right)-\frac{1}{2\kappa}\int \d^dx\sqrt{\gamma}\left(-2\gamma^{ab}\nabla_an_b+2\sqrt{-2\Lambda(d-1)/d}\right)
+\Lambda=-\frac{d(d-1)}{2L^2}
 \end{equation}
-Here $R$ is the Ricci scalar. The gravitational constant $\kappa$ (related to Newton's constant by $\kappa=8\pi G$) is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted, TODO. The probe limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole(TODO ref), the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
+where $L$ is a length scale and $d$ is the dimension of the boundary.
+A Gibbons-Hawking-York boundary term is also needed \cite{PhysRevD.15.2752}, \cite{PhysRevLett.28.1082} TODO, read, comment.
+\begin{equation}
+ S_{\mathrm{grav}}=\frac{1}{2\kappa}\int \d^{d+1}x\sqrt{-g}\left(R-2\Lambda\right)-\frac{1}{\kappa}\int \d^dx\sqrt{\gamma}\left(-\gamma^{ab}\nabla_an_b+\frac{d-1}{L}\right)
+\end{equation}
+Here $R$ is the Ricci scalar. The gravitational constant $\kappa$ (related to Newton's constant by $\kappa=8\pi G$) is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted, TODO. $n_a$ is a normal vector at the boundary. The probe limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole(TODO ref), the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
  g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d \mathbf{x}^2\right).\label{metric}
 \end{equation}
-Here $f(z)=1-z^dz_h^{-d}$ and $d$ is the dimension of the boundary. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS. Here the length $L$ is introduced as
-\begin{equation}
-L^2=-\frac{d(d-1)}{2\Lambda}.
-\end{equation}
+Here $f(z)=1-z^dz_h^{-d}$. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS.\\
 All coordinates are evidently of the same unit. The gravitational part of the Lagrangian can now be removed and this background metric can be used instead of solving the equations of motion for the metric together with the fields. This gravitational part of the Lagrangian must though be kept when calculating the value of the total action. The Ricci scalar of this metric is
 \begin{equation}
  R=-\frac{d(d+1)}{L^2}=2\Lambda\frac{d+1}{d-1}
@@ -150,11 +152,11 @@ The action can be calculated using this. Consider the space $(z,t,\mathbf{x})\in
 \begin{equation}
 \begin{split}
  \frac{S_{\mathrm{grav}}}{V}&=\frac{\Lambda}{\kappa}\left(\frac{d+1}{d-1}-1\right)\int_\epsilon^{z_h}\d z\sqrt{-g}+
-\frac{1}{2\kappa}\sqrt{\gamma}\left(-2\gamma^{ab}\partial_a\d z_b+2\sqrt{-2\Lambda(d-1)/d}\right)\\
+\frac{1}{\kappa}\sqrt{\gamma}\left(-\gamma^{ab}\partial_a\d z_b+\frac{d-1}{L}\right)\\
 &=\frac{\Lambda}{\kappa}\frac{2}{d-1}\int_\epsilon^{z_h}\d z\left(\frac{L}{z}\right)^{d+1}+
-\frac{1}{\kappa}\left(\frac{\epsilon}{L}\right)^{-d}\sqrt{-2\Lambda(d-1)/d}\\
+\frac{1}{\kappa}\left(\frac{\epsilon}{L}\right)^{-d}\frac{d-1}{L}\\
 &=\frac{L\Lambda}{\kappa}\frac{2}{d(d-1)}\left(\left(\frac{\epsilon}{L}\right)^{-d}-\left(\frac{z}{L}\right)^{-d}\right)\\
-&=\frac{1}{\kappa}\sqrt{\frac{-2\Lambda}{d(d-1)}}\left(\left(\frac{\epsilon}{L}\right)^{-d}-\left(\frac{z_h}{L}\right)^{-d}\right)
+&=-\frac{1}{L\kappa}\left(\left(\frac{\epsilon}{L}\right)^{-d}-\left(\frac{z_h}{L}\right)^{-d}\right)
 \end{split}
 \end{equation}
 
@@ -222,37 +224,38 @@ What will the contribution to the action from this solution be? Consider the act
 \begin{equation}
 \begin{split}
  S_{[\epsilon,\delta]}=&\int_{z\in[\epsilon,\delta]}\d^{d+1} x\sqrt{g}\L=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(m^2\psi^2-(\partial_a\psi)^2\right)=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(m^2( \psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1} )^2-(\partial_a(\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}))^2\right)=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\Big[m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right) \\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2\psi^2-(\partial_a\psi)^2\right)=\\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2( \psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1} )^2-(\partial_a(\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}))^2\right)=\\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right) \\
 &-g^{zz}L^{-2}(\Delta_0\psi_0\left(\frac{z}{L}\right)^{\Delta_0-1}+\Delta_1\psi_1\left(\frac{z}{L}\right)^{\Delta_1-1})^2\Big]=\\
-=&V\int_\epsilon^\delta\d z\left(\frac{z}{L}\right)^{-d-1}\Big[m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right)\\
+=&V\int_\epsilon^\delta\d z\left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right)\\
 &-g^{zz}L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2(\Delta_0-1)}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2(\Delta_1-1)}+
 2\Delta_0\Delta_1\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1-2}\right)\Big]=\\
-=&V\int_\epsilon^\delta\d z\Big[m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\\
-&-L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}+
+=&V\int_\epsilon^\delta\d z\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\\
+&-L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}-
 2L^2m^2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\Big]=\\
-=&V\int_\epsilon^\delta\d z \left((m^2-\Delta_0^2L^{-2})\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+(m^2-\Delta_1^2L^{-2})\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
-=&V\int_\epsilon^\delta\d z \left(-d\Delta_0L^{-2}\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}-d\Delta_1L^{-2}\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
-=&V\left(\frac{d\Delta_0L^{-1}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}+\frac{d\Delta_1L^{-1}\psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
+=&V\int_\epsilon^\delta\d z \left((-m^2-\Delta_0^2L^{-2})\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+(-m^2-\Delta_1^2L^{-2})\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
+=&VL^{-2}(\Delta_1-\Delta_0)\int_\epsilon^\delta\d z \left(\Delta_0\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}-\Delta_1\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
+=&VL^{-1}(\Delta_1-\Delta_0)\left(-\frac{ \Delta_0\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}+
+\frac{\Delta_1 \psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}\\
+=&VL^{-1}\left(\Delta_0\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}-
+\Delta_1\psi_1^2\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
 \end{split}
 \end{equation}
-Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. The term with $\psi_0$ diverges since $2\Delta_0-d=-\sqrt{d^2+4L^2m^2}$. The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence.\\
+Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=-L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. The term with $\psi_0$ diverges since $2\Delta_0-d=-\sqrt{d^2+4L^2m^2}$. The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence.\\
 The boundary term must thus evaluate to
 \begin{equation}
--V\frac{d\Delta_0L^{-1}\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}
+-\Delta_0VL^{-1}\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}
 \end{equation}
 near the boundary. A boundary term like this can be constructed using $\psi=\psi_0L^{-\Delta_0}\epsilon^{\Delta_0}$ near the boundary and $\sqrt{\gamma}=L^dz^{-d}$ where $\gamma$ is the determinant of the metric induced on the boundary by $g_{ab}$.
 The boundary term then becomes
 \begin{equation}
 \begin{split}
- S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dx\frac{d\Delta_0L^{-1}\psi^2}{2\Delta_0-d}\sqrt{\gamma}\\
-&=-\int_{z=\epsilon}\d^dx\frac{d(d-\Delta_1)L^{-1}\psi^2}{d-2\Delta_1}\sqrt{\gamma}\\
-&=-\frac{d(d-\Delta_1)}{(d-2\Delta_1)L}\int_{z=\epsilon}\d^dx\psi^2\sqrt{\gamma}
+ S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dx\Delta_0L^{-1}\psi^2\sqrt{\gamma}
 \label{Sbdy}
 \end{split}
 \end{equation}
-This is a addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
+This is addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
 \\
 Consider another possible term in the Lagrangian, an electromagnetic field $A_\mu$. The Lagrangian is $-\frac{1}{4}F_{ab}F^{ab}$ where $F_{ab}=\partial_aA_b-\partial_bA_a$. Consider fields with $t$, $x_1$, and $x_2$ symmetry.
 \\
@@ -308,6 +311,14 @@ First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by va
 \begin{eqnarray}
 0=\input{eqns/phieqm.tex}.
 \end{eqnarray}
+TODO, boundary conditions.\\
+These equations have the trivial solution
+\begin{equation}
+ \begin{split}
+  \psi=&0\\
+  \phi=\mu-\mu\frac{z}{z_h}\label{trivial}
+ \end{split}
+\end{equation}
 \section{Parameters}
 There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the parameters $\kappa$, $L$, $m^2$, $q$, $\alpha_1$, $\alpha_2$, and $\gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged. The physics are independent of the exact value of $\kappa$ as long as we are in the probe limit.\\
 
@@ -382,6 +393,7 @@ The metric now becomes
 \\
 Summary, fields, parameters, units
 \section{Thermodynamic Variables}
+
 The free energy, $A=-T\log{Z}$, is through the GKPW equation the same for the bulk and the boundary theory. This can be calculated in the classical limit in the bulk.
 \begin{equation}
  A=-T\log{Z}\stackrel{\mathrm{classical}}{=}-\i T S_c
@@ -391,6 +403,7 @@ Here $S_c$ is the classical periodic time action. The classical field solutions 
  \frac{A}{V_2}=-\int_0^{z_h}\d z \sqrt{-g}\L+V^{-1}S_{\mathrm{bdy}}
 \end{equation}
 Consider the case where $m^2=-2$. Then $\Delta_0=1$ and the boundary term is given by \eqref{Sbdy}.\\
+\subsection{Gravitational Free Energy}
 The action is dominated by the gravitational part since we are in the probe limit. 
 The expression for the temperature \eqref{T} can be used to calculate the free energy from the action at finite temperature
 \begin{equation}
@@ -400,12 +413,50 @@ The expression for the temperature \eqref{T} can be used to calculate the free e
 \end{split}
 \end{equation}
 \\
-The entropy $S$ can now be calculated from the free energy
+The entropy $H$ can now be calculated from the free energy
 \begin{equation}
- S=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
+ H=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
 \end{equation}
 TODO, Beckenstein-Hawking
+\subsection{Free Energy of Scalar and Electromagnetic Fields}
+It is important to calculate the free energy not only of the gravitational part of the Lagrangian since we have multiple solutions of the field equations and boundary values at the same temperature. Which solution is physical can be found by finding the one of lowest free energy. Here we neglect the contribution from any back-reaction on the metric. The back-reaction is small since $\kappa$ is small but a small $\kappa$ also makes the effect of the back-reaction on the free energy large. TODO, motivate or say that we leave this open.\\
+
+The free energy of the trivial solution \eqref{trivial} can be found analytically. For this solution we have
+\begin{equation}
+ \begin{split}
+  \psi&=0\\
+  \psi'&=0\\
+  \phi&=\mu-\mu\left(\frac{z}{z_h}\right)^{d-2}\\
+  \phi'&=-(d-2)\frac{\mu}{z_h}\left(\frac{z}{z_h}\right)^{d-3}
+ \end{split}
+\end{equation}TODO, explain d-3
+\begin{equation}
+\begin{split}
+ \frac{A}{V_\mathrm{SC}}=&-\int_0^{z_h}\d z \sqrt{-g}\L+V_\mathrm{SC}^{-1}S_{\mathrm{bdy}}\\
+=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1}\frac{1}{4}F_{ab}F^{ab}\\
+=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
+=&-\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1+4}\left(\frac{z}{z_h}\right)^{2(d-3)}(d-2)^2\frac{\mu^2}{2z_h^2}\\
+=&-L^{d-3}z_h^{-2d+4}(d-2)^2\frac{\mu^2}{2} \int_0^{z_h}\d z z^{d-3}\\
+=&-L^{d-3}z_h^{-d+2}(d-2)\frac{\mu^2}{2}\\
+=&-L^{d-3}\left(\frac{4\pi T}{d}\right)^{d-2}(d-2)\frac{\mu^2}{2}
+\end{split}
+\end{equation}
+\fig{A}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:mu}}
+
 \section{Operator Expectation Values}
+TODO, introduce $\rho$, $\mu$...
+The charge density $\rho$ of the trivial solution \eqref{trivial} is through \eqref{opExp} given by
+\begin{equation}
+ \rho=\frac{\mu}{z_h}.
+\end{equation}
+The chemical potential of the trivial solution can thus be calculated given the temperature and charge density
+\begin{equation}
+ \mu=\frac{d\rho}{4\pi T}.
+\end{equation}
+The chemical potential of the numerical solutions can be obtained from the boundary values. The result is seen in Fig. \ref{f:mu}.
+
+\fig{muTzeros}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:mu}}
+
 \section{Conductivity}
 \chapter{Numerical Solution of Bulk Equations of Motion}
 \section{Condensate}
@@ -413,10 +464,9 @@ TODO, write in more detail. TODO, write in some clear way about the dimensionles
 The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\phi=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read of at the boundary.\\
 
 The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
+
 \fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
 
-\fig{muTzeros}{Curves corresponding to different solutions at the same temperature.}
-%\fig{O2_T}{A picture}
 
 \begin{figure}
 \centering
