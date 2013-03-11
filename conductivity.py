@@ -2,22 +2,40 @@ import sympy as sp
 from metric import AdSBHz as M
 from lagrangian import getLagrangian
 from eulerLagrange import fieldEqn
+from seriesTools import *
+import pickle
 
 name='massTest'
 
-#fields, assume only radial dependence
-A=[f(M.x[0]) for f in sp.symbols(['Az','phi','A1','A2'])]
-psi=sp.Symbol('psi')(M.x[0])
-
 #parameters
-m2,gamma,alpha1,alpha2=sp.symbols(['m2','gamma','alpha1','alpha2'],real=True)
-#-9/4<m^2<-1
-ass={m2:-sp.S('9/4-1/100'),M.L:1,M.zh:1,gamma:0,alpha1:0,alpha2:0,A[0]:0,A[2]:0,A[3]:0}
-m2N=float(m2.subs(ass))
+params=m2,alpha1,alpha2,alpha3,w=sp.symbols(['m2','alpha1','alpha2','alpha3','w'],real=True)
 
-L=getLagrangian(M,m2,gamma,alpha1,alpha2,psi,*A)
+#fields, assume only radial dependence
+A=[sp.S(0),sp.Symbol('phi')(M.x[0]),sp.Symbol('Ax')(M.x[0]),sp.S(0)]
+psi=sp.Symbol('psi')(M.x[0])
+fields=[psi,A[1],A[2]]
+
+#-9/4<m^2<-1
+ass={m2:-sp.S(2),M.L:1,M.zh:1,alpha3:0,alpha1:0,alpha2:0,A[0]:0,A[3]:0}
+#ass={M.L:1,M.zh:1,alpha3:0,alpha1:0,alpha2:0,A[0]:0,A[3]:0}
+m2N=float(m2.subs(ass))
+Lfn='cache/L'
+try:
+    syms=M.x+params+[M.L,M.zh]
+    L=sp.S(pickle.load(open(Lfn))).subs(zip([sp.S(str(s)) for s in syms],syms))
+except IOError:
+    L=getLagrangian(M,m2,alpha3,alpha1,alpha2,psi,A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3])
+    pickle.dump(str(L),open(Lfn,'w'))
+
 L=L.subs(ass).doit()
-eqm=psieqm, phieqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in [psi,A[1]]]
+eqm=psieqm, phieqm, Axeqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in fields]
+eqm=[series(e,A[2]) for e in eqm]
+
+e=indicial(eqm,fields, M.x[0], z0=sp.S(1))
+for ei in e:
+    sp.pprint(ei)
+#sp.pprint(eqm)
+assert(False)
 
 singularities=[0]
 sols=[]

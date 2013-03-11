@@ -7,7 +7,7 @@ class Metric():
     def __init__(self,x,g,name=''):
         if name:
             try:
-                c=pickle.load(open('metricCache/'+name))
+                c=pickle.load(open('cache/'+name))
                 self.x=c.x
                 self.g=c.g
                 self.ginv=c.ginv
@@ -41,7 +41,7 @@ class Metric():
                      -self.R2[k][m]*g[i,l])/(n-2)
                    +self.R*(g[i,l]*g[k,m]-g[i,m]*g[k,l])/(n-1)/(n-2)).simplify() for m in r]for l in r]for k in r]for i in r]
         if name:
-            pickle.dump(self,open('metricCache/'+name,'w'))
+            pickle.dump(self,open('cache/'+name,'w'))
 
     def test(self):
         r=range(len(self.x))

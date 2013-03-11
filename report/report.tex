@@ -93,7 +93,11 @@ where $S[\psi(t)]$ is the action of the path through field configurations $\psi(
 \begin{equation}
  f(t)=\int_0^t \mathcal{D}[\psi(t)]\e^{\i S[\psi(t)]}.
 \end{equation}
-This means that $Z(\beta)$ can be obtained by calculating a path integral where the time is imaginary and periodic. The CFT we are interested in lives on the boundary of an AdS theory. The metric of the CFT is the metric induced from the bulk theory. The boundary is time-like and the time periodicity of the two theories are thus the same. This means that they are at the same temperatures.\\
+This means that $Z(\beta)$ can be obtained by calculating a path integral where the time is imaginary and periodic. The action must be analytically extended to imaginary time $\tau=\i t$.
+\begin{equation}
+ S[x(\tau)]=\int_0^\beta\d \tau \L
+\end{equation}
+The CFT we are interested in lives on the boundary of an AdS theory. The metric of the CFT is the metric induced from the bulk theory. The boundary is time-like and the time periodicity of the two theories are thus the same. This means that they are at the same temperatures.\\
 Only paths of extremal action will contribute to this in the classical limit because of the oscillatory behaviour of the exponential. Let $\psi_\mathrm{c}(t)$ be the path that extremizes the action and expand the exponent as a Taylor series around this
 \begin{equation}
 \begin{split}
@@ -262,6 +266,11 @@ Consider another possible term in the Lagrangian, an electromagnetic field $A_\m
 TODO, check. It is easily shown that the behaviour of these fields is the same when there is an interaction present as will be considered later.
 \section{Horizon Beaviour}
 TODO: Wilson loop=>$\phi=0$. Ingoing boundary conditions.
+Looking at the equations of motion for $z\rightarrow z_h$ gives when $\phi(z_h)=0$
+\begin{equation}
+ \psi(z_h)=\frac{-3z_h\psi^\prime(z_h)}{L^2m^2}
+\end{equation}
+
 \section{Expectation Values of Boundary Operators}
 These expectation values are calculated using \eqref{expectation} and \eqref{classical}.
 \begin{equation}
@@ -331,7 +340,7 @@ Considering $q\psi$ and $qA_a$ as the fields gives a Lagrangian of the same form
 %The parameters $\alpha_1, \alpha_2, \gamma$ are dimension-less and can not be scaled away. 
 The Breitenlohner-Freedman bound (BF) is a lower bound on $m^2$ of a massive scalar field in AdS space. It requires
 \begin{equation}
- L^2m^2\geq-4d^2\label{BF}
+ L^2m^2\geq-\frac{d^2}{4}\label{BF}
 \end{equation}
 for stability\cite{Kleban:2004bv}, TODO explain. The scalar field $\psi$ should obey this bound far away from the black-hole for normalizeable modes, TODO explain. We would though like a symmetry breaking of $\psi$ near the black hole corresponding to the electron condensate \cite{Gubser:2008px}. This can happen because the coupling of $\psi$ to $A_a$ gives $\psi$ an effective mass. \\The effective mass is given by:
 \begin{equation}
