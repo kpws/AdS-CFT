@@ -1,5 +1,5 @@
 import sympy as sp
-import pickle, copy
+from pickle import load,dump
 #low tensor indices everywere except for ginv which has two upper indices
 #g and ginv are sympy matrices, everything else just python arrays
 
@@ -7,7 +7,7 @@ class Metric():
     def __init__(self,x,g,name=''):
         if name:
             try:
-                c=pickle.load(open('cache/'+name))
+                c=load(open('metric_'+name))
                 self.x=c.x
                 self.g=c.g
                 self.ginv=c.ginv
@@ -41,7 +41,7 @@ class Metric():
                      -self.R2[k][m]*g[i,l])/(n-2)
                    +self.R*(g[i,l]*g[k,m]-g[i,m]*g[k,l])/(n-1)/(n-2)).simplify() for m in r]for l in r]for k in r]for i in r]
         if name:
-            pickle.dump(self,open('cache/'+name,'w'))
+            dump(self,open('metric_'+name,'w'))
 
     def test(self):
         r=range(len(self.x))
@@ -85,6 +85,11 @@ x=[sp.Symbol('z',positive=True)]+sp.symbols(['t','x1','x2'])
 f=1-(x[0]/zh)**(len(x)-1)
 AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2,'AdSBHz')
 AdSBHz.zh,AdSBHz.L=(zh,L)
+
+f=sp.Symbol('f')(x[0])
+AdSf=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2)
+AdSf.L=L
+AdSf.f=f
 
 if __name__=="__main__":
     #sp.pprint(AdSfr.R.subs(AdSfr.f,AdSfr.r**2-1/AdSfr.r).doit().ratsimp())
