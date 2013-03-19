@@ -1,60 +1,99 @@
+print('Importing modules...')
 import sympy as sp
 from metric import AdSBHz as M
 from lagrangian import getLagrangian
 from eulerLagrange import fieldEqn
 from seriesTools import *
-import pickle
+from pickle import load, dump
+from sympy.utilities.codegen import codegen
 
+
+print('Defining Lagrangian...')
 name='massTest'
-
 #parameters
-params=m2,alpha1,alpha2,alpha3,w=sp.symbols(['m2','alpha1','alpha2','alpha3','w'],real=True)
-
-#fields, assume only radial dependence
-A=[sp.S(0),sp.Symbol('phi')(M.x[0]),sp.Symbol('Ax')(M.x[0]),sp.S(0)]
-psi=sp.Symbol('psi')(M.x[0])
+params=m2,alpha1,alpha2,alpha3=sp.symbols(['m2','alpha1','alpha2','alpha3'],real=True)
+varParams=w,=[sp.Symbol('w',positive=True)]
+#fields
+fieldsF=[sp.Symbol('psi'), sp.Symbol('phi'), sp.Symbol('Ax')]
+A=[sp.S(0), fieldsF[1](M.x[0]), fieldsF[2](M.x[0]), sp.S(0)]
+psi=fieldsF[0](M.x[0])
 fields=[psi,A[1],A[2]]
-
-#-9/4<m^2<-1
-ass={m2:-sp.S(2),M.L:1,M.zh:1,w:1,alpha3:0,alpha1:0,alpha2:0,A[0]:0,A[3]:0}
+#Assumptions on the parameters.   -9/4<m^2<-1
+ass={m2:-sp.S(2),M.L:1,M.zh:1,alpha3:0,alpha1:0,alpha2:0}
 m2N=float(m2.subs(ass))
+syms=fieldsF+M.x+params+varParams+[M.L,M.zh]
+
 
 print('Calculating Lagrangian...')
-Lfn='cache/L'
 try:
-    syms=M.x+params+[M.L,M.zh]
-    L=sp.S(pickle.load(open(Lfn))).subs(zip([sp.S(str(s)) for s in syms],syms))
+    L=sp.sympify(load(open('cache/L')),dict(zip([str(s) for s in syms],syms)))
 except IOError:
     L=getLagrangian(M,m2,alpha3,alpha1,alpha2,psi,A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3])
-    pickle.dump(str(L),open(Lfn,'w'))
+    dump(str(L),open('cache/L','w'))
+L=L.subs(ass)
+
 
 print('Calculating equations of motion...')
-L=L.subs(ass).doit()
 eqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in fields]
 eqm=[series(e,A[2]).doit() for e in eqm]
 
-#sp.pprint(sp.fraction((eqm[2]*sp.exp(-2*M.x[1]*w)).simplify())[0].collect(A[2]))
 
 print('Solving indicial equations...')
-sing=[0,1]  #singular points to do expansion around
-ind=[indicial(eqm,fields, M.x[0], z0=s) for s in sing] #get solutions to indicial equation
-ind[1]=[i for i in ind[1] if i[0][1]>0] #remove solutions not satisfying z=1 BC
+try:
+    ind=load(open('cache/indicial'))
+except IOError:
+    sing=[0,1]  #singular points to do expansion around
+    ind=[indicial(eqm,fields, M.x[0], z0=s) for s in sing] #get solutions to indicial equation
+    dump(ind,open('cache/indicial','w'))
+ind[1]=[i for i in ind[1] if i[0][1]>0 and sp.im(i[0][2])>0] #remove solutions not satisfying z=1 BC
+assert(len(ind[1])==1)
 ind=[indicialToIndep(i) for i in ind] #try to make indep expansions
-Delta0,Delta1=ind[0][0] #these are useful
-print Delta0, Delta1
-singExp=[getExpansionFun(i) for i in ind] #makes numeric functions
+Delta0,Delta1,Beta=ind[0][0]+ind[1][2]  #these are useful
+#singExp=[getExpansionFun(i) for i in ind] #makes numeric functions
+
+
+print('Transforming EQM...')
+B=[s(M.x[0]) for s in sp.symbols(['B_r','B_i'])]
+s=sp.Dummy(positive=True)
+eqm=eqm[:2]+[eqm[2].subs(fields[2],B[i]+[sp.re,sp.im][i](sp.exp(sp.log(s)*Beta).rewrite(sp.cos))).subs(s,1-M.x[0]).doit()
+                for i in range(2)]
+fields=fields[:2]+B
+
+
+print('Putting EQM in canonical form...')
+try:
+    sols=sp.sympify(load(open('cache/EQMsols')),dict(zip([str(s) for s in syms],syms)))
+except IOError:
+    sols=sp.solve(eqm, [f.diff(M.x[0],2) for f in fields],dict=True)
+    dump(str(sols),open('cache/EQMsols','w'))
+dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
+dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
+sols=dict((k,v.subs(zip(dofs,dummies)[::-1])) for k,v in sols.items())
+sp.pprint(sols)
 
 print('Making numerical functions from symbolic expressions...')
-dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
-dummies=[sp.Dummy() for i in range(len(dofs))]
-Lfun=sp.lambdify([M.x[0]]+dummies, L.subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0))
-
-sols=sp.solve(eqm, [f.diff(M.x[0],2) for f in fields],dict=True)
-bis=[sp.lambdify([M.x[0]]+dummies,sols[f.diff(M.x[0],2)].subs(zip(dofs,dummies)[::-1])) for f in fields]
-
+Lfun=sp.lambdify([M.x[0]]+dummies+varParams, L.subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0))
+bis=[sp.lambdify([M.x[0]]+dummies,sols[f.diff(M.x[0],2)]) for f in fields]
 def yprim(z,y):
     return [y[1], bis[0](z,*y), y[3], bis[1](z,*y), y[5], bis[2](z,*y)]
 
+
+print('Making C-code for numeric functions...')
+codegen([('f'+str(i*2+1),sols[fields[i].diff(M.x[0],2)]) for i in range(len(fields))]+
+        [('dfdz'+str(i*2+1),sols[fields[i].diff(M.x[0],2)].diff(M.x[0])) for i in range(len(fields))]+
+        [('j'+str(i*2+1)+'_'+str(j),sols[fields[i].diff(M.x[0],2)].diff(dummies[j]))
+                                for i in range(len(fields)) for j in range(len(dofs))],
+    'C', 'bulkODE', header=False, argument_sequence=[M.x[0]]+dummies+varParams, to_files=True)
+
+
+print('Compiling C-code for numeric ODE solution...')
+from subprocess import Popen, PIPE
+p=Popen(['python', 'setup.py', 'build_ext', '--inplace'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+stdout,stderr=p.communicate()
+if p.returncode: print(stderr)
+
+
+print('Importing additional modules...')
 from scipy.integrate import ode
 import numpy as np
 import pylab as pl
@@ -75,10 +114,17 @@ psiDerToP=sp.solve([(p1s*M.x[0]**Delta0+p2s*M.x[0]**Delta1-psi).diff(M.x[0],deg)
 eps=0.0002
 dum=sp.Dummy()
 Ma=[[float(psiDerToP[[p1s,p2s][i]].expand().collect(psi,evaluate=False)[psi.diff(M.x[0],j)].simplify().subs(M.x[0],eps))  for j in [0,1]] for i in range(2)]
+import solveBulk
 def getBoundary(phiD,psi,plot=False,returnSol=False):
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
-    zs=np.linspace(1-eps,eps,1000)
+    n=80
+    zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], 0, 0],  eps, n)
+    osc=0
+    for i in range(1,n):
+        if y[i][0]*y[i-1][0]<0:
+            osc+=1
+    '''zs=np.linspace(1-eps,eps,1000)
     r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-9, with_jacobian=False)
     r.set_initial_value([f[0],fD[0],f[1],fD[1], 0, 0], zs[0])
     y=[r.y]
@@ -87,7 +133,7 @@ def getBoundary(phiD,psi,plot=False,returnSol=False):
         r.integrate(t)
         y.append(r.y)
         if y[-1][0]*y[-2][0]<0:
-            osc+=1
+            osc+=1'''
     psiEndDD=yprim(eps,y[-1])[1]
     psiEndD=y[-1][1]
     psiEnd=y[-1][0]
@@ -104,10 +150,10 @@ def getBoundary(phiD,psi,plot=False,returnSol=False):
         pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
         pl.plot(start,mu-start*rho,linestyle='-')
         pl.plot(zs,[i[0] for i in y],label='$\psi(z)$',linestyle='--')
-        pl.plot(start,p1*start**Delta0+p2*start**Delta1,linestyle='-')
-        pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='-')
-    print p1
-    print osc
+        pl.plot(start,p1*start**Delta0+p2*start**Delta1,linestyle='--')
+        pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='--')
+    #print p1
+    #print osc
     if returnSol:
         return [mu,rho,p1,p2,osc,(zs,y)]
     else:
@@ -117,7 +163,7 @@ from scipy.optimize import brentq, newton
 from scipy.integrate import cumtrapz
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-7,1.2,30)
+psis=np.logspace(-6,1.1,40)
 oscN=4
 lss=['-', '--', '-.', ':']
 ys=[]
@@ -145,7 +191,7 @@ for psii in range(len(psis)):
         else:
             end=start*(oscN+1)/oscN
         while a*f(end)>=0:
-            print 'Expand..'*10
+            #print 'Expand..'*10
             end=end*factor
         sol=end
         first=True

@@ -2,7 +2,7 @@ import sympy as sp
 from itertools import product
 from tensor import sqr
 
-@sp.cacheit
+#@sp.cacheit
 def getLagrangian(metric, m2, gamma, alpha1, alpha2, psi, *A):
     gi=metric.ginv
     x=metric.x
