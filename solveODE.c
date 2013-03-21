@@ -16,7 +16,7 @@ int func (double t, const double y[], double f[], void *params)
 	f[3] = f3(ARGS);
 	f[4] = y[5];
 	f[5] = f5(ARGS);
-	f[6] = y[6];
+	f[6] = y[7];
 	f[7] = f7(ARGS);
 
 	return GSL_SUCCESS;

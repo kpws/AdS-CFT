@@ -24,18 +24,21 @@ m2N=float(m2.subs(ass))
 syms=fieldsF+M.x+params+varParams+[M.L,M.zh]
 
 
-print('Calculating Lagrangian...')
+print('Generating Lagrangian...')
 try:
     L=sp.sympify(load(open('cache/L')),dict(zip([str(s) for s in syms],syms)))
 except IOError:
     L=getLagrangian(M,m2,alpha3,alpha1,alpha2,psi,A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3])
     dump(str(L),open('cache/L','w'))
 L=L.subs(ass)
+dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
+dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
+Lfun=sp.lambdify([M.x[0]]+varParams+dummies, L.subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0))
 
 
 print('Calculating equations of motion...')
 eqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in fields]
-eqm=[series(e,A[2]).doit() for e in eqm]
+eqm=[series(e,A[2]).doit() for e in eqm] #assume small Ax, gives eqm linear in Ax
 
 
 print('Solving indicial equations...')
@@ -52,37 +55,29 @@ Delta0,Delta1,Beta=ind[0][0]+ind[1][2]  #these are useful
 #singExp=[getExpansionFun(i) for i in ind] #makes numeric functions
 
 
-print('Transforming EQM...')
-B=[s(M.x[0]) for s in sp.symbols(['B_r','B_i'])]
-s=sp.Dummy(positive=True)
-eqm=eqm[:2]+[eqm[2].subs(fields[2],B[i]+[sp.re,sp.im][i](sp.exp(sp.log(s)*Beta).rewrite(sp.cos))).subs(s,1-M.x[0]).doit()
-                for i in range(2)]
-fields=fields[:2]+B
+print('Transforming EQM...') #fields -> fields2
+B=[s(M.x[0]) for s in sp.symbols(['B_r','B_i'])]; dum=sp.Dummy(positive=True)
+ATransRI=[B[i]+[sp.re,sp.im][i](sp.exp(sp.log(dum)*Beta).rewrite(sp.cos)).subs(dum,1-M.x[0]) for i in range(2)]
+eqm=eqm[:2]+[eqm[2].subs(fields[2],t).doit() for t in ATransRI]
+fields2=fields[:2]+B
 
 
 print('Putting EQM in canonical form...')
 try:
     sols=sp.sympify(load(open('cache/EQMsols')),dict(zip([str(s) for s in syms],syms)))
 except IOError:
-    sols=sp.solve(eqm, [f.diff(M.x[0],2) for f in fields],dict=True)
+    sols=sp.solve(eqm, [f.diff(M.x[0],2) for f in fields2],dict=True)
     dump(str(sols),open('cache/EQMsols','w'))
-dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
+dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields2]) #list of fields and derivatives
 dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
 sols=dict((k,v.subs(zip(dofs,dummies)[::-1])) for k,v in sols.items())
-sp.pprint(sols)
-
-print('Making numerical functions from symbolic expressions...')
-Lfun=sp.lambdify([M.x[0]]+dummies+varParams, L.subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0))
-bis=[sp.lambdify([M.x[0]]+dummies,sols[f.diff(M.x[0],2)]) for f in fields]
-def yprim(z,y):
-    return [y[1], bis[0](z,*y), y[3], bis[1](z,*y), y[5], bis[2](z,*y)]
 
 
 print('Making C-code for numeric functions...')
-codegen([('f'+str(i*2+1),sols[fields[i].diff(M.x[0],2)]) for i in range(len(fields))]+
-        [('dfdz'+str(i*2+1),sols[fields[i].diff(M.x[0],2)].diff(M.x[0])) for i in range(len(fields))]+
-        [('j'+str(i*2+1)+'_'+str(j),sols[fields[i].diff(M.x[0],2)].diff(dummies[j]))
-                                for i in range(len(fields)) for j in range(len(dofs))],
+codegen([('f'+str(i*2+1),sols[fields2[i].diff(M.x[0],2)]) for i in range(len(fields2))]+
+        [('dfdz'+str(i*2+1),sols[fields2[i].diff(M.x[0],2)].diff(M.x[0])) for i in range(len(fields2))]+
+        [('j'+str(i*2+1)+'_'+str(j),sols[fields2[i].diff(M.x[0],2)].diff(dummies[j]))
+                                for i in range(len(fields2)) for j in range(len(dofs))],
     'C', 'bulkODE', header=False, argument_sequence=[M.x[0]]+dummies+varParams, to_files=True)
 
 
@@ -98,87 +93,82 @@ from scipy.integrate import ode
 import numpy as np
 import pylab as pl
 from fig import fig, saveFig
-
-def boundarySol(mu,rho,p1,p2,z):
-    return [p1*z**Delta0+p2*z**Delta1,mu-rho*z]
-def boundarySolD(mu,rho,p1,p2,z):
-    return [Delta0*p1**(Delta0-1)+Delta1*p2**(Delta1-1),-rho]
+import solveBulk
 
 def horizonSol(phiD, psi, z):
-    return [psi+(z-1)*(-m2N/3.*psi),(z-1)*phiD]
+    return [psi+(z-1)*(-m2N/3.*psi),(z-1)*phiD,0.,0.]
 def horizonSolD(phiD, psi, z):
-    return [-m2N/3.*psi,phiD]
+    return [-m2N/3.*psi,phiD,0.,0.]
 
-p1s,p2s,eps=sp.symbols(['p1','p2','eps'])
-psiDerToP=sp.solve([(p1s*M.x[0]**Delta0+p2s*M.x[0]**Delta1-psi).diff(M.x[0],deg) for deg in [0,1]],p1s,p2s)
+p1,p2,D1,D2,F,Fd,eps=sp.symbols(['p1','p2','D1','D2','F','Fd','eps'])
+sols=sp.solve([(p1*M.x[0]**D1+p2*M.x[0]**D2).diff(M.x[0],i)-[F,Fd][i] for i in [0,1]],p1,p2)
 eps=0.0002
 dum=sp.Dummy()
-Ma=[[float(psiDerToP[[p1s,p2s][i]].expand().collect(psi,evaluate=False)[psi.diff(M.x[0],j)].simplify().subs(M.x[0],eps))  for j in [0,1]] for i in range(2)]
-import solveBulk
-def getBoundary(phiD,psi,plot=False,returnSol=False):
+Ma=[[[float(sols[[p1,p2][i]].expand().collect([F,Fd][j],evaluate=False)[[F,Fd][j]]
+    .subs(zip([D1,D2],ind[0][fi])).simplify().subs(M.x[0],eps))
+    for j in range(2)] for i in range(2)] for fi in range(len(fields))]
+dofs=[M.x[0],w,B[0],B[0].diff(),B[1],B[1].diff()]
+dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
+unTrans=sp.lambdify(dummies,
+        [(ATransRI[0]+1j*ATransRI[1]).diff(M.x[0],deg).subs(zip(dofs,dummies)[::-1],) for deg in [0,1]])
+def getBoundary(phiD, psi, wv=1., plot=False, returnSol=False):
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
     n=80
-    zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], 0, 0],  eps, n)
+    zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  eps, n, [wv])
     osc=0
     for i in range(1,n):
         if y[i][0]*y[i-1][0]<0:
             osc+=1
-    '''zs=np.linspace(1-eps,eps,1000)
-    r = ode(yprim).set_integrator('vode',method='bdf',rtol=1e-9, with_jacobian=False)
-    r.set_initial_value([f[0],fD[0],f[1],fD[1], 0, 0], zs[0])
-    y=[r.y]
-    osc=0
-    for t in zs[1:]:
-        r.integrate(t)
-        y.append(r.y)
-        if y[-1][0]*y[-2][0]<0:
-            osc+=1'''
-    psiEndDD=yprim(eps,y[-1])[1]
-    psiEndD=y[-1][1]
-    psiEnd=y[-1][0]
-    phiEnd=y[-1][2]
-    phiEndD=y[-1][3]
-    #p1,p2=[sum(Ma[i][j]*[psiEndD,psiEndDD][j] for j in range(2)) for i in range(2)]
-    p1,p2=[sum(Ma[i][j]*[psiEnd,psiEndD][j] for j in range(2)) for i in range(2)]
-    rho=-phiEndD
-    mu=phiEnd+rho*eps
+    end=y[-1][:4]+unTrans(eps,wv,*y[-1][4:])
+
+    bb=[[sum(Ma[fi][i][j]*end[fi*2+j] for j in range(2)) for i in range(2)] for fi in range(len(fields))]
     if plot:
-        start=np.linspace(0,eps,100)
-        end=np.linspace(1-eps,1,100)
+        start=np.linspace(0,eps,50)
+        end=np.linspace(1-eps,1,50)
         pl.plot(zs,[i[2] for i in y],label='$\phi(z)$',linestyle='-',marker='')
         pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
-        pl.plot(start,mu-start*rho,linestyle='-')
+
         pl.plot(zs,[i[0] for i in y],label='$\psi(z)$',linestyle='--')
-        pl.plot(start,p1*start**Delta0+p2*start**Delta1,linestyle='--')
         pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='--')
+        
+        for i in range(len(fields)):
+            pl.plot(start,sum(bb[i][j]*start**ind[0][i][j] for j in [0,1]).real,linestyle='--')
+            pl.plot(start,sum(bb[i][j]*start**ind[0][i][j] for j in [0,1]).imag,linestyle='--')
+
+        pl.plot(zs,[unTrans(zs[i],wv,*y[i][4:])[0].real for i in range(len(y))],label='$Re(A_x(z))$',linestyle='-.')
+        pl.plot(zs,[unTrans(zs[i],wv,*y[i][4:])[0].imag for i in range(len(y))],label='$Im(A_x(z))$',linestyle=':')
+        lend=np.logspace(-15,np.log10(eps),500)
+        pl.plot(1-lend,np.real(lend**complex(Beta.subs({sp.I:1j,w:wv}))))
+        pl.plot(1-lend,np.imag(lend**complex(Beta.subs({sp.I:1j,w:wv}))))
     #print p1
     #print osc
     if returnSol:
-        return [mu,rho,p1,p2,osc,(zs,y)]
+        return [bb[1][0],-bb[1][1],bb[0][0],bb[0][1],osc,(zs,y)]
     else:
-        return [mu,rho,p1,p2,osc]
+        return [bb[1][0],-bb[1][1],bb[0][0],bb[0][1],osc]
 
 from scipy.optimize import brentq, newton
 from scipy.integrate import cumtrapz
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-6,1.1,40)
+psis=np.logspace(-6,0.8,15)
 oscN=4
 lss=['-', '--', '-.', ':']
 ys=[]
 end=-1.0
 sols=[]
+varParamsv=[1]
 for psii in range(len(psis)):
     ys.append([])
     psi=psis[psii]
     print(str(psii+1)+'/'+str(len(psis))+'#'*100)
     print(str(psi)+':')
-    source=2
-    expect=3
+    source=0
+    expect=1
     def f(phiD):
-        y=getBoundary(phiD,psi)
-        return y[source]
+        bb=getBoundary(phiD,psi)
+        return bb[0][source]
     start=0
     for osci in range(oscN):
         a=f(start)
@@ -209,21 +199,22 @@ for psii in range(len(psis)):
                 end=random()*sol
                 print('rand: '+str(end/sol))
             sol=brentq(f,start,end,xtol=abs(end)*1e-7)
-            y=mu,rho,p1,p2,osc=getBoundary(sol,psi)
+            y=bb,osc=getBoundary(sol,psi)
             #assert osc>=osci*2-1
             first=False
         start=sol*1.001#assumption
         fig(2)
-        mu,rho,p1,p2,osc,zy=getBoundary(sol,psi,plot=True,returnSol=True)
-        A=[0]+list(cumtrapz([Lfun(zy[0][i],*zy[1][i]) for i in range(len(zy[0]))][::-1], x=zy[0][::-1]))
+        bb,osc,zy=getBoundary(sol,psi,plot=True,returnSol=True)
+        A=[0]+list(cumtrapz([Lfun(*([zy[0][i]]+varParamsv+zy[1][i][:-4]+[0,0])) for i in range(len(zy[0]))][::-1], x=zy[0][::-1]))
         fig(6)
         pl.plot(zy[0][::-1],A,ls=lss[osci])
-        ys[-1].append(y+[A[-1]])
+        ys[-1].append((bb, A[-1]))
 
         if osci==0:
             sols.append(sol)
 
-mu, rho, p1, p2, _ ,A =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(6)]
+bbs ,A =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(2)]
+p2=[[bi[0][1] for bi in b] for b in bbs]
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 print 'rhoc: '+str(rhoc)
 zh=1.#choice of length units makes zh numerically constant
