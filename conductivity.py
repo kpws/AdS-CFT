@@ -114,7 +114,7 @@ unTrans=sp.lambdify(dummies,
 def getBoundary(phiD, psi, wv=1., plot=False, returnSol=False):
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
-    n=80
+    n=300 if returnSol or plot else 30
     zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  eps, n, [wv])
     osc=0
     for i in range(1,n):
@@ -144,30 +144,32 @@ def getBoundary(phiD, psi, wv=1., plot=False, returnSol=False):
     #print p1
     #print osc
     if returnSol:
-        return [bb[1][0],-bb[1][1],bb[0][0],bb[0][1],osc,(zs,y)]
+        return [bb,osc,(zs,y)]
     else:
-        return [bb[1][0],-bb[1][1],bb[0][0],bb[0][1],osc]
+        return [bb,osc]
 
 from scipy.optimize import brentq, newton
 from scipy.integrate import cumtrapz
 from random import random
 #psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-6,0.8,15)
+psis=np.logspace(-7,1.0,30)
 oscN=4
 lss=['-', '--', '-.', ':']
-ys=[]
+bbs=[]
+As=[]
 end=-1.0
 sols=[]
 varParamsv=[1]
 for psii in range(len(psis)):
-    ys.append([])
+    bbs.append([])
+    As.append([])
     psi=psis[psii]
     print(str(psii+1)+'/'+str(len(psis))+'#'*100)
     print(str(psi)+':')
     source=0
     expect=1
     def f(phiD):
-        bb=getBoundary(phiD,psi)
+        bb,_=getBoundary(phiD,psi)
         return bb[0][source]
     start=0
     for osci in range(oscN):
@@ -199,7 +201,7 @@ for psii in range(len(psis)):
                 end=random()*sol
                 print('rand: '+str(end/sol))
             sol=brentq(f,start,end,xtol=abs(end)*1e-7)
-            y=bb,osc=getBoundary(sol,psi)
+            _,osc=getBoundary(sol,psi)
             #assert osc>=osci*2-1
             first=False
         start=sol*1.001#assumption
@@ -208,13 +210,17 @@ for psii in range(len(psis)):
         A=[0]+list(cumtrapz([Lfun(*([zy[0][i]]+varParamsv+zy[1][i][:-4]+[0,0])) for i in range(len(zy[0]))][::-1], x=zy[0][::-1]))
         fig(6)
         pl.plot(zy[0][::-1],A,ls=lss[osci])
-        ys[-1].append((bb, A[-1]))
+        bbs[-1].append(bb)
+        As[-1].append(A[-1])
 
         if osci==0:
             sols.append(sol)
-
-bbs ,A =[[np.array([y[osci][i] for y in ys]) for osci in range(oscN)] for i in range(2)]
-p2=[[bi[0][1] for bi in b] for b in bbs]
+bbs=np.array(bbs)
+A=np.array(As).transpose()
+p1=bbs[:,:,0,0].real.transpose()
+p2=bbs[:,:,0,1].real.transpose()
+mu=bbs[:,:,1,0].real.transpose()
+rho=-bbs[:,:,1,1].real.transpose()
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 print 'rhoc: '+str(rhoc)
 zh=1.#choice of length units makes zh numerically constant
