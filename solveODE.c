@@ -85,6 +85,7 @@ int solveODE(double * start, double eps, int n, double *out,double *params)
 {
 
 	int i,j;
+	double scale_abs[]={1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
 	//for(i=0; i<30; i++)
 	//	printf ("skit: %f\n", out[i]);
 	//                       yprim,jac ,dim, param
@@ -92,7 +93,9 @@ int solveODE(double * start, double eps, int n, double *out,double *params)
 	//gsl_odeiv2_system sys = {func, jac, dim, params};
 	//                             sys,driver type           ,initial h, abs err, rel err
 	gsl_odeiv2_driver * d = 
-	gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd, -1e-8, 1e-8, 0.0);
+	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd, -1e-8, 1e-8, 0.0);
+	//                                                            hstart, ,epsabs,epsrel, ay , adydt
+	gsl_odeiv2_driver_alloc_scaled_new (&sys, gsl_odeiv2_step_rk8pd, -1e-7, 0.0, 1e-6   , 1.0, 0.0, scale_abs);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_msbdf, -1e-8, 1e-8, 0.0);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_bsimp, -1e-8, 1e-8, 0.0);
 	double z0 = 1.0-eps, z1 = eps;

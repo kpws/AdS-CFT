@@ -48,7 +48,7 @@ except IOError:
     sing=[0,1]  #singular points to do expansion around
     ind=[indicial(eqm,fields, M.x[0], z0=s) for s in sing] #get solutions to indicial equation
     dump(ind,open('cache/indicial','w'))
-ind[1]=[i for i in ind[1] if i[0][1]>0 and sp.im(i[0][2])>0] #remove solutions not satisfying z=1 BC
+ind[1]=[i for i in ind[1] if i[0][1]>0 and sp.im(i[0][2])<0] #remove solutions not satisfying z=1 BC
 assert(len(ind[1])==1)
 ind=[indicialToIndep(i) for i in ind] #try to make indep expansions
 Delta0,Delta1,Beta=ind[0][0]+ind[1][2]  #these are useful
@@ -89,7 +89,6 @@ if p.returncode: print(stderr)
 
 
 print('Importing additional modules...')
-from scipy.integrate import ode
 import numpy as np
 import pylab as pl
 from fig import fig, saveFig
@@ -102,40 +101,34 @@ def horizonSolD(phiD, psi, z):
 
 p1,p2,D1,D2,F,Fd,eps=sp.symbols(['p1','p2','D1','D2','F','Fd','eps'])
 sols=sp.solve([(p1*M.x[0]**D1+p2*M.x[0]**D2).diff(M.x[0],i)-[F,Fd][i] for i in [0,1]],p1,p2)
-eps=0.0002
-dum=sp.Dummy()
+eps=0.0001
 Ma=[[[float(sols[[p1,p2][i]].expand().collect([F,Fd][j],evaluate=False)[[F,Fd][j]]
     .subs(zip([D1,D2],ind[0][fi])).simplify().subs(M.x[0],eps))
     for j in range(2)] for i in range(2)] for fi in range(len(fields))]
 dofs=[M.x[0],w,B[0],B[0].diff(),B[1],B[1].diff()]
 dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
 unTrans=sp.lambdify(dummies,
-        [(ATransRI[0]+1j*ATransRI[1]).diff(M.x[0],deg).subs(zip(dofs,dummies)[::-1],) for deg in [0,1]])
+    [(ATransRI[0]+1j*ATransRI[1]).diff(M.x[0],deg).subs(zip(dofs,dummies)[::-1],) for deg in [0,1]])
 def getBoundary(phiD, psi, wv=1., plot=False, returnSol=False):
     f=horizonSol(phiD,psi,1-eps)
     fD=horizonSolD(phiD,psi,1-eps)
-    n=300 if returnSol or plot else 30
+    n=150 if returnSol or plot else 30
     zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  eps, n, [wv])
     osc=0
     for i in range(1,n):
         if y[i][0]*y[i-1][0]<0:
             osc+=1
     end=y[-1][:4]+unTrans(eps,wv,*y[-1][4:])
-
     bb=[[sum(Ma[fi][i][j]*end[fi*2+j] for j in range(2)) for i in range(2)] for fi in range(len(fields))]
     if plot:
         start=np.linspace(0,eps,50)
         end=np.linspace(1-eps,1,50)
-        pl.plot(zs,[i[2] for i in y],label='$\phi(z)$',linestyle='-',marker='')
-        pl.plot(end,[horizonSol(phiD,psi,i)[1] for i in end],linestyle='-')
-
-        pl.plot(zs,[i[0] for i in y],label='$\psi(z)$',linestyle='--')
-        pl.plot(end,[horizonSol(phiD,psi,i)[0] for i in end],linestyle='--')
-        
+        for fi in [0,1]:
+            pl.plot(zs,[i[fi*2] for i in y],ls=['-','--'][fi])
+            pl.plot(end,[horizonSol(phiD,psi,i)[fi] for i in end],ls=['-','--'][fi])
         for i in range(len(fields)):
             pl.plot(start,sum(bb[i][j]*start**ind[0][i][j] for j in [0,1]).real,linestyle='--')
             pl.plot(start,sum(bb[i][j]*start**ind[0][i][j] for j in [0,1]).imag,linestyle='--')
-
         pl.plot(zs,[unTrans(zs[i],wv,*y[i][4:])[0].real for i in range(len(y))],label='$Re(A_x(z))$',linestyle='-.')
         pl.plot(zs,[unTrans(zs[i],wv,*y[i][4:])[0].imag for i in range(len(y))],label='$Im(A_x(z))$',linestyle=':')
         lend=np.logspace(-15,np.log10(eps),500)
@@ -148,121 +141,57 @@ def getBoundary(phiD, psi, wv=1., plot=False, returnSol=False):
     else:
         return [bb,osc]
 
-from scipy.optimize import brentq, newton
-from scipy.integrate import cumtrapz
-from random import random
-#psis=np.linspace(1e-7,10.0,30)
-psis=np.logspace(-7,1.0,30)
-oscN=4
-lss=['-', '--', '-.', ':']
-bbs=[]
-As=[]
-end=-1.0
-sols=[]
-varParamsv=[1]
-for psii in range(len(psis)):
-    bbs.append([])
-    As.append([])
-    psi=psis[psii]
-    print(str(psii+1)+'/'+str(len(psis))+'#'*100)
-    print(str(psi)+':')
-    source=0
-    expect=1
-    def f(phiD):
-        bb,_=getBoundary(phiD,psi)
-        return bb[0][source]
-    start=0
-    for osci in range(oscN):
-        a=f(start)
-        osc=True
-        maxEnd=None
-        factor=1.2
-        if osci==0:
-            if len(sols)>1:
-                end=sols[-1]
-        else:
-            end=start*(oscN+1)/oscN
-        while a*f(end)>=0:
-            #print 'Expand..'*10
-            end=end*factor
-        sol=end
-        first=True
-        while first or osc>osci*2:
-            #x=np.linspace(0,sol,20)
-            #pl.figure(3)
-            #pl.plot(x,[f(i) for i in x])
-            #pl.show()
-            if not first:
-                print 'Osc..'*20
-                end=sol*(osci*2+1)/float(osc+1)
-            while True:
-                if a*f(end)<0:
-                    break
-                end=random()*sol
-                print('rand: '+str(end/sol))
-            sol=brentq(f,start,end,xtol=abs(end)*1e-7)
-            _,osc=getBoundary(sol,psi)
-            #assert osc>=osci*2-1
-            first=False
-        start=sol*1.001#assumption
-        fig(2)
-        bb,osc,zy=getBoundary(sol,psi,plot=True,returnSol=True)
-        A=[0]+list(cumtrapz([Lfun(*([zy[0][i]]+varParamsv+zy[1][i][:-4]+[0,0])) for i in range(len(zy[0]))][::-1], x=zy[0][::-1]))
-        fig(6)
-        pl.plot(zy[0][::-1],A,ls=lss[osci])
-        bbs[-1].append(bb)
-        As[-1].append(A[-1])
 
-        if osci==0:
-            sols.append(sol)
-bbs=np.array(bbs)
-A=np.array(As).transpose()
-p1=bbs[:,:,0,0].real.transpose()
-p2=bbs[:,:,0,1].real.transpose()
-mu=bbs[:,:,1,0].real.transpose()
-rho=-bbs[:,:,1,1].real.transpose()
-rhoc=min([min(r) for r in rho])#rho, in units used at Tc
-print 'rhoc: '+str(rhoc)
-zh=1.#choice of length units makes zh numerically constant
-T=3./(zh*4.*np.pi)#temp of solution in units used, this is constant by choice of units
-for osci in range(oscN):
-    Tc=T*np.sqrt(rho[osci]/rhoc)#critical temp, in units used for all solutions
-    
-    fig(1)
-    pl.plot(T/Tc,np.power(np.abs(p2[osci])*np.sqrt(2.),1./(Delta1))/Tc,c='k',ls=lss[osci])
-    fig(4)
-    pl.plot(T/Tc,mu[osci]/Tc,c='k',ls=lss[osci])
-    fig(7)
-    pl.plot(T/Tc,A[osci]/Tc**3,c='k',ls=lss[osci])
-    print 'mu/rho'+str(mu[osci][-1]/rho[osci][-1])
-    print 'p2/rho'+str(p2[osci][-1]/rho[osci][-1])
-fig(1)
-pl.plot([0,2], [0,0], c='k', lw=1)
-pl.xlabel('$\\frac{T}{T_c}$')
-pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
-pl.xlim([0,1.2])
-pl.ylim([-1,10])
-saveFig(name+'O2Tzeros')
-fig(4)
-rho=np.linspace(rhoc*0.2,rhoc*10,1000)
-mu=rho*zh
-Tc=T*np.sqrt(rho/rhoc)#critical temp, in units used for all solutions
-pl.plot(T/Tc,mu/Tc,c='k',ls='-',lw=1)
-pl.xlabel('$\\frac{T}{T_c}$')
-pl.ylabel('$\\frac{\\mu}{T_c}$')
-pl.xlim([0,1.2])
-pl.ylim([0,40])
-saveFig(name+'muTzeros')
+print('Solve for sweep of different horizon BCs...')
+from solveBC import sweep, findrho
+from printStatus import printRatio
 
-fig(7)
-pl.xlabel('$\\frac{T}{T_c}$')
-pl.ylabel('$\\frac{A}{V_{SC}T_c^3}$')
-Atriv=4*np.pi*T/3*mu**2/2
-pl.plot(T/Tc, Atriv/Tc**3,c='k',ls='-',lw=1)
-pl.xlim([0,2])
-pl.ylim([0,1.5e3])
-saveFig(name+'A')
+hpsis=np.logspace(-7,1.0,100)
+bbs,sols=sweep(getBoundary, hpsis, oscN=1)
+
+if False:
+    print('Calculating free energy...')
+    from scipy.integrate import cumtrapz
+    As=[]
+    fig(0)
+    for s in sols:
+        As.append([])
+        for i in range(len(hpsis)):
+            _,_,(zs,y)=getBoundary(s[i], hpsis[i], wv=1., plot=True, returnSol=True)
+            Al=[0]+list(cumtrapz([Lfun(*([zs[j]]+varParams+y[j][:-4]+[0,0]))
+                    for j in range(len(zs))][::-1], x=zs[::-1]))
+            As[-1].append(Al[-1])
+else: As=None
+
+print('Plot the result...')
+import plotOps
+plotOps.plot(bbs,ind,As=As,name=name)
 
 fig(5)
-pl.plot(psis,sols)
+for s in sols:
+    pl.plot(hpsis,s)
+
+print('Solving for specific temperature...')
+rho=-np.array(bbs)[:,:,1,1].real
+rhoc=min([min(r) for r in rho])#rho, in units used at Tc
+Tr=0.3 #T/T_c ratio
+rho=rhoc/Tr**2
+rhoSol=findrho(getBoundary, sols, hpsis, bbs, rho)
+
+print('Solving for different frequencies...')
+wvs= np.logspace(-1,2,200)
+sigmas=[]
+for osci in range(len(rhoSol)):
+    sigmas.append([])
+    for wvi in range(len(wvs)):
+        printRatio(osci*len(wvs)+wvi,len(rhoSol)*len(wvs))
+        bb,_=getBoundary(*rhoSol[osci], wv=wvs[wvi])
+        sigmas[-1].append(-1j*bb[2][1]/( bb[2][0]*wvs[wvi] ))
+fig(11)
+for s in sigmas:
+    pl.plot(wvs,[i.real for i in s])
+    pl.plot(wvs,[i.imag for i in s])
+pl.xlim(wvs[0],wvs[-1])
+pl.ylim(-1,3.5)
+pl.xscale('log')
 pl.show()

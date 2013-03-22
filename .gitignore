@@ -15,7 +15,6 @@ build
 #files
 bulkODE.h
 bulkODE.c
-solveBulk.h
 solveBulk.c
 
 #latex
