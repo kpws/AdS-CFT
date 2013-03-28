@@ -4,12 +4,13 @@
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
 
-#define ARGS t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],w
+#define ARGS t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],w,alpha2
 const int dim=8;
 
-int func (double t, const double y[], double f[], void *params)
+int func (double t, const double y[], double f[], double *params)
 {
-	double w=*(double *)params;
+	double w=params[0];
+	double alpha2=params[1];
 	f[0] = y[1];
 	f[1] = f1(ARGS);
 	f[2] = y[3];
@@ -95,7 +96,7 @@ int solveODE(double * start, double eps, int n, double *out,double *params)
 	gsl_odeiv2_driver * d = 
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd, -1e-8, 1e-8, 0.0);
 	//                                                            hstart, ,epsabs,epsrel, ay , adydt
-	gsl_odeiv2_driver_alloc_scaled_new (&sys, gsl_odeiv2_step_rk8pd, -1e-7, 0.0, 1e-6   , 1.0, 0.0, scale_abs);
+	gsl_odeiv2_driver_alloc_scaled_new (&sys, gsl_odeiv2_step_rk8pd, -1e-7, 0.0, 1e-7   , 1.0, 0.0, scale_abs);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_msbdf, -1e-8, 1e-8, 0.0);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_bsimp, -1e-8, 1e-8, 0.0);
 	double z0 = 1.0-eps, z1 = eps;

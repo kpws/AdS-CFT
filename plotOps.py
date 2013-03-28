@@ -32,7 +32,7 @@ def plot(bbs,ind,As=None,name='',verbose=False):
     pl.ylabel('$\\frac{\\sqrt{O_2}}{T_c}$')
     pl.xlim([0,1.2])
     pl.ylim([-1,10])
-    saveFig(name+'O2Tzeros')
+    if name: saveFig(name+'O2Tzeros')
     fig(4)
     rho=np.linspace(rhoc*0.2,rhoc*10,1000)
     mu=rho*zh
@@ -42,7 +42,7 @@ def plot(bbs,ind,As=None,name='',verbose=False):
     pl.ylabel('$\\frac{\\mu}{T_c}$')
     pl.xlim([0,1.2])
     pl.ylim([0,40])
-    saveFig(name+'muTzeros')
+    if name: saveFig(name+'muTzeros')
 
     if As!=None:
         fig(7)
@@ -52,4 +52,4 @@ def plot(bbs,ind,As=None,name='',verbose=False):
         pl.plot(T/Tc, Atriv/Tc**3,c='k',ls='-',lw=1)
         pl.xlim([0,2])
         pl.ylim([0,1.5e3])
-        saveFig(name+'A')
+        if name: saveFig(name+'A')

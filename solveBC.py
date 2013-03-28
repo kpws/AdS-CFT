@@ -4,14 +4,14 @@ from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 from printStatus import printRatio
 
-def sweep(getBoundary, psis,oscN=1,verbose=False):
+def sweep(getBoundary, psis,oscN=1,verbose=False,status=False):
     lss=['-', '--', '-.', ':']
     bbs=[]
     end=-1.0
     sols=[]
     varParamsv=[1]
     for psii in range(len(psis)):
-        printRatio(psii,len(psis))
+        if status: printRatio(psii,len(psis))
         bbs.append([])
         sols.append([])
         psi=psis[psii]

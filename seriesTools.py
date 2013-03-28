@@ -13,7 +13,7 @@ def series(e,x,x0=0,n=1):
 #eqns contain polynomials (or ratios) of z and of unknown functions fs _of_z_. The functions fs are expanded.
 #A finite number of possible lowest exponents are returned. They are not required to work, but all working should
 #hopefully be included.
-def indicial(eqns,fs,z,z0=0,verbose=False):
+def indicial(eqns,fs,z,z0=0,verbose=False,withAss=False):
     if verbose: sp.pprint(eqns)
     if verbose: sp.pprint(fs)
     seqns=[eqSimp(eqns[i]).expand().collect(fs[i]) for i in range(len(eqns))]
@@ -80,18 +80,25 @@ def indicial(eqns,fs,z,z0=0,verbose=False):
                 return (sol([[p[0]]+p[2:] if i==j else l[j][:] for j in range(len(l))],
                           ass=ass+[sp.re(p[0][0]-p[1][0])<0],ds=ds)+
                      sol([[p[1]]+p[2:] if i==j else l[j][:] for j in range(len(l))],
-                         ass=ass+[sp.re(p[1][0]-p[0][0])<0],ds=ds)+
-                     sol([[(p[0][0],p[0][1]+p[1][1])]+p[2:] if i==j else l[j][:] for j in range(len(l))],
+                         ass=ass+[sp.re(p[1][0]-p[0][0])<0],ds=ds)
+                     +sol([[(p[0][0],p[0][1]+p[1][1])]+p[2:] if i==j else l[j][:] for j in range(len(l))],
                          ass=ass+[sp.Eq(p[0][0]-p[1][0])],ds=ds)  )
         assert(False)#shouldn't end up here
-    return [(dict([(ans.index(i[0]),i[1]) for i in s if type(i)==tuple]),
+    if withAss:
+        return [(dict([(ans.index(i[0]),i[1]) for i in s if type(i)==tuple]),
              [i for i in s if type(i)!=tuple]) for s in sol(seqns)]
+    else:
+        return [dict([(ans.index(i[0]),i[1]) for i in s if type(i)==tuple]) for s in sol(seqns)
+                if sum(1 for i in s if type(i)!=tuple)==0]
 
-def indicialToIndep(i):  #this also removes the assumptions, hopefully none
-    for s in i:
-        if len(s[1])>0:
-            raise Exception('Unresolved assumptions '+str(s[1]))
-    i=[s[0] for s in i]
+
+
+def indicialToIndep(i,withAss=False):  #this also removes the assumptions, hopefully none
+    if withAss:
+        for s in i:
+            if len(s[1])>0:
+                raise Exception('Unresolved assumptions '+str(s[1]))
+        i=[s[0] for s in i]
     n=len(i[0])
     def comp(a,b):
         d=a<b

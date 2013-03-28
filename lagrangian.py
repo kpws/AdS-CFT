@@ -2,25 +2,29 @@ import sympy as sp
 from itertools import product
 from tensor import sqr
 
-#@sp.cacheit
-def getLagrangian(metric, m2, gamma, alpha1, alpha2, psi, *A):
+def getLagrangian(metric, m2, gamma, alpha1, alpha2, psi, A,verbose=False):
     gi=metric.ginv
     x=metric.x
     r=range(len(x))
     F=[[A[j].diff(x[i])-A[i].diff(x[j]) for j in r]for i in r]
+    if verbose: print('Calculating Maxwell term...')
     F2=sum(F[i][j]*F[I][J]*gi[i,I]*gi[j,J] for i,j,I,J in product(r,r,r,r)).simplify()
     eabs=lambda a:a
     if metric.g.is_diagonal():
-        return ((-metric.g.det())**(sp.S(1)/2)).simplify()*(-F2/4
+        ret= sp.simplify(-F2/4
            -m2*eabs(psi)**2
            -sqr([eabs(psi.diff(x[i])) for i in r],gi)
-           -sqr([eabs(-A[i]*psi) for i in r],gi)
-           +gamma*sum(metric.C[i][j][k][l]*F[i][j]*F[k][l]*gi[i,i]*gi[j,j]*gi[k,k]*gi[l,l] 
+           -sqr([eabs(-A[i]*psi) for i in r],gi))
+        if verbose: print('Calculating Weyl term...')
+        ret+=gamma*sum(sp.simplify(metric.C[i][j][k][l]*F[i][j]*F[k][l]*gi[i,i]*gi[j,j]*gi[k,k]*gi[l,l] )
                    for i,j,k,l in product(r,repeat=4))
-           +alpha1*F2**2
-           +alpha2*sum(F[i][j]*F[j][k]*F[k][l]*F[l][i]*gi[i,i]*gi[j,j]*gi[k,k]*gi[l,l]
+        if verbose: print('Calculating alpha1 term...')
+        ret+=sp.simplify(alpha1*F2**2)
+        if verbose: print('Calculating alpha2 term...')
+        ret+=alpha2*sum(sp.simplify(F[i][j]*F[j][k]*F[k][l]*F[l][i]*gi[i,i]*gi[j,j]*gi[k,k]*gi[l,l])
                    for i,j,k,l in product(r,repeat=4))
-           ).simplify()
+        if verbose: print('Simplifying...')
+        return sp.simplify(((-metric.g.det())**(sp.S(1)/2)).simplify()*ret)
     else:
         assert False#TODO look over abs..
         return(-F2/4
