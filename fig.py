@@ -11,6 +11,7 @@ params = {'backend': 'ps',
           'ytick.labelsize': 12,
           'text.usetex': True,
           'lines.linewidth':0.5,
+          'legend.linewidth':0.5,
           'axes.linewidth':0.5,
           'grid.linewidth':0.5
           }

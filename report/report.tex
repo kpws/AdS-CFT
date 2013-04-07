@@ -450,7 +450,7 @@ The free energy of the trivial solution \eqref{trivial} can be found analyticall
 =&-L^{d-3}\left(\frac{4\pi T}{d}\right)^{d-2}(d-2)\frac{\mu^2}{2}
 \end{split}
 \end{equation}
-\fig{A}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:mu}}
+\fig{A}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:A}}
 
 \section{Operator Expectation Values}
 TODO, introduce $\rho$, $\mu$...
@@ -477,16 +477,31 @@ The fields all have the unit of inverse length and $\rho$ thus has unit inverse 
 \fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
 
 
-\begin{figure}
-\centering
-\begin{tikzpicture}
-    \draw[->] (-1,0) -- (4,0) node[right] {$v$};
-    \draw[->] (0,-0.5) -- (0,3) node[above] {$V(v)$};
-    \draw plot[domain=-1:4] (\x,\x*\x*\x*\x/128-\x*\x/12) node[right] {$\mu_0^2<0$};
-    \draw plot[domain=-1:4] (\x,\x*\x*\x*\x/128+\x*\x/12) node[right] {$\mu_0^2>0$};
-\end{tikzpicture}
-\caption{\label{pot}The potential used by Goldstone\cite{McGreevy:2009xe} which also is the Higgs potential. Note the minimum not being at $v=0$ giving a spontaneously broken symmetry.}
-\end{figure}
+\section{Higher Order Term}
+This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
+\begin{equation}
+ \frac{\partial^2\mathbf{x}}{\partial t^2}=\frac{q}{m}\mathbf{E}-\frac{1}{\tau}\frac{\partial\mathbf{x}}{\partial t}
+\end{equation}
+Solving this gives the conductivity
+\begin{equation}
+ \sigma=\frac{\sigma_0}{1-\i\tau\omega}.
+\end{equation}
+This agrees very well to what is obtained for low frequencies above the critical point, especially for high values of TODO. See Fig. \ref{drude}.
+
+\fig{drude_2Tc_a21}{Conductivity for $\alpha_2=1$ and $T=2T_c$. The Drude parameters have been obtained from the lowest frequency data-point. \label{drude}}
+
+The low frequency limit of the conductivity $\sigma_0$ seems to depend linearly on $\alpha_2$ for values of $\alpha_2$ larger than TODO. See Fig \ref{drudeVar2Tc}. The proportionality constant depends on the temperature, see Fig \ref{drudeVarMTc}, and seems to closely follow a power-law, see Fig \ref{drudeTdep_1e4}. $\sigma_0$ thus seems to closely follow
+\begin{equation}
+ \sigma_0=C\alpha_2\left(\frac{T}{T_c}\right)^{-4/3}
+\end{equation}
+for values of $\alpha_2>>TODO$.
+
+\fig{drudeVar2Tc}{Drude parameters as functions of $\alpha_2$.\label{drudeVar2Tc}}
+
+\fig{drudeVarMTc}{$\omega\rightarrow0$ limit of the conductivity as a function of $\alpha_2$ for different temperatures.\label{drudeVarMTc}}
+
+\fig{drudeTdep_1e4}{$\sigma_0/\alpha_2$ as a function of temperature for large $\alpha_2$.\label{drudeTdep_1e4}}
+
 
 \bibliographystyle{unsrt}
 \bibliography{report}
