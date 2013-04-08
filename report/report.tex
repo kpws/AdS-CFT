@@ -473,9 +473,11 @@ TODO, write in more detail. TODO, write in some clear way about the dimensionles
 The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\phi=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read of at the boundary.\\
 
 The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
-
+\chapter{Results}
+\section{Condensate}
 \fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
-
+\section{Conductivity}
+\fig{cond_Ts}{Real and imaginary part of the conductivity for different temperatures. Higher temperatures above $T_c$ give the same conductivity as for the $T=T_c$ case. \label{cond_Ts}}
 
 \section{Higher Order Term}
 This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
@@ -496,7 +498,7 @@ The low frequency limit of the conductivity $\sigma_0$ seems to depend linearly 
 \end{equation}
 for values of $\alpha_2>>TODO$.
 
-\fig{drudeVar2Tc}{Drude parameters as functions of $\alpha_2$.\label{drudeVar2Tc}}
+\fig{drudeVar2Tc}{Drude parameters as functions of $\alpha_2$ at $T=2T_c$.\label{drudeVar2Tc}}
 
 \fig{drudeVarMTc}{$\omega\rightarrow0$ limit of the conductivity as a function of $\alpha_2$ for different temperatures.\label{drudeVarMTc}}
 

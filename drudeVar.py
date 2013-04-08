@@ -1,4 +1,4 @@
-from conductivity import getBoundary
+from getBoundary import getBoundary
 from solveBC import sweep, findrho
 from printStatus import printRatio
 import numpy as np
@@ -34,6 +34,8 @@ for i in range(len(a2s)):
     d=1/sigma.real
     m=sigma.imag/w*d**2
     y1s.append(1/d)
+    rho=-bb[1][1]
+    mu=bb[1][0]
     y2s.append(m/d*Tc)
 #drude=1/(d-m*1j*w)
 fig(0)
@@ -50,13 +52,12 @@ pl.plot([a2s[hn], a2s[-1]], [a2s[hn]**k*m, a2s[-1]**k*m],ls='--',c='r')#,label=r
 pl.annotate(r'$C\alpha_2^{'+('%.3f'%k)+'}$',xy=(a2s[hn],a2s[hn]**k*m), xycoords='data',
                                   xytext=(-60, -10), textcoords='offset points', fontsize=10,
                                                                      arrowprops=dict(arrowstyle="->"))
-'''
-hn=len(a2s)-len(a2s)/4
-k=np.log(y2s[1]/y2s[0])/np.log(a2s[1]/a2s[0])
-m=y2s[0]/a2s[0]**k
+
+'''k=np.log(y2s[-1]/y2s[-2])/np.log(a2s[-1]/a2s[-2])
+m=y2s[-1]/a2s[-1]**k
 print(k)
 print(m)
-pl.plot([a2s[0], a2s[hn]], [a2s[0]**k*m, a2s[hn]**k*m],ls='-',c='b')#,label=r'$\mathrm{Power\ fit}$')'''
+pl.plot([a2s[hn], a2s[-1]], [a2s[hn]**k*m, a2s[-1]**k*m],ls='-',c='b')#,label=r'$\mathrm{Power\ fit}$')'''
 pl.xlabel(r'$\alpha_2$')
 ai=50
 pl.legend(loc='upper left')
