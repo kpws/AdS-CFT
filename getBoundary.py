@@ -122,7 +122,7 @@ def horizonSolD(phiD, psi, z):
 
 p1,p2,D1,D2,F,Fd,eps=sp.symbols(['p1','p2','D1','D2','F','Fd','eps'])
 sols=sp.solve([(p1*M.x[0]**D1+p2*M.x[0]**D2).diff(M.x[0],i)-[F,Fd][i] for i in [0,1]],p1,p2)
-eps=0.00001
+eps=0.00002
 Ma=[[[float(sols[[p1,p2][i]].expand().collect([F,Fd][j],evaluate=False)[[F,Fd][j]]
     .subs(zip([D1,D2],ind[0][fi])).simplify().subs(M.x[0],eps))
     for j in range(2)] for i in range(2)] for fi in range(len(fields))]
