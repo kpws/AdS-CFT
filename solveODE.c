@@ -82,7 +82,7 @@ int jac (double t, const double y[], double *dfdy, double dfdt[], void *params)
 	return GSL_SUCCESS;
 }*/
 
-int solveODE(double * start, double eps, int n, double *out,double *params)
+int solveODE(double * start, double epsB, double epsH, int n, double *out,double *params)
 {
 
 	int i,j;
@@ -99,7 +99,7 @@ int solveODE(double * start, double eps, int n, double *out,double *params)
 	gsl_odeiv2_driver_alloc_scaled_new (&sys, gsl_odeiv2_step_rk8pd, -1e-7, 0.0, 1e-7   , 1.0, 0.0, scale_abs);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_msbdf, -1e-8, 1e-8, 0.0);
 	//gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_bsimp, -1e-8, 1e-8, 0.0);
-	double z0 = 1.0-eps, z1 = eps;
+	double z0 = 1.0-epsH, z1 = epsB;
 	double z=z0;
 	double y[dim];
 	for (i=0; i<dim; i++)
@@ -115,6 +115,7 @@ int solveODE(double * start, double eps, int n, double *out,double *params)
 		if (status != GSL_SUCCESS)
 		{
 			printf ("error, return value=%d\n", status);
+			printf ("z=%f\n", z);
 			  break;
 		}
 		for(j=0;j<dim;j++)

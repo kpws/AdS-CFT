@@ -122,28 +122,29 @@ def horizonSolD(phiD, psi, z):
 
 p1,p2,D1,D2,F,Fd,eps=sp.symbols(['p1','p2','D1','D2','F','Fd','eps'])
 sols=sp.solve([(p1*M.x[0]**D1+p2*M.x[0]**D2).diff(M.x[0],i)-[F,Fd][i] for i in [0,1]],p1,p2)
-eps=0.00002
+epsB=0.00002
+epsH=0.0002
 Ma=[[[float(sols[[p1,p2][i]].expand().collect([F,Fd][j],evaluate=False)[[F,Fd][j]]
-    .subs(zip([D1,D2],ind[0][fi])).simplify().subs(M.x[0],eps))
+    .subs(zip([D1,D2],ind[0][fi])).simplify().subs(M.x[0],epsB))
     for j in range(2)] for i in range(2)] for fi in range(len(fields))]
 dofs=[M.x[0]]+varParams+[B[0],B[0].diff(),B[1],B[1].diff()]
 dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
 unTrans=sp.lambdify(dummies,
     [(ATransRI[0]+1j*ATransRI[1]).diff(M.x[0],deg).subs(zip(dofs,dummies)[::-1],) for deg in [0,1]])
 def getBoundary(phiD, psi, pars, plot=False, returnSol=False):
-    f=horizonSol(phiD,psi,1-eps)
-    fD=horizonSolD(phiD,psi,1-eps)
+    f=horizonSol(phiD,psi,1-epsH)
+    fD=horizonSolD(phiD,psi,1-epsH)
     n=150 if returnSol or plot else 60
-    zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  eps, n, pars)
+    zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  epsB, epsH, n, pars)
     osc=0
     for i in range(1,n):
         if y[i][0]*y[i-1][0]<0:
             osc+=1
-    end=y[-1][:4]+unTrans(*([eps]+pars+y[-1][4:]))
+    end=y[-1][:4]+unTrans(*([epsB]+pars+y[-1][4:]))
     bb=[[sum(Ma[fi][i][j]*end[fi*2+j] for j in range(2)) for i in range(2)] for fi in range(len(fields))]
     if plot:
-        start=np.linspace(0,eps,50)
-        end=np.linspace(1-eps,1,50)
+        start=np.linspace(0,epsB,50)
+        end=np.linspace(1-epsH,1,50)
         for fi in [0,1]:
             pl.plot(zs,[i[fi*2] for i in y],ls=['-','--'][fi])
             pl.plot(end,[horizonSol(phiD,psi,i)[fi] for i in end],ls=['-','--'][fi])
@@ -152,7 +153,7 @@ def getBoundary(phiD, psi, pars, plot=False, returnSol=False):
             pl.plot(start,sum(bb[i][j]*start**ind[0][i][j] for j in [0,1]).imag,linestyle='--')
         pl.plot(zs,[unTrans(*([zs[i]]+pars+y[i][4:]))[0].real for i in range(len(y))],label='$Re(A_x(z))$',linestyle='-.')
         pl.plot(zs,[unTrans(*([zs[i]]+pars+y[i][4:]))[0].imag for i in range(len(y))],label='$Im(A_x(z))$',linestyle=':')
-        lend=np.logspace(-15,np.log10(eps),500)
+        lend=np.logspace(-15,np.log10(epsH),500)
         pl.plot(1-lend,np.real(lend**complex(Beta.subs({sp.I:1j}).subs(zip(varParams,pars)))))
         pl.plot(1-lend,np.imag(lend**complex(Beta.subs({sp.I:1j}).subs(zip(varParams,pars)))))
     #print p1
