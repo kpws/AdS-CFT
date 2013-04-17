@@ -19,6 +19,8 @@
 \newcommand{\e}{\ensuremath{\mathrm{e}}}
 \renewcommand{\L}{\ensuremath{\mathcal{L}}}
 \renewcommand{\i}{\ensuremath{i}}
+\newcommand{\re}{\ensuremath{\mathrm{Re}}}
+\newcommand{\im}{\ensuremath{\mathrm{Im}}}
 %\renewcommand{\i}{\ensuremath{\mathrm{i}}}
 \newcommand{\ket}[1]{|#1\rangle}
 \newcommand{\bra}[1]{\langle#1|}
@@ -68,6 +70,44 @@ The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
 where $Z_{\text{CFT}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The relation between the Lagrangians of the theories is unknown but the boundary values of fields in the bulk theory correspond to fields in the CFT.
 TODO
 Lorentz invariance, relativity, causality, locality?
+\chapter{Application to Two-Dimensional Electron Condensates}
+\section{A Lagrangian}
+
+TODO, Strong coupling, classical limit.
+TODO, motivate, reference. The Lagrangian used is
+\begin{eqnarray}
+ \mathcal{L}=&\frac{1}{2\kappa}\left(R-2\Lambda\right)-\frac{1}{4}F_{ab}F^{ab}-m^2\psi\overline{\psi}-D_a\psi\overline{D^a\psi}
++\gamma C_{abcd}F^{ab}F^{cd}\nonumber\\
+&+\alpha_1(F_{ab}F^{ab})^2+\alpha_2F^a_bF^b_cF^c_dF^d_a
+\end{eqnarray}
+TODO, describe term by term.
+The first term is an Einstein-Hilbert term with a cosmological constant $\Lambda$.
+where $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$ and $F_{ab}=\partial_aA_b-\partial_bA_a$. This Lagrangian is invariant under a U(1) gauge transformation
+\begin{eqnarray}
+ \psi&\rightarrow&\mathrm{e}^{i\theta(x)}\psi\\
+ A_a&\rightarrow& A_a+\frac{1}{q}\nabla_a\theta(x).
+\end{eqnarray}
+This lets us make a choice of gauge, $\nabla_aA^a=0$, the Lorentz gauge. The gauge is still not completely fixed, a gauge transformation $\theta(x)$ such that $\nabla_a\nabla^a\theta(x)=0$ can still be done without violating the gauge condition.
+The Lagrangian is also evidently Lorentz invariant imposing Lorentz invariance of the boundary theory. This Lagrangian also possess conformal invariance. This means that the Lagrangian is unchanged by the transformation $g_{ab}\rightarrow f(x)g_{ab}$.
+\section{Symmetry Assumptions}
+\section{Equations of motion}
+Describe why $\psi$ can be considered real.\\
+First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by varying the fields $\psi$, $\phi$ are respectively
+\begin{eqnarray}
+0=\input{eqns/psieqm.tex}
+\end{eqnarray}
+\begin{eqnarray}
+0=\input{eqns/phieqm.tex}.
+\end{eqnarray}
+TODO, boundary conditions.\\
+These equations have the trivial solution
+\begin{equation}
+ \begin{split}
+  \psi=&0\\
+  \phi=\mu-\mu\frac{z}{z_h}\label{trivial}
+ \end{split}
+\end{equation}
+
 \section{Partition Function}
 The partition function is a concept from statistical physics. It is for a quantum-mechanical system defined as
 \begin{equation}
@@ -98,7 +138,7 @@ This means that $Z(\beta)$ can be obtained by calculating a path integral where 
  S[x(\tau)]=\int_0^\beta\d \tau \L
 \end{equation}
 The CFT we are interested in lives on the boundary of an AdS theory. The metric of the CFT is the metric induced from the bulk theory. The boundary is time-like and the time periodicity of the two theories are thus the same. This means that they are at the same temperatures.\\
-Only paths of extremal action will contribute to this in the classical limit because of the oscillatory behaviour of the exponential. Let $\psi_\mathrm{c}(t)$ be the path that extremizes the action and expand the exponent as a Taylor series around this
+Only paths of extremal action will contribute to this in the classical limit because of the oscillatory behavior of the exponential. Let $\psi_\mathrm{c}(t)$ be the path that extremizes the action and expand the exponent as a Taylor series around this
 \begin{equation}
 \begin{split}
  S[\psi_\mathrm{c}(t)+\psi(t)]=S[\psi_\mathrm{c}(t)]+\frac{\psi(t)^2}{2!}\frac{\delta^2}{\delta\psi(t)^2} S[\psi_\mathrm{c}(t)]+
@@ -172,7 +212,7 @@ The total action density is obtained as $\epsilon\rightarrow0$.
  T=\frac{d}{4\pi  z_h}\label{T}
 \end{equation}
 %This $T$ in units of energy is also in units of inverse length since we chose the energy unit to the inverse time it 
-\section{Boundary Behaviour}
+\section{Boundary Behavior}
 The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{|\det g_{ab}|}\L\equiv\int\d^{d+1} x\sqrt{g}\L.
@@ -293,41 +333,7 @@ where $i$ goes over all fields. Here the Lagrangian is assumed to only depend on
 \end{equation}
 where $n_a$ is an outward normal to the boundary of AdS.
 The first integral vanishes since the fields obey the Euler-Lagrange equation.
-\chapter{Application to Two-Dimensional Electron Condensates}
-TODO, Strong coupling, classical limit.
-TODO, motivate, reference. The Lagrangian used is
-\begin{eqnarray}
- \mathcal{L}=&\frac{1}{2\kappa}\left(R-2\Lambda\right)-\frac{1}{4}F_{ab}F^{ab}-m^2\psi\overline{\psi}-D_a\psi\overline{D^a\psi}
-+\gamma C_{abcd}F^{ab}F^{cd}\nonumber\\
-&+\alpha_1(F_{ab}F^{ab})^2+\alpha_2F^a_bF^b_cF^c_dF^d_a
-\end{eqnarray}
-TODO, describe term by term.
-The first term is an Einstein-Hilbert term with a cosmological constant $\Lambda$.
-where $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$ and $F_{ab}=\partial_aA_b-\partial_bA_a$. This Lagrangian is invariant under a U(1) gauge transformation
-\begin{eqnarray}
- \psi&\rightarrow&\mathrm{e}^{i\theta(x)}\psi\\
- A_a&\rightarrow& A_a+\frac{1}{q}\nabla_a\theta(x).
-\end{eqnarray}
-This lets us make a choice of gauge, $\nabla_aA^a=0$, the Lorentz gauge. The gauge is still not completely fixed, a gauge transformation $\theta(x)$ such that $\nabla_a\nabla^a\theta(x)=0$ can still be done without violating the gauge condition.
-The Lagrangian is also evidently Lorentz invariant imposing Lorentz invariance of the boundary theory. This Lagrangian also posseses conformal invariance. This means that the Lagrangian is unchanged by the transformation $g_{ab}\rightarrow f(x)g_{ab}$.
-\section{Symmetry Assumptions}
-\section{Equations of motion}
-Describe why $\psi$ can be considered real.\\
-First consider a system with $A_r=A_x=A_y=0$. The field equations obtained by varying the fields $\psi$, $\phi$ are respectively
-\begin{eqnarray}
-0=\input{eqns/psieqm.tex}
-\end{eqnarray}
-\begin{eqnarray}
-0=\input{eqns/phieqm.tex}.
-\end{eqnarray}
-TODO, boundary conditions.\\
-These equations have the trivial solution
-\begin{equation}
- \begin{split}
-  \psi=&0\\
-  \phi=\mu-\mu\frac{z}{z_h}\label{trivial}
- \end{split}
-\end{equation}
+
 \section{Parameters}
 There are multiple unknown parameters. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the parameters $\kappa$, $L$, $m^2$, $q$, $\alpha_1$, $\alpha_2$, and $\gamma$. The solution of the equations of motion for the metric we used in the probe limit also contains a temperature dependent constant $z_h$. Some of these parameters might be redundant since we can make different transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged. The physics are independent of the exact value of $\kappa$ as long as we are in the probe limit.\\
 
@@ -478,25 +484,63 @@ The numerical results are here presented.
 \section{Condensate}
 This section shows results from 
 \fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
-\section{Conductivity}
+\section{Electrical Conductivity}
+The conductivity of a superconductor can easily be measured experimentally for a wide range of frequencies and it is therefore an interesting property to calculate from our model of a superconductor. The agreement in different frequency ranges tells us about similarities and differences between our model and the experimental superconductors.\\
+\subsection{Definition of Electrical Conductivity and its Properties}
+The current density, $\mathbf{J}$ is a vector quantity defined as the flow of charge. The rate of charge passing through a surface at $x$ of length $\d l$ and with normal $\mathbf{n}$ is given by $\d l\mathbf{n}\cdot \mathbf{J}(x)$.
+We define conductivity $\sigma$ as the linear response function for the current density $J_x$ with the applied electrical field $E_x$ as source
+\begin{equation}
+ \sigma(\omega)=\frac{J_x(\omega)}{E_x(\omega)}\label{sigma}.
+\end{equation}
+Here the direction $x$ has been chosen for concreteness but since we consider two-dimensional systems with rotational symmetry we need only consider one direction. These functions of $\omega$ are the Fourier transforms of the time-dependent quantities. The considered electrical field $E_x$ is further assumed to be translationally symmetric giving a still translationally symmetric system. The current in the time domain can be obtained from the conductivity and the applied field through a inverse Fourier transform
+\begin{equation}
+ J_x(t)=\int_{-\infty}^\infty E_x(t-\tau)\sigma(\tau)\d \tau.
+\end{equation}
+Causality implies that $\sigma(\tau)=0$ for $\tau<0$ since the current would otherwise depend on future values of the electrical field. The conductivity can using this be written
+\begin{equation}
+ \sigma(\omega)=\int_0^\infty\sigma(\tau)\exp(\i\tau\omega)\d\tau
+\end{equation}
+and thus has an analytical extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ gives the Kramers–Kronig relations
+\begin{equation}
+\begin{split}
+ \re(\sigma(\omega))&=\frac{2}{\pi}\int_0^\infty\frac{\omega^\prime\im(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\\
+\im(\sigma(\omega))&=-\frac{2}{\pi}\int_0^\infty\frac{\omega\re(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\label{kk}
+\end{split}
+\end{equation}
+These relations state that the real part of the conductivity uniquely determines the imaginary part and vice versa.
+\subsection{Calculating the Holographic Conductivity}
 The obtained conductivity for temperatures above the $T_c$ is $\sigma(\omega)=1$. This agrees with TODO. The conductivity changes when the condensate forms. An energy gap $\Delta$ forms and the conductivity for $\omega<\Delta$ goes to 0 as the temperature is lowered. The superconductivity is not immidiately evident from the obtained conductivity curves. There is a delta-function at $\omega=0$ since translational invariance of the boundary theory has been assumed.
-
-\section{Sum Rule}
-The sum rule \cite{PhysRev.109.1398}.
-
 \fig{cond_Ts}{Real and imaginary part of the conductivity for different temperatures. Higher temperatures above $T_c$ give the same conductivity as for the $T=T_c$ case. \label{cond_Ts}}
-
+\section{Consistency Check using a Sum Rule}
+The Kramers-Kroning relations and the decoupeling of the electrons from the system at high frequencies can be used to prove a sum rule for the conductivity \cite{PhysRev.109.1398}. The rule states
+\begin{equation}
+ \int_0^\infty\re(\sigma(\omega))\d\omega=C
+\end{equation}
+where $C$ is a constant depending on what system we are considering 
 \fig{sum_rule_a20}{Integral}
-\section{Higher Order Term}
-This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
+
+
+
+
+\chapter{Higher Order Term}
+Many assumptions have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function develops under $T_c$ giving infinite DC conductivity. A difference that is evident is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity\cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$\cite{drudeFit}.
+
+\section{Drude Model}
+The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
 \begin{equation}
- \frac{\partial^2\mathbf{x}}{\partial t^2}=\frac{q}{m}\mathbf{E}-\frac{1}{\tau}\frac{\partial\mathbf{x}}{\partial t}
+ \frac{\d v}{\d t}=\frac{q}{m}E-\frac{1}{\tau}v
 \end{equation}
-Solving this gives the conductivity
+Solving this for harmonic $E=E_0\exp(-\i\omega t)$ gives 
 \begin{equation}
- \sigma=\frac{\sigma_0}{1-\i\tau\omega}.
+ v=\frac{\tau qE_0}{m(1-\i\omega\tau)}\exp(-\i\omega t).
 \end{equation}
-This agrees very well to what is obtained for low frequencies above the critical point, especially for high values of TODO. See Fig. \ref{drude}.
+This gives the conductivity
+\begin{equation}
+ \sigma(\omega)=\frac{J(\omega)}{E(\omega)}=\frac{v(\omega)q\rho}{E(\omega)}=\frac{\tau\rho q^2}{m(1-\i\omega\tau)}=\frac{\sigma_0}{1-\i\tau\omega}.
+\end{equation}
+where $\rho$ is the density of charge carriers of charge $q$.
+This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. 
+This agrees very well with what is obtained for low frequencies above the critical point, especially for high values of TODO. See Fig. \ref{drude}.
 
 \fig{drude_2Tc_a21}{Conductivity for $\alpha_2=1$ and $T=2T_c$. The Drude parameters have been obtained from the lowest frequency data-point. \label{drude}}
 
