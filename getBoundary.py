@@ -21,7 +21,7 @@ A=[sp.S(0), fieldsF[1](M.x[0]), fieldsF[2](M.x[0]), sp.S(0)]
 psi=fieldsF[0](M.x[0])
 fields=[psi,A[1],A[2]]
 #Assumptions on the parameters.   -9/4<m^2<-1
-ass={m2:-sp.S(2),M.L:1,M.zh:1,alpha3:0,alpha1:0}
+ass={m2:-sp.S(2),M.L:1,M.zh:1}
 m2N=float(m2.subs(ass))
 syms=fieldsF+M.x+params+varParams+[M.L,M.zh]
 
@@ -30,7 +30,7 @@ print('Generating Lagrangian...')
 try:
     L=sp.sympify(load(open('cache/L')),dict(zip([str(s) for s in syms],syms)))
 except IOError:
-    L=getLagrangian(M,m2,alpha3,alpha1,alpha2,psi,[A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3]],verbose=True)
+    L=getLagrangian(M,m2,0,0,alpha2,psi,[A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3]],verbose=True)
     dump(str(L),open('cache/L','w'))
 L=L.subs(ass)
 dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
@@ -48,18 +48,20 @@ try:
     ind=load(open('cache/indicial'))
 except IOError:
     sing=[0,1]  #singular points to do expansion around
-    ind=[indicial(eqm[:2],fields[:2], M.x[0], z0=s) for s in sing] #get solutions to indicial equation
+    ind=[indicial(eqm[:2],fields[:2], M.x[0], z0=s,verbose=True) for s in sing] #get solutions to indicial equation
     ind[1]=[i for i in ind[1] if i[1]>0] #remove solutions not satisfying z=1 BC
     for i in range(len(sing)): #some lousy code to first solve without A, and then add A. Because small A lim
         indn=[]
         for j in range(len(ind[i])):
             ind2=indicial([eqm[2].subs([(fields[fi],M.x[0]**ind[i][j][fi]) for fi in range(2)])],
-                    fields[2:], M.x[0], z0=sing[i]) 
+                    fields[2:], M.x[0], z0=sing[i],verbose=True) 
             for i2 in ind2:
                 n=dict(ind[i][j])
                 n[2]=i2[0]
                 indn.append(n)
         ind[i]=indn
+    print ind[0]
+    print ind[1]
     ind[1]=[i for i in ind[1] if sp.im(i[2])<0] #remove solutions not satisfying z=1 BC
     dump(ind,open('cache/indicial','w'))
 assert(len(ind[1])==1)

@@ -41,7 +41,6 @@ print('Calculating equations of motion...')
 eqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in fields]
 eqm=[series(e,A[2]).doit().simplify() for e in eqm] #assume small Ax, gives eqm linear in Ax
 
-
 print('Solving indicial equations...')
 try:
     ind=load(open('cache/indicial'))

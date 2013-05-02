@@ -4,7 +4,7 @@ from pickle import load,dump
 #g and ginv are sympy matrices, everything else just python arrays
 
 class Metric():
-    def __init__(self,x,g,name=''):
+    def __init__(self,x,g,name='',calculateWeyl=False):
         if name:
             try:
                 c=load(open('cache/metric_'+name))
@@ -34,7 +34,8 @@ class Metric():
             for m in r]for l in r]for k in r]for i in r]
         self.R2=[[sum(sum(self.ginv[l,m]*self.R4[i][l][j][m] for l in r)for m in r).simplify() for j in r]for i in r]
         self.R=sum(sum(self.ginv[i,j]*self.R2[i][j]for j in r)for i in r).simplify()
-        self.C=[[[[(self.R4[i][k][l][m]
+        if calculateWeyl:
+            self.C=[[[[(self.R4[i][k][l][m]
                    +(-self.R2[i][l]*g[k,m]
                      +self.R2[i][m]*g[k,l]
                      +self.R2[k][l]*g[i,m]
@@ -42,6 +43,11 @@ class Metric():
                    +self.R*(g[i,l]*g[k,m]-g[i,m]*g[k,l])/(n-1)/(n-2)).simplify() for m in r]for l in r]for k in r]for i in r]
         if name:
             dump(self,open('cache/metric_'+name,'w'))
+    #low indices
+    def covariantVectorDerivative(self, v):
+        assert(self.g.is_diagonal())
+        return [[v[j].diff(self.x[i])+sum(v[k]*self.CS[k][i][j]*self.ginv[k,k] for k in range(len(self.x)))
+            for j in range(len(self.x))] for i in range(len(self.x))]
 
     def test(self):
         r=range(len(self.x))
@@ -87,9 +93,9 @@ AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2,'AdSBHz')
 AdSBHz.zh,AdSBHz.L=(zh,L)
 
 f=sp.Symbol('f')(x[0])
-AdSf=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2)
-AdSf.L=L
-AdSf.f=f
+AdSBHf=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2)
+AdSBHf.L=L
+AdSBHf.f=f
 
 if __name__=="__main__":
     #sp.pprint(AdSfr.R.subs(AdSfr.f,AdSfr.r**2-1/AdSfr.r).doit().ratsimp())

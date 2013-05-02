@@ -22,7 +22,8 @@
 \renewcommand{\i}{\ensuremath{i}}
 \newcommand{\re}{\ensuremath{\mathrm{Re}}}
 \newcommand{\im}{\ensuremath{\mathrm{Im}}}
-\newcommand{\At}{\ensuremath{{A_x}}}
+\newcommand{\At}{\ensuremath{{\phi}}}
+\newcommand{\sympy}{SymPy}
 %\renewcommand{\i}{\ensuremath{\mathrm{i}}}
 \newcommand{\ket}[1]{|#1\rangle}
 \newcommand{\bra}[1]{\langle#1|}
@@ -68,10 +69,13 @@ High TC Superconductors, Graphene.
 Inverse, Cosmology?
 
 \chapter{Application to Two-Dimensional Condensed Matter Systems}
-We wish to model a high temperature superconductor. Conventional superconductors are well described by the BCS theory where the electrons, photons and phonons are the degrees of freedom of interest. The importance of the phonon interactions was understood from the isotope effect, the mass of the atoms in the lattice changed the superconductivity behavior. The isotope effect is though much weaker, TODO cite, in high temperature superconductors and the phonons are thus not believed to be important for high temperature superconductivity. The important degrees of freedom are the electrons and the photons. The electrons are, just as in BCS theory, expected to form Cooper-pairs, TODO cite. These are pairs of electrons of opposite spin but otherwise in the same state effectively becoming spin 0 particles. Our high temperature superconductor model will thus contain two fields, a spin 1 field $A_a$ for the photons and a spin 0 field $\psi$ for the Cooper-pairs.
+We wish to model a high temperature superconductor. Conventional superconductors are well described by the BCS theory where the electrons, photons and phonons are the degrees of freedom of interest. The importance of the phonon interactions was understood from the isotope effect, the mass of the atoms in the lattice changed the superconductivity behavior. The isotope effect is though much weaker, TODO cite, in high temperature superconductors and the phonons are thus not believed to be important for high temperature superconductivity. The important degrees of freedom are the electrons and the photons. The electrons are, just as in BCS theory, expected to form Cooper-pairs, TODO cite. These are pairs of electrons of opposite spin but otherwise in the same state effectively becoming spin 0 particles. Our high temperature superconductor model will thus contain two fields, a spin 1 field $A_a$ for the photons and a spin 0 field $\psi$ for the Cooper-pairs.\\
+
+The superconductor lives in 2+1 dimensional flat space. We will use coordinates $x$, $y$ for the spatial directions and $t$ for time. The extra dimension in the AdS dual will be parametrised by the coordinate $z$. See Appendix \ref{conventions} for details on how indices are labeled and ordered in this report. 
 \section{Symmetry Assumptions}
 Gauge symmetry, say that $\psi$ is complex
 Translational invariance...
+
 \section{A Lagrangian}
 There are many different ways to construct a bulk Lagrangian for the fields $A_a$ and  $\psi$ and the metric $g_{ab}$. A Lagrangian previously used succesfully to model two-dimensional electron condensates\cite{hartnoll9},\cite{horowitz} will initially be used here.
 \begin{eqnarray}
@@ -88,9 +92,9 @@ where $g$ is the absolute value of the determinant of the metric tensor, $g=|\de
 
 The first term of the Lagrangian is an Einstein-Hilbert term with a cosmological constant $\Lambda$. A negative cosmological constant gives a asymptotically anti-de-Sitter space as required. $R$ is the Ricci scalar curvature obtained from the nmetric $g_{ab}$. The constant $\kappa$ determines the coupling between the metric and the other fields.\\
 
-The second term is an ordinary Maxwell term where $F_{ab}=\nabla_aA_b-\nabla_bA_a$. The spacetime will not be flat so covariant derivatives have to be used. See Appendix \ref{conventions}.\\
+The second term is an ordinary Maxwell term where the electromagnetic tensor $F_{ab}$ is the exterior derivative of the electromegnatic field tensor, $F_{ab}=\partial_aA_b-\partial_bA_a$.\\
 
-The third and fourth terms are the kinetic and mass terms for the scalar field respectively. $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$. This makes the Lagrangian invariant under a U(1) gauge transformation
+The third and fourth terms are the kinetic and mass terms for the scalar field respectively. $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$. $\nabla_a$ is the covariant derivative, see Appendix \ref{conventions}. This minimal gauge coupling makes the Lagrangian invariant under a U(1) gauge transformation
 \begin{eqnarray}
  \psi&\rightarrow&\mathrm{e}^{i\theta(x)}\psi\\
  A_a&\rightarrow& A_a+\frac{1}{q}\nabla_a\theta(x)\label{Agauge}.
@@ -101,7 +105,7 @@ The Lagrangian is also manifestly Lorentz invariant imposing Lorentz invariance 
 Varying the fields gives the equations of motion. First vary $\psi$. This gives
 \begin{equation}
 \begin{split}
-\left(m^2-\nabla^2-q^2A^2+\i q(\nabla_aA^a)\right)\psi&=0.
+\left(m^2-\nabla^2+q^2A^2+\i q(\nabla_aA^a)\right)\psi&=0.
 \end{split}
 \end{equation}
 Varying $A_a$ gives these equations of motion
@@ -115,9 +119,9 @@ A real $\psi$ simplifies calculations and that can be obtained since the gauge i
 removes the last term in the parenthesis of the equation of motion for $\psi$. The equation of motion for $\psi$ does not mix the real and imaginary parts after this choice and $\psi$ can be taken to be real since a global shift of phase does not affect $A_a$, see \eqref{Agauge}. The gauge is still not completely fixed, a gauge transformation $\theta(x)$ such that $\nabla_a\nabla^a\theta(x)=0$ can still be done without violating the gauge condition, \eqref{lorentz}. The equations of motion are
 \begin{equation}
 \begin{split}
-\left(m^2-\nabla^2-q^2A^2\right)\psi&=0\\
--\nabla_aF^{ab}+2q^2|\psi|^2A^b&=0.
-\end{split}
+\left(m^2-\nabla^2+q^2A^2\right)\psi&=0\\
+-\nabla_aF^{ab}+2q^2\psi^2A^b&=0.
+\end{split}\label{eqm}
 \end{equation}
 after choosing the Lorentz gauge and a real $\psi$.
 \section{Parameters}
@@ -127,11 +131,12 @@ The Einstein-Hilbert term of the Lagrangian makes the theory gravitational. $\ka
 
 This greatly simplifies calculations and will therefore be used throughout this work. It is though not guaranteed that interesting boundary theories are dual to bulk theories in the probe limit. Earlier studies have though found that interesting boundary systems can be obtained by treating a bulk in the probe limit. A superconducting condensate developes for low temperatures in the work by S. Hartnoll, C. Herzog and G. Horowitz \cite{hartnoll9} where the bulk is treated in the probe limit. $\kappa\rightarrow0$ is a fixed-point of the theory so the physics is independent of the exact value of $\kappa$ as long as we are in the probe limit.
 \subsection{$\lambda$}
-Scale-invariance of the system lets us choose an arbitrary $\lambda$. Two systems with different $\lambda$ can be shown to be equal by a rescaling. $\lambda$ sets a scale to which other parameters, e.g $m^2$, can be related. Scale-invariance can thus not be used to choose those parameters freely.\\
+Scale-invariance of the system lets us choose an arbitrary $\lambda$. Two systems with different $\lambda$ can be shown to be equal by a rescaling. $\lambda$ sets a length scale $L$
+\begin{equation}
+L=\sqrt{-\frac{3}{\Lambda}}
+\end{equation}
+to which other parameters, e.g $m^2$, can be related. Scale-invariance can thus not be used to choose those parameters freely.\\
 $\lambda$ will be set to a convenient number in numerical calculations but kept in calculations for clarity.
-
-
-
 \subsection{$q$}
 Considering $\tilde{\psi}=q\psi$ and $\tilde{A}_a=qA_a$ as the fields gives a Lagrangian of the same form but with different constants $\alpha_1$ and the whole Lagrangian is divided by $q^2$ except for the term originally containing $q^2$ which is divided by $q^4$. Multiplying the Lagrangian by a constant doesn't affect the equations of motion so $q=1$ can be assumed without getting a less general Lagrangian. It should be noted that a different value of $q$ would give $q\psi$ as solution instead where $\psi$ is the solution of the equations of motion when $q=1$. The same is true for $A_a$.\\
 \subsection{$m^2$}
@@ -199,39 +204,69 @@ Taking a functional derivative of this gives:
 The partition functions of the bulk and boundary theories are the same even for a perturbed Lagrangian. Both Lagrangians are then perturbed. Expectation values of operators of the boundary theory can thus be calculated using the partition function for the bulk theory. It is though not trivial to figure out what fields in the bulk theory corresponds to what operators in the boundary theory. The next chapter will show how to solve the bulk theory and obtain CFT observables.
 \chapter{Solution of the Classical Bulk Theory}
 We wish to compute expectation values of the CFT. This will be done through the correspondence \eqref{GKPW}. Then bulk theory must then be solved. The bulk theory was assumed to be classical in Section \ref{correspondence} so the system is solved by finding the equations of motion for the fields and solving them. This lets ut calculate the partition function and using it to find CFT expectation values through \ref{expectation}.
-\section{Limitations}
-The Lagrangian describes a general system so there are many solutions to the equations of motion. We wish to investigate two properties of a superconductor, the development of a condensate at low temperatures and the conductivity at different frequencies. We are interested in a superconductor subject to spatially uniform conditions, the applied electric field is uniform and the chemical potential is uniform. The atomic lattice and its imperfections are thus not accounted for but interesting superconductivity behaviour has been obtained anyways \cite{hartnoll9}.\\
+\section{Definitions}
+The Lagrangian describes a general system so there are many solutions to the equations of motion. We wish to investigate two properties of a superconductor, the development of a condensate at low temperatures and the conductivity at different frequencies. We are interested in a superconductor subject to spatially uniform conditions, the applied electric field is uniform and the chemical potential is uniform. The atomic lattice and its imperfections are thus not accounted for but interesting superconductivity behaviour has been obtained anyways \cite{hartnoll9}. It is thus enough to look at a system with translational symmetry in the $x$ and $y$ directions. A rotationally invariant superconductor will further be studied. The system is subject to conditions constant in time, e.g. no time-dependent chemical potential. This lets us assume time-independence while solving the non-linear field equations.\\
 
-It is thus enough to look at a system with translational symmetry in the $x$ and $y$ directions.\\
+The conductivity is the linear electrical current response to an applied transverse electrical field. We can apply this in the $x$ direction due to the rotational symmetry. We let the applied field have a harmonic time dependence $\exp(\i t \omega)$ so we can get the response function in the frequency domain. The linear response is sought so the applied field should be infinitesimal. The applied field breaks the rotational and time symmetries but since it is infinitesimal and we are not interested in the effect is has on the other fields it can be neglected while calculating them. The applied field is later added with the other fields as background solutions.\\
+The electrical field in the $x$-direction is $E_x=F_{xt}=\nabla_xA^t-\nabla_tA^x$. Translational symmetry gives $E_x=\nabla_tA^x$.
 
-The conductivity is the electrical current response to an applied electrical field. The applied electric field is infinitesimal so we will solve the non-linear field equations without it and then add it as a perturbation. The non-linear system is thus also rotationally symmetric. The superconductor is subject to conditions constant in time except for the applied electrical field, e.g. no time-dependent chemical potential. This lets us assume time-independence while solving the non-linear field equations. 
+These limitations lets us do the following definitions
+\begin{equation}
+ \begin{split}
+  \d s^2&=g_{zz}(z)\d z^2+g_{tt}(z)\d t^2+g_{xx}(z)(\d x^2+\d y^2)  \\
+  \psi&=\psi(z)\\
+  A_a&=(A_z(z), \At(z), A_x(z)\exp(\i t \omega), 0)
+ \end{split}\label{defs}
+\end{equation}
+where $\At(z)$ is infinitesimal.
+The gauge condition requires
+\begin{equation}
+ \nabla_aA^a=\partial_aA^a+\Gamma^a_{\ ba}A^b=0
+\end{equation}
+this gives a homogeneous first-order linear ordinary differential equation for $A_z(z)$. The remaining gauge symmetry can be used to set $A_z(z)=0$ for a $z$ and $A_z(z)$ can thus be taken to be identically 0 for all $z$.\\
+The non-zero components of the electromagnetic tensor then become
+\begin{equation}
+\begin{split}
+ &F_{zt}(z)=-F_{tz}(z)=\At'(z)\\
+ &F_{zx}(z,t)=-F_{xz}(z,t)=A_x'(z)\exp(\i t \omega)\\
+ &F_{tx}(z,t)=-F_{xt}(z,t)=\i\omega A_x(z)\exp(\i t \omega)
+\end{split}
+\end{equation}
+The explicit $z$ and $t$-dependence of these functions will hereafter be ommited. Another useful quantity is
+$\nabla_aF^{ab}$
+\begin{equation}
+ \nabla_aF^{ab}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}+\Gamma^b_{\ ca}F^{ac}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}
+\end{equation}
+
 \section{Metric}
-The Lagrangian, \eqref{L}, contains an Einstein-Hilbert term with a cosmological constant.
+The bulk equation of motion for the metric $g_{ab}$ is Einstein equation with a cosmological constant
 \begin{equation}
-\Lambda=-\frac{3}{L^2}
+R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\lambda=\kappa T_{ab}\label{einstein}
 \end{equation}
-where $L$ is a length.
-A Gibbons-Hawking-York boundary term is also needed \cite{PhysRevD.15.2752}, \cite{PhysRevLett.28.1082} TODO, read, comment.
+where $R_{ab}$ is the Ricci curvature tensor and $T_{ab}$ is the energy-momentum tensor. We assumed the probe limit in Section \ref{kappa} and therefore neglect the right hand side of this equation. We thus seek a vacuum solution to Einstein equation with a negative cosmological constant. We want a translationally invariant solution in the $t$, $x$, and $y$ directions that is asymptotically AdS.
+The probe limit lets us solve the equations of motion for the metric independently of the other fields. 
+
+ We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole\cite{McGreevy:2009xe}, the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
- S_{\mathrm{grav}}=\frac{1}{2\kappa}\int \d^{d+1}x\sqrt{-g}\left(R-2\Lambda\right)-\frac{1}{\kappa}\int \d^dx\sqrt{\gamma}\left(-\gamma^{ab}\nabla_an_b+\frac{d-1}{L}\right)
+ g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d x^2+\d y^2\right).\label{metric}
 \end{equation}
-%Here $R$ is the Ricci scalar. The gravitational constant $\kappa$ (related to Newton's constant by $\kappa=8\pi G$) is assumed to be small so that we are in a so called ``probe limit''. We will later see when this assumption can't be trusted.
-$n_a$ is a normal vector at the boundary. The bulk equation of motion for the metric $g_{ab}$ is Einstein equation with a cosmological constant
+Here $f(z)=1-z^3z_h^{-3}$. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS. There is a horizon at $z=z_h$ where $f(z_h)=0$. The space behind the horizon can not affect the physics of the boundary and can thus be neglected in our calculations. This solution extended to imaginary time is dual to the field theory imaginary time path integral. The imaginary time path integral has periodicity $\tau~\tau+\beta$
 \begin{equation}
-R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\lambda=\kappa T_{ab}
+ T=\frac{3}{4\pi  z_h}\label{T}
 \end{equation}
-where $R_{ab}$ is the Ricci curvature tensor and $T_{ab}$ is the energy-momentum tensor. We assumed the probe limit in Section \ref{kappa} and therefore neglect the right hand side of this equation. We thus seek a vacuum solution to Einsteins equation with a negative cosmological constant. We want a translationally invariant solution in the $t$, $x$, and $y$ directions.
-The probe limit lets us solve the equations of motion for the metric independently of the other fields. We are looking for an equilibrium solution at a finite temperature $T$ and the solution is then known to be a black hole(TODO ref), the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
-\begin{equation}
- g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d \mathbf{x}^2\right).\label{metric}
-\end{equation}
-Here $f(z)=1-z^dz_h^{-d}$. The vector $\mathbf{x}$ thus has $d-1$ components. $f(z)$ approaches 1 at the boundary and the space is asymptotically AdS.\\
-All coordinates are evidently of the same unit. The gravitational part of the Lagrangian can now be removed and this background metric can be used instead of solving the equations of motion for the metric together with the fields. This gravitational part of the Lagrangian must though be kept when calculating the value of the total action. The Ricci scalar of this metric is
+This expression for the temperature agrees with the Beckenstein-Hawking temperature of a black hole.\\
+The backreaction $\Delta g_{ab}$ from the non-zero fields will be of order $\kappa T_{ab}$ according to \eqref{einstein}. The Einstein equation is obtained by varying the Lagrangian with respect to $g_{ab}$ so $\Delta S\propto\kappa^{-1}\Delta g_{ab}^2$ for the solution. We thus have that $\Delta S\propto\kappa T_{ab}^2$ and the backreaction can safely be neglected also when calculating the action from different field configurations.\\
+
+The gravitational part of the Lagrangian can now be removed and this background metric can be used instead of solving the equations of motion for the metric together with the fields. This gravitational part of the Lagrangian must though be kept when calculating the value of the total action which is dominated by the gravitational part. The Ricci scalar of the solution metric is
 \begin{equation}
  R=-\frac{d(d+1)}{L^2}=2\Lambda\frac{d+1}{d-1}
 \end{equation}
-TODO: does the region behind the horizon contribute?
-The action can be calculated using this. Consider the space $(z,t,\mathbf{x})\in[\epsilon,z_h]\times V$ corresponding to a $d$-volume of the boundary theory $V$. The action boundary density is then
+The action can be calculated using this. A Gibbons-Hawking-York boundary term is needed in addition to the Einstein-Hilbert term \cite{PhysRevD.15.2752}, \cite{PhysRevLett.28.1082} since we have a boundary with Dirichlet boundary conditions. The boundary term is
+\begin{equation}
+ S_{\mathrm{grav}}=\frac{1}{2\kappa}\int \d^{d+1}x\sqrt{-g}\left(R-2\Lambda\right)-\frac{1}{\kappa}\int \d^dx\sqrt{\gamma}\left(-\gamma^{ab}\nabla_an_b+\frac{d-1}{L}\right)
+\end{equation}
+where $n_a$ is a normal vector at the boundary. 
+ Consider the space $(z,t,\mathbf{x})\in[\epsilon,z_h]\times V$ corresponding to a $d$-volume of the boundary theory $V$. The action boundary density is then
 \begin{equation}
 \begin{split}
  \frac{S_{\mathrm{grav}}}{V}&=\frac{\Lambda}{\kappa}\left(\frac{d+1}{d-1}-1\right)\int_\epsilon^{z_h}\d z\sqrt{-g}+
@@ -248,11 +283,22 @@ The total action density is obtained as $\epsilon\rightarrow0$.
 
 The horizon $z_h$ and the curvature length $L$ set length scales in the metric. Length units in the numerical solution can be chosen such that $z_h=1$. This means that we for different temperatures have different units since $z_h$ is related to the temperature. We will have to convert between these units when comparing results from different temperatures.\\
 
-\begin{equation}
- T=\frac{d}{4\pi  z_h}\label{T}
-\end{equation}
+
 %This $T$ in units of energy is also in units of inverse length since we chose the energy unit to the inverse time it 
 \section{Equations of Motion}
+The equations of motion for $\psi(z)$, $\At(z)$ and $A_x(z)$ can now be obtained. Inserting \eqref{defs} into the equations of motion \eqref{eqm} and using the metric \eqref{metric} gives
+\begin{equation}
+ \begin{split}
+  &\left(-L^2m^2f+z^2f^2\partial_z\partial_z+zf(zf^\prime-2f)\partial_z+q^2z^2\phi^2\right)\psi=0\\
+  &\left(z^2f\partial_z\partial_z+2q^2\psi^2L^2\right)\phi=0\\
+ \end{split}
+\end{equation}
+the formulas in Appendix \ref{CAS} have here been used.
+
+ for contractions and covariant derivatives gives
+
+ $A_x(z)$ is infinitesimal and can thus be neglected when calculating $\psi(z)$, $\At(z)$ since we are not interested in the infinitesimal effect $A_x(z)$ has on them.
+
 First consider a system with $A_x=A_y=0$. The field equations obtained by varying the fields $\psi$, $\At$ are respectively
 \begin{eqnarray}
 0=\input{eqns/psieqm.tex}
@@ -610,18 +656,62 @@ TODO
 TODO
 \section{Outlook}
 TODO
-
 \begin{appendices}
 \section{Conventions in this Report\label{conventions}}
 The AdS space will be refered to as the bulk and the boundary conformal field theory will be referred to as the boundary theory or the superconductor.\\
 Vector quantities not involving time components will in the boundary theory be written with boldface, $\mathbf{E}, \mathbf{J}$.\\
-Tensor indices in the $d+1$-dimensional bulk theory will be TODO latin letters, $a,b,c,...8$. Tensor indices in the $d$-dimensional boundary theory will be TODO greek letters, $\mu,\nu,...$.
-The time-component will always come first in vectors and the metric sign convention for positive space-like distances will be chosen.\\
+Tensor indices in the $d+1$-dimensional bulk theory will be TODO latin letters, $a,b,c,...8$. Tensor indices in the $d$-dimensional boundary theory will be TODO greek letters, $\mu,\nu,...$. Tensors written in component form will have it's components ordered as $\mu=t,x,y$ on the boundary and $a=z,t,x,y$ in the bulk.
+The metric sign convention for positive space-like distances will be chosen.\\
 The action is calculated from the Lagrangian as
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{g}\L+S_\mathrm{boundary}.
 \end{equation}
 This is independent of coordinates but makes us use covariant derivatives for finding the equations of motion. The square root could instead be absorbed in the Lagrangian and the space time be considered flat. This has been done in computer-aided calculations of the equations of motion.
+\section{Computer-Aided Analytical Calculations\label{CAS}}
+The Christoffel symbols for the AdS black hole were calculated using \sympy. All the non-zero components are shown below.
+\begin{equation}
+\begin{split}
+&
+\Gamma_{zzz}=\frac{L^{2} \left(- z f^\prime\left(z\right) - 2 f\left(z\right)\right)}{2 z^{3} f^{2}\left(z\right)}=\frac{L^{2} z_h^{3} \left(5 z^{3} - 2 z_h^{3}\right)}{2 z^{3} \left(z^{6} - 2 z^{3} z_h^{3} + z_h^{6}\right)}\\
+&
+\Gamma_{ztt}=\frac{L^{2} \left(z f^\prime\left(z\right) - 2 f\left(z\right)\right)}{2 z^{3}}=\frac{L^{2} \left(- z^{3} - 2 z_h^{3}\right)}{2 z^{3} z_h^{3}}\\
+&
+\Gamma_{zxx}=\frac{L^{2}}{z^{3}}\\
+&
+\Gamma_{zyy}=\frac{L^{2}}{z^{3}}\\
+&
+\Gamma_{ttz}=
+\Gamma_{tzt}=\frac{L^{2} \left(- z f^\prime\left(z\right) + 2 f\left(z\right)\right)}{2 z^{3}}=\frac{L^{2} \left(z^{3} + 2 z_h^{3}\right)}{2 z^{3} z_h^{3}}\\
+&
+\Gamma_{xxz}=
+\Gamma_{xzx}=- \frac{L^{2}}{z^{3}}\\
+&
+\Gamma_{yyz}=
+\Gamma_{yzy}=- \frac{L^{2}}{z^{3}}\\
+\end{split}\label{CS}
+\end{equation}
+which gives
+\begin{equation}
+ R=\frac{- z^{2} f^{\prime\prime}\left(z\right) + 6 z f^\prime\left(z\right) - 12 f\left(z\right)}{L^{2}}=- \frac{12}{L^{2}}
+\end{equation}
+Some Christoffel symbol contractions are useful
+\begin{equation}
+\begin{split}
+&\Gamma^a_{\ az}=- \frac{4}{z}\\
+&\Gamma^a_{\ at}=0\\
+&\Gamma^a_{\ ax}=0\\
+&\Gamma^a_{\ ay}=0\\
+&g^{ab}\Gamma^z_{\ ab}=\frac{z \left(- z f^\prime\left(z\right) + 2 f\left(z\right)\right)}{L^{2}}=\frac{z \left(z^{3} + 2 z_h^{3}\right)}{L^{2} z_h^{3}}\\
+&g^{ab}\Gamma^t_{\ ab}=0\\
+&g^{ab}\Gamma^x_{\ ab}=0\\
+&g^{ab}\Gamma^y_{\ ab}=0.
+\end{split}\label{CSsum}
+\end{equation}
+Using these one obtains
+\begin{equation}
+ \nabla_a\nabla^a\chi=\left(\partial_a\partial^a+\frac{z \left(z f^\prime\left(z\right) - 2 f\left(z\right)\right)}{L^{2}}\partial_z\right)\chi.
+\end{equation}
+for a scalar field $\chi$.
 \end{appendices}
 \bibliographystyle{unsrt}
 \bibliography{report}
