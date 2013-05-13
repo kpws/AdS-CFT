@@ -11,7 +11,7 @@ bbs,sols=sweep(lambda x,y:getBoundary(x,y,[0,a2]),[1e-6],oscN=1)
 rho=-np.array(bbs)[:,:,1,1].real
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 
-Tr=1  #use T = 2 T_c
+Tr=1
 rho=rhoc/Tr**2
 zh=1
 T=3./(zh*4.*np.pi)
@@ -40,11 +40,10 @@ pl.plot(ws,[s.real for s in sigmas],c='k',label=r'$\mathrm{AdS-CFT}$')
 pl.plot(ws,[s.real for s in drude],c=[1.0,0.,0.],ls='--',label=r'$\mathrm{Drude}$')
 pl.plot(ws,[s.imag for s in sigmas],c='k')
 pl.plot(ws,[s.imag for s in drude],ls='--',c=[1.,0.,0.])
-pl.plot(ws,[abs(s)-1 for s in sigmas],ls='-',c=[1.,0.,1.])
 pl.xlabel(r'$\frac{\omega}{T_c}$')
 pl.ylabel(r'$\sigma$')
 pl.xscale('log')
-ai=50
+ai=35
 pl.annotate(r'$\mathrm{Re}(\sigma)$',xy=(ws[ai],sigmas[ai].real), xycoords='data',
                           xytext=(-45, -25), textcoords='offset points', fontsize=10,
                                    arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=.2"))
@@ -54,5 +53,5 @@ pl.annotate(r'$\mathrm{Im}(\sigma)$',xy=(ws[ai],sigmas[ai].imag), xycoords='data
                                    arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=-.2"))
 
 pl.legend()
-saveFig('drude_2Tc_a2.01')
+saveFig('drude_T_'+str(Tr)+'Tc_a2_'+str(a2))
 pl.show()

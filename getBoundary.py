@@ -16,8 +16,9 @@ name='massTest'
 params=m2,alpha1,alpha3=sp.symbols(['m2','alpha1','alpha3'],real=True)
 varParams=w,alpha2=[sp.Symbol('w',positive=True),sp.Symbol('alpha2',real=True)]
 #fields
-fieldsF=[sp.Symbol('psi'), sp.Symbol('phi'), sp.Symbol('Ax')]
-A=[sp.S(0), fieldsF[1](M.x[0]), fieldsF[2](M.x[0]), sp.S(0)]
+fieldsF=[sp.Symbol('psi'), sp.Symbol('phi'), sp.Symbol('Ax'), sp.Symbol('Axf')]
+A=[sp.S(0), fieldsF[1](M.x[0]), fieldsF[2](M.x[0],M.x[1]), sp.S(0)]
+Axf=fieldsF[3](M.x[0])*sp.exp(M.x[1]*w*sp.I)
 psi=fieldsF[0](M.x[0])
 fields=[psi,A[1],A[2]]
 #Assumptions on the parameters.   -9/4<m^2<-1
@@ -30,7 +31,7 @@ print('Generating Lagrangian...')
 try:
     L=sp.sympify(load(open('cache/L')),dict(zip([str(s) for s in syms],syms)))
 except IOError:
-    L=getLagrangian(M,m2,0,0,alpha2,psi,[A[0],A[1],A[2]*sp.exp(w*M.x[1]),A[3]],verbose=True)
+    L=getLagrangian(M,m2,0,0,alpha2,psi,A,verbose=True)
     dump(str(L),open('cache/L','w'))
 L=L.subs(ass)
 dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
@@ -39,9 +40,12 @@ Lfun=sp.lambdify([M.x[0]]+varParams+dummies, L.subs(zip(dofs, dummies)[::-1]).su
 
 
 print('Calculating equations of motion...')
-eqm=[fieldEqn(L,f,M.x).expand().collect(f) for f in fields]
-eqm=[series(e,A[2]).doit().simplify() for e in eqm] #assume small Ax, gives eqm linear in Ax
-
+eqm=[fieldEqn(L,f,M.x).subs(A[2],0).doit().simplify() for f in fields[:2]]
+d=sp.Dummy()
+eqm.append(series(fieldEqn(L,A[2],M.x).subs(A[2],d*Axf).doit(),d).subs(d,1).doit().simplify())
+eqm=[sp.fraction(e.cancel())[0] for e in eqm]
+fields[2]=fieldsF[3](M.x[0])
+del A
 
 print('Solving indicial equations...')
 try:
