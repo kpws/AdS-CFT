@@ -313,54 +313,86 @@ The equations of motion for $\psi(z)$, $\At(z)$ and $A_x(z)$ can now be obtained
  &\Big(-2q^2\psi^2L^2+z^2f\partial_z\partial_z\Big)\phi=0\\
  &\Big(-2q^2\psi^2L^2f+z^2\omega^2+z^2ff^\prime\partial_z+z^2f^2\partial_z\partial_z\Big)A_x=0
 \end{empheq}
-The formulas in Appendix \ref{CAS} have here been used.\\
+The formulas in Appendix \ref{CAS} have here been used.
 \section{AdS Boundary behaviour of Fields}
-A Frobenious expansion of these equations can be done at the boundary, $z=0$. The leading behaviour of the fields are
+A Frobenious expansion of these equations can be done at the boundary, $z=0$. The leading behaviours of the functions are
 \begin{empheq}[left=\empheqlbrace]{align}
- &\psi=\psi_0(z)^{}+\psi_1(z)^{}\\
- &\phi=(z)^\Delta\\
- &A_x=(z)^\Delta
+ &\psi=\psi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\psi}\\
+ &\phi=\phi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\phi}\\
+ &A_x=A_{x(0)}\left(\frac{z}{z_h}\right)^{\Delta_{A_x}}
 \end{empheq}
-Now consider the boundary, $z=0$. The functions $\psi$, $\psi$, $A_x$ can be expanded in Laurent series. Our metric is asymptotically AdS so $f(0)\rightarrow1, zf'(0)\rightarrow0$. $\psi$ can be expanded at the boundary as a Laurent series. Call the lowest exponent in this series $\Delta$. $\psi$ will then behave as $(z/L)^\Delta$ near the boundary. This should solve the differential equation in the near boundary limit. Insertion of $z^\Delta$ into the differential equation and taking the limit of small $z$ gives
+where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to be determined. This is a slight assumption since not all functions have this type of leading behaviour.
+ Entering this in the equations of motion yields
+ \begin{empheq}[left=\empheqlbrace]{align}
+  &q^2z^2\phi_{(0)}^2s^{2\Delta_\phi}-L^2m^2f+f(zf^\prime-2f)\Delta_\psi+f^2\Delta_\psi(\Delta_\psi-1) =0\label{ind1}\\
+  &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2+f\Delta_\phi(\Delta_\phi-1)=0\label{ind2}\\
+  &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2f+z^2\omega^2+zff^\prime\Delta_{A_x}+f^2\Delta_{A_x}(\Delta_{A_x}-1)=0.
+ \end{empheq}
+where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$. Assume the strict inequalities. The leading order behaviour is then
+ \begin{empheq}[left=\empheqlbrace]{align}
+  &-L^2m^2-2\Delta_\psi+\Delta_\psi(\Delta_\psi-1) =0\\
+  &\Delta_\phi(\Delta_\phi-1)=0\\
+  &\Delta_{A_x}(\Delta_{A_x}-1)=0.
+ \end{empheq}
+with solutions
+ \begin{empheq}[left=\empheqlbrace]{align}
+  &\Delta_\psi =\frac{3}{2}\pm\sqrt{\frac{9}{4}+L^2m^2}\label{indicialSo1}\\
+  &\Delta_\phi=0,1\\
+  &\Delta_{A_x}=0,1\label{indicialSol3}.
+ \end{empheq}
+Now assume $\Delta_\psi=0$. \eqref{ind2} gives
 \begin{equation}
-\begin{split}
-0&=-z^22\Delta(\Delta-1)z^{\Delta-2}-\left((-d+1)2z + z^22f'(z)\right)\Delta z^{\Delta-1} -L^2V'(z^{\Delta})\\
-&=z^{\Delta}\left(-2\Delta(\Delta-1)-2(-d+1)\Delta\right)-L^2V'(z^{\Delta}).
-\end{split}
+ -2q^2\psi_{(0)}^2L^2+\Delta_\phi(\Delta_\phi-1)=0
 \end{equation}
-Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2+\mathcal{O}(\psi^3)$. We then get the following equation for $\Delta$
-\begin{equation}
-\begin{split}
-%0=\Delta(\Delta-1)-(d-1)\Delta-L^2m^2=\\
-0=\Delta^2-d\Delta-L^2m^2
-\end{split}
-\end{equation}
-in the limit $z\rightarrow0$. This has solutions
-\begin{equation}
-\begin{split}
-\Delta=\frac{d\pm\sqrt{d^2+4L^2m^2}}{2}.
-\end{split}
-\end{equation}
-$\psi$ thus goes as $z^{\Delta_0}$ where $\Delta_0$ is the smaller solution and $\Delta_1$ the larger. The leading behaviour of $\psi$ near $z=0$ is
-\begin{equation}
- \psi=\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}
-\end{equation}
-unless $\Delta_1-\Delta_0>=1$ and further terms from the series corresponding to $\Delta_0$ must be included.\\
-
-
-
-Solving the indicial equation gives the boundary behaviour of the fields.
+while \eqref{ind1} gives $\Delta_\phi=-1$. We then have
+ \begin{empheq}[left=\empheqlbrace]{align}
+  &q^2\phi_{(0)}^2z_h^{2} =L^2m^2\label{spurious1}\\
+  &q^2\psi_{(0)}^2L^2=1\\
+  &\Delta_{A_x}(\Delta_{A_x}-1)=2.
+ \end{empheq}
+with solutions $\Delta_{A_x}=-1,2$.
+First assuming $\Delta_\phi=-1$ yields the same result. There are though no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
+All useful solutions are thus given by equation \ref{indicialSo1} to \ref{indicialSol3}.
 \subsection{Boundary conditions at Horizon}
-The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)$ must be zero for $A^t(z_h)$ to be finite.
- 
-\begin{eqnarray}
-0=\input{eqns/psieqm.tex}
-\end{eqnarray}
-\begin{eqnarray}
-0=\input{eqns/phieqm.tex}.
-\end{eqnarray}
-TODO, boundary conditions.\\
-These equations have the trivial solution
+The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)=\At(z_h)$ must be zero for $A^t(z_h)$ to be finite. Expand the fields as 
+\begin{empheq}[left=\empheqlbrace]{align}
+ &\psi=\psi_{(1)}s^{\Upsilon_\psi}\\
+ &\phi=\phi_{(1)}s^{\Upsilon_\phi}\\
+ &A_x=A_{x(1)}s^{\Upsilon_{A_x}}
+\end{empheq}
+where $s$ now is $(1-z/z_h)$. The function $f$ can be expanded as $f=1-z^3z_h^{-3}=1-(1-s)^3=3s-3s^2+s^3$.
+% \begin{empheq}[left=\empheqlbrace]{align}
+%  &q^2z^2\phi_{(1)}^2s^{2\Upsilon_\phi}-L^2m^2f-zf(zf^\prime-2f)s^{-1}\Upsilon_\psi+z^2f^2s^{-2}\Upsilon_\psi(\Upsilon_\psi-1)=0\\
+%  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2+z^2fs^{-2}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
+%  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2f+z^2\omega^2-z^2ff^\prime s^{-1}\Upsilon_{A_x}+z^2f^2s^{-2}\Upsilon_{A_x}(\Upsilon_{A_x}-1)=0
+% \end{empheq}
+Insert these leading terms in the equations of motion. We get
+\begin{empheq}[left=\empheqlbrace]{align}
+ &q^2z^2\phi_{(1)}^2s^{2\Upsilon_\phi}+9z_h^2\Upsilon_\psi+z_h^2 9\Upsilon_\psi(\Upsilon_\psi-1)=0\\
+ &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2+z_h^2 3s^{-1}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
+ &-6q^2\psi_{(1)}^2s^{2\Upsilon_\psi+1}L^2+z_h^2\omega^2+z_h^2 9\Upsilon_{A_x}+z_h^2 9\Upsilon_{A_x}(\Upsilon_{A_x}-1)=0.
+\end{empheq}
+Assume $2\Upsilon_\psi+1>0$. The leading terms are then
+\begin{empheq}[left=\empheqlbrace]{align}
+ &\Upsilon_\psi=0\\
+ &\Upsilon_\phi(\Upsilon_\phi-1)=0\\
+ &\omega^2+  9\Upsilon_{A_x}^2=0.
+\end{empheq}
+This has solutions
+\begin{empheq}[left=\empheqlbrace]{align}
+ &\Upsilon_\psi=0\\
+ &\Upsilon_\phi=1\\
+ &\Upsilon_{A_x}=\pm\frac{\i\omega}{3}.
+\end{empheq}
+The two possible $\Upsilon_{A_x}$ represent ingoing and outgoing solutions. $A_x(z,t)$ is close to the horizon
+\begin{equation}
+ s^{\pm\frac{\i\omega}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{\log s}{3})\big)
+\end{equation}
+The phase is constant for
+\begin{equation}
+ s=\exp(\mp3t)
+\end{equation}
+\\These equations have the trivial solution
 \begin{equation}
  \begin{split}
   \psi=&0\\
@@ -616,7 +648,7 @@ Causality implies that $\sigma(\tau)=0$ for $\tau<0$ since the current would oth
 \begin{equation}
  \sigma(\omega)=\int_0^\infty\sigma(\tau)\exp(\i\tau\omega)\d\tau
 \end{equation}
-and thus has an analytical extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ gives the Kramers–Kronig relations
+and thus has an analytical extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ give the Kramers–Kronig relations
 \begin{equation}
 \begin{split}
  \re(\sigma(\omega))&=\frac{2}{\pi}\int_0^\infty\frac{\omega^\prime\im(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\\
