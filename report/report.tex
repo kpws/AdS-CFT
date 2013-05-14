@@ -48,11 +48,22 @@
 \includegraphics{figs/front}
 }
 \maketitle
+
+\begin{abstract}
+The physics of certain condensed matter systems is not well understood due to strong coupling preventing perturbative descriptions.
+The AdS-CFT correspondence might allow a non-perturbative description of these systems and is in this thesis used to model a high-$T_c$ superconductor by a field theory outside a black hole in AdS space.
+%The AdS field theory is treated classically and in a gravitational probe limit.
+These computations are described in detail in the first part of the thesis.
+A model similar to that of Gary T. Horowitz and Jorge E. Santos\cite{horowitz} is used but using a higher-order term in the AdS field theory Lagrangian instead of adding a periodic lattice.
+The frequency dependent conductivity is calculated using this model and a superconducting phase is shown to appear below a critical temperature. The higher-order term is shown to give a Drude peak above the critical temperature and its properties are examined. This way of obtaining the Drude peak is computationally much simpler than the periodic lattice and might be a useful effective description.
+
+\end{abstract}
+
 \section*{Acknowledgements}
 Thanks Mum.
 \tableofcontents
 \chapter{Introduction}
-The AdS-CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space. AdS is the maximally symmetric space of constant negative curvature. AdS spaces have many interesting properies which will not be described here in detail. A useful visualization of a two-dimensional AdS space can be made by embedding it as a hyperbola in a three-dimensional space-time with two time directions. The inherited metric is then that of two-dimensional AdS-space with one time direction. See figure on the front of this report. The two time directions are there in the horizontal plane. This embedding gives a periodic time which is not necessary. The string theory in the AdS space is gravitational and thus perturbs the AdS space. The correspondence only requires an asymptotically AdS space. The boundary where the conformal field theory lives is then a flat space of one dimension lower. This difference in dimension is why this approach is called \emph{holographic}. The action of the isometry group of AdS space on the AdS boundary is the conformal group, thus requiring conformal symmetry of the boundary theory.\\
+The AdS-CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space. AdS is the maximally symmetric space of constant negative curvature. AdS spaces have many interesting properties which will not be described here in detail. A useful visualization of a two-dimensional AdS space can be made by embedding it as a hyperbola in a three-dimensional space-time with two time directions. The inherited metric is then that of two-dimensional AdS-space with one time direction. See figure on the front of this report. The two time directions are there in the horizontal plane. This embedding gives a periodic time which is not necessary. The string theory in the AdS space is gravitational and thus perturbs the AdS space. The correspondence only requires an asymptotically AdS space. The boundary where the conformal field theory lives is then a flat space of one dimension lower. This difference in dimension is why this approach is called \emph{holographic}. The action of the isometry group of AdS space on the AdS boundary is the conformal group, thus requiring conformal symmetry of the boundary theory.\\
 A conformal field theory is a quantum field theory with invariance under conformal transformations. The conformal group is the Poincar\'{e} group with dilations and special conformal transformations added. Dilations are scaling transformations. The word \emph{conformal} comes from the angle-preserving property of these transformations.\\
 
 There is no proof of the correspondence but it has been extensively tested. The field theory of the original conjecture\cite{Maldacena:1997re} was a supersymmetric Yang-Mills theory. Extensions of the conjecture has later been made and we will here use a field theory without supersymmetry. That the extended correspondence also holds is motivated in for example \cite{McGreevy:2009xe}.\\
@@ -354,7 +365,7 @@ with solutions $\Delta_{A_x}=-1,2$.
 First assuming $\Delta_\phi=-1$ yields the same result. There are though no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
 All useful solutions are thus given by equation \ref{indicialSo1} to \ref{indicialSol3}.
 \subsection{Boundary conditions at Horizon}
-The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)=\At(z_h)$ must be zero for $A^t(z_h)$ to be finite. Expand the fields as 
+The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)=\At(z_h)$ must be zero for $A^t(z_h)$ to be finite. $A^t$ must be finite since  Expand the fields as 
 \begin{empheq}[left=\empheqlbrace]{align}
  &\psi=\psi_{(1)}s^{\Upsilon_\psi}\\
  &\phi=\phi_{(1)}s^{\Upsilon_\phi}\\
@@ -382,16 +393,13 @@ This has solutions
 \begin{empheq}[left=\empheqlbrace]{align}
  &\Upsilon_\psi=0\\
  &\Upsilon_\phi=1\\
- &\Upsilon_{A_x}=\pm\frac{\i\omega}{3}.
+ &\Upsilon_{A_x}=\pm\frac{\i\omega}{3}\label{inout}.
 \end{empheq}
 The two possible $\Upsilon_{A_x}$ represent ingoing and outgoing solutions. $A_x(z,t)$ is close to the horizon
 \begin{equation}
  s^{\pm\frac{\i\omega}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{\log s}{3})\big)
 \end{equation}
-The phase is constant for
-\begin{equation}
- s=\exp(\mp3t)
-\end{equation}
+The phase is constant for $s=\exp(\mp3t)$ so the plus sign in \eqref{inout} gives the ingoing solution.
 \\These equations have the trivial solution
 \begin{equation}
  \begin{split}
