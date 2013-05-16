@@ -50,21 +50,23 @@
 \maketitle
 
 \begin{abstract}
-The physics of certain condensed matter systems is not well understood due to strong coupling preventing perturbative descriptions.
-The AdS-CFT correspondence might allow a non-perturbative description of these systems and is in this thesis used to model a high-$T_c$ superconductor by a field theory outside a black hole in AdS space.
-%The AdS field theory is treated classically and in a gravitational probe limit.
-These computations are described in detail in the first part of the thesis.
-A model similar to that of Gary T. Horowitz and Jorge E. Santos\cite{horowitz} is used but using a higher-order term in the AdS field theory Lagrangian instead of adding a periodic lattice.
-The frequency dependent conductivity is calculated using this model and a superconducting phase is shown to appear below a critical temperature. The higher-order term is shown to give a Drude peak above the critical temperature and its properties are examined. This way of obtaining the Drude peak is computationally much simpler than the periodic lattice and might be a useful effective description.
-
+The physics of certain condensed matter systems is not well understood due to strong coupling preventing perturbative descriptions and in certain cases also numerical simulations.
+The AdS/CFT correspondence might allow a non-perturbative description of these systems in terms of a dual weakly coupled system. In this thesis the AdS/CFT correspondence is used to model a high-$T_c$ superconductor by a field theory outside a black hole in AdS space. The frequency dependent conductivity is calculated using this model and a superconducting phase is shown to appear below a critical temperature.
+These computations are described in detail in the first part of the thesis. 
+In the second part of the thesis is, in the spirit of effective field theory, a higher curvature correction included on the gravity side of the correspondence.
+The correction is shown to give a Drude peak and its properties are examined.
+Another way to introduce a Drude peak is by introducing a periodic lattice\cite{horowitz}, as was recently done by Horowitz et al. Our way of obtaining the Drude peak is computationally much simpler than the periodic lattice and might be a useful effective description.
 \end{abstract}
 
 \section*{Acknowledgements}
 Thanks Mum.
 \tableofcontents
 \chapter{Introduction}
-The AdS-CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space. AdS is the maximally symmetric space of constant negative curvature. AdS spaces have many interesting properties which will not be described here in detail. A useful visualization of a two-dimensional AdS space can be made by embedding it as a hyperbola in a three-dimensional space-time with two time directions. The inherited metric is then that of two-dimensional AdS-space with one time direction. See figure on the front of this report. The two time directions are there in the horizontal plane. This embedding gives a periodic time which is not necessary. The string theory in the AdS space is gravitational and thus perturbs the AdS space. The correspondence only requires an asymptotically AdS space. The boundary where the conformal field theory lives is then a flat space of one dimension lower. This difference in dimension is why this approach is called \emph{holographic}. The action of the isometry group of AdS space on the AdS boundary is the conformal group, thus requiring conformal symmetry of the boundary theory.\\
-A conformal field theory is a quantum field theory with invariance under conformal transformations. The conformal group is the Poincar\'{e} group with dilations and special conformal transformations added. Dilations are scaling transformations. The word \emph{conformal} comes from the angle-preserving property of these transformations.\\
+The AdS/CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space.\\
+AdS is the maximally symmetric space of constant negative curvature. AdS spaces have many interesting properties which will not be described here in detail. A visualization of a two-dimensional AdS space can be made by embedding it as a hyperbola in a three-dimensional space-time with two time directions. The inherited metric is then that of two-dimensional AdS-space with one time direction. See figure on the front of this report. The two time directions are there in the horizontal plane. This embedding gives a periodic time which is not necessary. AdS space has, as opposed to Minkowski space, a boundary at spatial infinity. This boundary often called the \emph{conformal boundary} can be reached by a massless particle in finite time and boundary conditions must be specified here for a field theory in AdS space. The action of the isometry group of AdS space on the conformal boundary is the conformal group, thereof the name.\\
+
+The string theory in the AdS space is gravitational and thus perturbs the AdS space. The correspondence only requires an asymptotically AdS space. The boundary of the AdS space where the CFT lives is a Minkowski space of one spatial dimension lower. This difference in dimension is why this approach is called \emph{holographic}. The AdS isometry group requires conformal symmetry of the boundary theory which thus is a conformal field theory.
+A conformal field theory is a quantum field theory with invariance under conformal transformations. The conformal group is the Poincar\'{e} group with dilations and special conformal transformations added. Dilations are scaling transformations. The word \emph{conformal} comes from the angle-preserving property of these transformations.\\ This means that the CFT can be scaled by a factor $s$, TODO write.
 
 There is no proof of the correspondence but it has been extensively tested. The field theory of the original conjecture\cite{Maldacena:1997re} was a supersymmetric Yang-Mills theory. Extensions of the conjecture has later been made and we will here use a field theory without supersymmetry. That the extended correspondence also holds is motivated in for example \cite{McGreevy:2009xe}.\\
 
@@ -77,16 +79,65 @@ The strength of the duality comes from that the bulk theory is weakly coupled wh
 %\end{figure}
 
 \section{The Correspondence\label{correspondence}}
-The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
+The correspondence can be formulated through
 \begin{equation}
- Z_{\text{CFT}}=Z_{\text{strings}}
-\label{GKPW}
+ Z_{bulk}(\phi_0)=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}\label{fulCorr}
 \end{equation}
-where $Z_{\text{CFT}}$ is the partition function of the boundary theory and $Z_{\text{strings}}$ is the partition function of the bulk theory. The exact relation between the Lagrangians of the theories is unknown. Fields in the boundary theory correspond to fields in the bulk theory of same spin.\\
-The boundary theory being scale invariant has different scalings for different operators. Consider an operator $\mathcal{O}$. Scaling the boundary ...TODO
-%but the boundary values of fields in the bulk theory correspond to fields in the CFT.
-TODO
-Lorentz invariance, relativity, causality, locality?
+ \cite{hartnoll8}. Here $Z_{bulk}(\phi_0)$ is the partition function for the bulk theory with boundary condition at the conformal boundary $\phi_0$. The partition function is defined as TODO.\\
+The expectation value on the right-hand side is of a field theory at a temperature given by the periodicity of the path integral for the partition function. The field $\phi_0$ is source to the operator $\mathcal{O}$,
+\begin{equation}
+\mathcal{O}= \frac{\delta S_{CFT}}{\delta \phi_0}
+\end{equation}
+where $S_{CFT}$ is the CFT action.
+\\
+The boundary theory becomes classical for a gauge boundary theory with a large number of colors, a large $N$. We do not have a large-$N$ theory but a similar effect is expected for strongly coupled boundary theories so a classical bulk theory is assummed. See for example \cite{McGreevy:2009xe} for a thorough treatment of when the bulk theory can be considered classical. The partition function is then given in a semi-classical limit by
+\begin{equation}
+ Z_{bulk}(\phi_0)=C\exp(\i S_c)
+\end{equation}
+where $S_c$ is the bulk theory action for the classical periodic path in Euclidean time\cite{hartnoll8} and $C$ is a constant. This path has boundary condition at the conformal boundary described by $\phi_0$.\\
+Expectation values of the CFT operator $\mathcal{O}(x)$ can be calculated by
+\begin{equation}
+\begin{split}
+\frac{\delta S_c(\phi_0)}{\delta\phi_0(x)}|_{\phi_0=0}&=
+-\i\frac{\delta\log Z_{bulk}(\phi_0)}{\delta\phi_0(x)}|_{\phi_0=0}\\
+&=-\i\frac{\delta\log\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}{\delta\phi_0(x)}|_{\phi_0=0}\\
+&=\frac{\left\langle\sqrt{g_0}\phi_0\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}{\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}|_{\phi_0=0}\\
+&=\langle \sqrt{g_0}\mathcal{O}(x) \rangle_{FT}
+\end{split}
+\end{equation}
+where the first equality comes from the semi-classical approximation and the second equality from \eqref{fulCorr}.
+% The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
+% \begin{equation}
+%  Z_{\text{CFT}}(h)=Z_{\text{strings}}(h)
+% \label{GKPW}
+% \end{equation}
+% where $Z_{\text{CFT}}(h)$ is the partition function of the boundary theory and $Z_{\text{strings}}(h)$ is the partition function of the bulk string-theory. The exact relation between the Lagrangians of the theories is unknown. That the conformal structure fo the two theories are the same 
+% 
+% Fields in the boundary theory correspond to fields in the bulk theory of same spin.\\
+% The boundary theory being scale invariant has different scalings for different operators. Consider an operator $\mathcal{O}$. Scaling the boundary ...TODO
+% %but the boundary values of fields in the bulk theory correspond to fields in the CFT.
+% TODO
+% Lorentz invariance, relativity, causality, locality?
+
+
+% 
+% The boundary values of the bulk fields correspond to fields in the CFT. Expectation values of observables in the CFT can be calculated using a generating functional $Z[J]$. This is a partition function for a system with a perturbed Lagrangian $\L_J(x)=\L(x)+J(x)\mathcal{O}(x)$. Here $\mathcal{O}(x)$ is a local operator on the fields. The generating functional can be regarded an expectation value of a system with the original Lagrangian $\L$.
+% \begin{equation}
+% \begin{split}
+%  Z[J]&=\int_0^{-\i\beta} \mathcal{D}[\psi(t)]\e^{\i \int (\L(\psi(x))+J(x)\mathcal{O}(\psi(x))})\\
+% &=Z[0]\int_0^{-\i\beta} \mathcal{D}[\psi(t)]\frac{\e^{\i\int \L(\psi(x))}}{Z[0]}\e^{\i\int J(x)\mathcal{O}(\psi(x))}\\
+% &=Z[0]\langle\e^{\i\int J(x)\mathcal{O}(\psi(x))}\rangle
+% \end{split}
+% \end{equation}
+% Taking a functional derivative of this gives:
+% \begin{equation}
+% \begin{split}
+%  \frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}&=\frac{Z[0]\langle-\i\i \mathcal{O}(\psi(x))\e^{\i\int J(x)\mathcal{O}(\psi(x))}\rangle}{  Z[0]\langle\e^{\i \int J(x)\mathcal{O}(\psi(x))}\rangle }\big |_{J=0}\\
+% &= \langle \mathcal{O}(\psi(x))\rangle\label{expectation}
+% \end{split}
+% \end{equation}
+% The partition functions of the bulk and boundary theories are the same even for a perturbed Lagrangian. Both Lagrangians are then perturbed. Expectation values of operators of the boundary theory can thus be calculated using the partition function for the bulk theory. %It is though not trivial to figure out what fields in the bulk theory corresponds to what operators in the boundary theory. 
+% %The next chapter will show how to solve the bulk theory and obtain CFT observables.
 \section{Applications}
 The correspondence can be used both ways but we will consider a strongly coupled boundary theory. Conformal field theories are characterized by not having any specific length scale. Physics at critical points often have this property. A critical point can be a thermodynamic phase transition or a quantum phase transition. The characteristic length goes to infinity as the critical point is approached and the length scale disappears. The physics near a critical point can be expected to be similar to the critical system and finding the critical behaviour is then of interest.\\
 
@@ -107,15 +158,15 @@ There are many different ways to construct a bulk Lagrangian for the fields $A_a
  \mathcal{L}=&\frac{1}{2\kappa}\left(R-2\Lambda\right)-\frac{1}{4}F_{ab}F^{ab}-m^2|\psi|^2-|D_a\psi|^2
 \label{L}
 \end{eqnarray}
-This is obtained using Wilsonian naturalness meaning that the lowest order terms obeying all symmetries are used. A higher order term will be investigated in \ref{higherOrder}.\\
+This is obtained using Wilsonian naturalness meaning that the lowest order terms obeying all symmetries are used. A higher order term will be investigated in Chapter \ref{higherOrder}.\\
 
 The action $S$ is calculated from this Lagrangian from
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{g}\L+S_\mathrm{boundary}.
 \end{equation}
-where $g$ is the absolute value of the determinant of the metric tensor, $g=|\det g_{ab}|$. $S_\mathrm{boundary}$ is a boundary term that later will be determined. It doesn't affect the equations of motion but is needed for getting normalizeable modes.\\
+where $g$ is the absolute value of the determinant of the metric tensor, $g=|\det g_{ab}|$. $S_\mathrm{boundary}$ is a boundary term that is needed to cancel divergences when integrating the action towards the boundary. It does not affect the equations of motion but is needed to get normalizeable modes.\\
 
-The first term of the Lagrangian is an Einstein-Hilbert term with a cosmological constant $\Lambda$. A negative cosmological constant gives a asymptotically anti-de-Sitter space as required. $R$ is the Ricci scalar curvature obtained from the nmetric $g_{ab}$. The constant $\kappa$ determines the coupling between the metric and the other fields.\\
+The first term of the Lagrangian is an Einstein-Hilbert term with a cosmological constant $\Lambda$. A negative cosmological constant gives a asymptotically anti-de-Sitter space as required. $R$ is the Ricci scalar curvature obtained from the metric $g_{ab}$. The constant $\kappa$ determines the coupling between the metric and the other fields.\\
 
 The second term is an ordinary Maxwell term where the electromagnetic tensor $F_{ab}$ is the exterior derivative of the electromegnatic field tensor, $F_{ab}=\partial_aA_b-\partial_bA_a$.\\
 
@@ -174,61 +225,44 @@ $m$ is the mass of the scalar field in the bulk. What values of $m$ that are sui
 
 
 
-\section{Partition Function}
-The partition function is a concept from statistical physics. It is for a quantum-mechanical system defined as
-\begin{equation}
- Z(\beta)=\mathrm{tr}(\e^{-\beta\hat{H}})
-\end{equation}
-where $\hat{H}$ is the time-independent Hamiltonian and $\beta=(k_BT)^{-1}$ where $k_B$ is Boltzmann's constant and $T$ is the temperature. Hereafter we let $k_B=1$ meaning that we measure temperature in units of what energy it corresponds to. The partition function is similar to the trace of the time-evolution operator $\hat{U}(t_2,t_1)$ evolving a state from time $t_1$ to $t_2$
-\begin{equation}
- \mathrm{tr}(\hat{U}(t_2,t_1))=\mathrm{tr}(\e^{-\i\frac{(t_2-t_1)\hat{H}}{\hbar}})=f(t_2-t_1).
-\end{equation}
-We will hereafter let $\hbar=1$ by measuring energy in units of inverse time. The partition function can be obtained as the analytical extension of $f$,
-\begin{equation}
- Z(\beta)=f(-\i\beta).
-\end{equation}
-The trace of the time evolution operator can be calculated as an integral over configuration space which in our case will be field configurations $\Psi$,
-\begin{equation}
- f(t)=\int \mathcal{D}[\Psi] \bracket{\Psi}{\hat{U}(t,0)}{\Psi}.
-\end{equation}
-The time-evolution operator matrix elements can be calculated using Feynman's path integrals \cite{feynman1965quantum},
-\begin{equation}
- \bracket{\Psi_2}{\hat{U}(t,0)}{\Psi_1}=\int_{\Psi_1}^{\Psi_2} \mathcal{D}[\Psi(t)]\e^{\i S[\Psi(t)]}
-\end{equation}
-where $S[\Psi(t)]$ is the action of the path $\Psi(t)$ through field configurations. Combining these results tells us that the trace $f(t)$ can be calculated as a periodic time path integral with period $t$
-\begin{equation}
- f(t)=\int_0^t \mathcal{D}[\Psi(t)]\e^{\i S[\Psi(t)]}.
-\end{equation}
-This means that $Z(\beta)$ can be obtained by calculating a path integral where the time is imaginary and periodic. The action must be analytically extended to imaginary time $\tau=\i t$. 
-%\begin{equation}
-% S[\Psi(\tau)]=\int_0^\beta\d \tau\int\d x\sqrt{g} \L(\Psi(\tau),\Psi^\prime(\tau),...)
-%\end{equation}
-The metric of the CFT is the metric induced from the bulk theory. The boundary is time-like and the time periodicity of the two theories are thus the same. This means that they are at the same temperatures. The path integral can for a classical theory be calculated using the saddle point approximation. The partition function is then
-\begin{equation}
- Z(\beta)=f(-\i\beta)\stackrel{\mathrm{classical}}{=} \e^{ \i S_c}\label{classical}
-\end{equation}
-where $S_c$ is the action of classical periodic path with period $-\i\beta$. For a solution stationary in time the action is $S_c=-\i\beta L_c$ where $L_c$ is the imaginary time saddle-point Lagrangian. The classical partition function then becomes
-\begin{equation}
- Z(\beta)= \e^{\beta L_c}\label{classical2}
-\end{equation}
-\section{Field Theory Expectation Values}
-The boundary values of the bulk fields correspond to fields in the CFT. Expectation values of observables in the CFT can be calculated using a generating functional $Z[J]$. This is a partition function for a system with a perturbed Lagrangian $\L_J(x)=\L(x)+J(x)\mathcal{O}(x)$. Here $\mathcal{O}(x)$ is a local operator on the fields. The generating functional can be regarded an expectation value of a system with the original Lagrangian $\L$.
-\begin{equation}
-\begin{split}
- Z[J]&=\int_0^{-\i\beta} \mathcal{D}[\psi(t)]\e^{\i \int \L(\psi(x))+J(x)\mathcal{O}(\psi(x))}\\
-&=Z[0]\int_0^{-\i\beta} \mathcal{D}[\psi(t)]\frac{\e^{\i\int \L(\psi(x))}}{Z[0]}\e^{\i\int J(x)\mathcal{O}(\psi(x))}\\
-&=Z[0]\langle\e^{\i\int J(x)\mathcal{O}(\psi(x))}\rangle
-\end{split}
-\end{equation}
-Taking a functional derivative of this gives:
-\begin{equation}
-\begin{split}
- \frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}&=\frac{Z[0]\langle-\i\i \mathcal{O}(\psi(x))\e^{\i\int J(x)\mathcal{O}(\psi(x))}\rangle}{  Z[0]\langle\e^{\i \int J(x)\mathcal{O}(\psi(x))}\rangle }\big |_{J=0}\\
-&= \langle \mathcal{O}(\psi(x))\rangle\label{expectation}
-\end{split}
-\end{equation}
-The partition functions of the bulk and boundary theories are the same even for a perturbed Lagrangian. Both Lagrangians are then perturbed. Expectation values of operators of the boundary theory can thus be calculated using the partition function for the bulk theory. %It is though not trivial to figure out what fields in the bulk theory corresponds to what operators in the boundary theory. 
-The next chapter will show how to solve the bulk theory and obtain CFT observables.
+% \section{Partition Function}
+% The partition function is a concept from statistical physics. It is for a quantum-mechanical system defined as
+% \begin{equation}
+%  Z(\beta)=\mathrm{tr}(\e^{-\beta\hat{H}})
+% \end{equation}
+% where $\hat{H}$ is the time-independent Hamiltonian and $\beta=(k_BT)^{-1}$ where $k_B$ is Boltzmann's constant and $T$ is the temperature. Hereafter we let $k_B=1$ meaning that we measure temperature in units of what energy it corresponds to. The partition function is similar to the trace of the time-evolution operator $\hat{U}(t_2,t_1)$ evolving a state from time $t_1$ to $t_2$
+% \begin{equation}
+%  \mathrm{tr}(\hat{U}(t_2,t_1))=\mathrm{tr}(\e^{-\i\frac{(t_2-t_1)\hat{H}}{\hbar}})=f(t_2-t_1).
+% \end{equation}
+% We will hereafter let $\hbar=1$ by measuring energy in units of inverse time. The partition function can be obtained as the analytical extension of $f$,
+% \begin{equation}
+%  Z(\beta)=f(-\i\beta).
+% \end{equation}
+% The trace of the time evolution operator can be calculated as an integral over configuration space which in our case will be field configurations $\Psi$,
+% \begin{equation}
+%  f(t)=\int \mathcal{D}[\Psi] \bracket{\Psi}{\hat{U}(t,0)}{\Psi}.
+% \end{equation}
+% The time-evolution operator matrix elements can be calculated using Feynman's path integrals \cite{feynman1965quantum},
+% \begin{equation}
+%  \bracket{\Psi_2}{\hat{U}(t,0)}{\Psi_1}=\int_{\Psi_1}^{\Psi_2} \mathcal{D}[\Psi(t)]\e^{\i S[\Psi(t)]}
+% \end{equation}
+% where $S[\Psi(t)]$ is the action of the path $\Psi(t)$ through field configurations. Combining these results tells us that the trace $f(t)$ can be calculated as a periodic time path integral with period $t$
+% \begin{equation}
+%  f(t)=\int_0^t \mathcal{D}[\Psi(t)]\e^{\i S[\Psi(t)]}.
+% \end{equation}
+% This means that $Z(\beta)$ can be obtained by calculating a path integral where the time is imaginary and periodic. The action must be analytically extended to imaginary time $\tau=\i t$. 
+% %\begin{equation}
+% % S[\Psi(\tau)]=\int_0^\beta\d \tau\int\d x\sqrt{g} \L(\Psi(\tau),\Psi^\prime(\tau),...)
+% %\end{equation}
+% The metric of the CFT is the metric induced from the bulk theory. The boundary is time-like and the time periodicity of the two theories are thus the same. This means that they are at the same temperatures. The path integral can for a classical theory be calculated using the saddle point approximation. The partition function is then
+% \begin{equation}
+%  Z(\beta)=f(-\i\beta)\stackrel{\mathrm{classical}}{=} \e^{ \i S_c}\label{classical}
+% \end{equation}
+% where $S_c$ is the on-shell action for a periodic path with period $-\i\beta$. For a solution stationary in time the action is $S_c=-\i\beta L_c$ where $L_c$ is the imaginary time saddle-point Lagrangian. The classical partition function then becomes
+% \begin{equation}
+%  Z(\beta)= \e^{\beta L_c}\label{classical2}
+% \end{equation}
+
 \chapter{Solution of the Classical Bulk Theory}
 We wish to compute expectation values of the CFT. This will be done through the correspondence \eqref{GKPW}. The bulk theory must then be solved so that the partition function there can be obtained. The bulk theory was assumed to be classical in Section \ref{correspondence} so the system is solved by finding the equations of motion for the fields and solving them. This lets ut calculate the partition function and use it to find CFT expectation values through \ref{expectation}.
 \section{Definitions}
@@ -365,13 +399,13 @@ with solutions $\Delta_{A_x}=-1,2$.
 First assuming $\Delta_\phi=-1$ yields the same result. There are though no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
 All useful solutions are thus given by equation \ref{indicialSo1} to \ref{indicialSol3}.
 \subsection{Boundary conditions at Horizon}
-The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)=\At(z_h)$ must be zero for $A^t(z_h)$ to be finite. $A^t$ must be finite since  Expand the fields as 
+The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)$ must be zero because a finite $A_t(z_h)$ would give a finite Wilson loop around the periodic imaginary time circle whose length in time is 0. A Wilson loop is contrary to $A_t$ a physical quantity ($A_t$ is gauge-dependent). This gives a singular gauge connection which is unwanted\cite{hartnoll8}. We thus have $\At(z_h)=0$. Expand the fields as 
 \begin{empheq}[left=\empheqlbrace]{align}
  &\psi=\psi_{(1)}s^{\Upsilon_\psi}\\
  &\phi=\phi_{(1)}s^{\Upsilon_\phi}\\
  &A_x=A_{x(1)}s^{\Upsilon_{A_x}}
 \end{empheq}
-where $s$ now is $(1-z/z_h)$. The function $f$ can be expanded as $f=1-z^3z_h^{-3}=1-(1-s)^3=3s-3s^2+s^3$.
+where $s$ now is $(1-z/z_h)$ and $\Upsilon_\phi>0$. The function $f$ can be expanded as $f=3s-3s^2+s^3$.
 % \begin{empheq}[left=\empheqlbrace]{align}
 %  &q^2z^2\phi_{(1)}^2s^{2\Upsilon_\phi}-L^2m^2f-zf(zf^\prime-2f)s^{-1}\Upsilon_\psi+z^2f^2s^{-2}\Upsilon_\psi(\Upsilon_\psi-1)=0\\
 %  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2+z^2fs^{-2}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
@@ -383,30 +417,48 @@ Insert these leading terms in the equations of motion. We get
  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2+z_h^2 3s^{-1}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
  &-6q^2\psi_{(1)}^2s^{2\Upsilon_\psi+1}L^2+z_h^2\omega^2+z_h^2 9\Upsilon_{A_x}+z_h^2 9\Upsilon_{A_x}(\Upsilon_{A_x}-1)=0.
 \end{empheq}
-Assume $2\Upsilon_\psi+1>0$. The leading terms are then
-\begin{empheq}[left=\empheqlbrace]{align}
- &\Upsilon_\psi=0\\
- &\Upsilon_\phi(\Upsilon_\phi-1)=0\\
- &\omega^2+  9\Upsilon_{A_x}^2=0.
-\end{empheq}
-This has solutions
+Solving for the leading terms of these equations gives
+% \begin{empheq}[left=\empheqlbrace]{align}
+%  &\Upsilon_\psi=0\\
+%  &\Upsilon_\phi(\Upsilon_\phi-1)=0\\
+%  &\omega^2+  9\Upsilon_{A_x}^2=0.
+% \end{empheq}
+% This has solutions
 \begin{empheq}[left=\empheqlbrace]{align}
  &\Upsilon_\psi=0\\
  &\Upsilon_\phi=1\\
  &\Upsilon_{A_x}=\pm\frac{\i\omega}{3}\label{inout}.
 \end{empheq}
-The two possible $\Upsilon_{A_x}$ represent ingoing and outgoing solutions. $A_x(z,t)$ is close to the horizon
+The two possible $\Upsilon_{A_x}$ represent solutions going into or coming out of the horizon. $A_x(z,t)$ is close to the horizon
 \begin{equation}
- s^{\pm\frac{\i\omega}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{\log s}{3})\big)
+ s^{\pm\frac{\i\omega}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{\log s}{3})\big).
 \end{equation}
 The phase is constant for $s=\exp(\mp3t)$ so the plus sign in \eqref{inout} gives the ingoing solution.
-\\These equations have the trivial solution
+\section{Expectation Values of Field Theory Operators}
+These expectation values are calculated using \eqref{expectation} and \eqref{classical}.
 \begin{equation}
- \begin{split}
-  \psi=&0\\
-  \At=\mu-\mu\frac{z}{z_h}\label{trivial}
- \end{split}
+\begin{split}
+\langle \mathcal{O}(\psi(x))\rangle&=-\i\frac{\delta}{\delta J(x)}\log(Z_{\mathrm{CFT}}[J])|_{J=0}\\
+&\stackrel{\mathrm{GKPW}}{=}-\i\frac{\delta}{\delta J(x)}\log(Z_{\mathrm{Bulk}}[J])|_{J=0}\\
+&\stackrel{\mathrm{classical}}{=}\frac{\delta}{\delta J(x)}S_c|_{J=0}
+\end{split}
 \end{equation}
+where $J$ is the field coupling to the operator $\mathcal{O}$ in the field theory. $S_c$ here is the on-shell action. 
+The functional derivative is thus the change in the classical action when the boundary value of the fields are changed. The total change in the partition function is needed and the whole field solutions change when changing the boundary conditions so this must be taken into account. The derivative becomes
+\begin{equation}
+\begin{split}
+\frac{\delta}{\delta J(x)}S_c|_{J=0}=\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}\frac{\partial \phi_i(y)}{\partial J(x)}+\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\nabla_a\phi_i(y))}{\partial J(x)}\right)
+\end{split}
+\end{equation}
+where $i$ goes over all fields. Here the Lagrangian is assumed to only depend on the fields and their first derivatives. Now integrate by parts
+\begin{equation}
+\begin{split}
+\frac{\delta}{\delta J(x)}S_c|_{J=0}=&\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}-\nabla_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\right)\frac{\partial (\phi_i(y))}{\partial J(x)}\\
++&\int_{\partial\mathrm{AdS}} \d^{d}y\sqrt{g_0}n_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\phi_i(y))}{\partial J(x)}
+\end{split}
+\end{equation}
+where $n_a$ is an outward normal to the boundary of AdS.
+The first integral vanishes since the fields obey the Euler-Lagrange equation.
 
 \subsection{Choice of scalar mass $m$}
 The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman bound (BF) is a lower bound on $m^2$ of a massive scalar field in AdS space with . It requires
@@ -437,95 +489,6 @@ The effective mass breaks the BF-bound at $z_0$ when
    \sqrt{17}}-\sqrt[3]{142+34 \sqrt{17}}}}
 \end{equation}
 where \eqref{T} has been used.
-
-\section{Boundary Behavior of Bulk Fields}
-The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
-\begin{equation}
- S=\int\d^{d+1} x\sqrt{|\det g_{ab}|}\L\equiv\int\d^{d+1} x\sqrt{g}\L.
-\end{equation}
-The Euler-Lagrange equation is obtained by varying the action. The integration measure can then be regarded as part of the Lagrangian or covariant derivatives can be used in the derivation of the Euler-Lagrange equation. The measure becomes when using the metric \eqref{metric} $L^{d+1}z^{-d-1}$. The Euler-Lagrange equation gives
-\begin{equation}
-\begin{split}
- 0=\partial_a\left(\frac{\partial (z^{-d-1}(V(\psi)-(\partial_b\psi)^2)) }{\partial(\partial_a\At)}\right)-\frac{\partial  (z^{-d-1}(V(\psi)-(\partial_b\psi)^2) )}{\partial\At}=\\
- =-\partial_a\left(z^{-d-1}2\partial^a\psi\right)-z^{-d-1}V'(\psi)\\
-\end{split}
-\end{equation}
-We will be interested in boundary systems with translational symmetry so $\psi$ is assumed to be a function of $z$, TODO motivate more. The equation of motion then becomes
-\begin{equation}
-\begin{split}
-0=-\partial_z\left(z^{-d-1}2g^{zz}\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
--\partial_z\left(z^{-d-1}2(z^2L^{-2}f(z))\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
--z^{-d-1}2z^2L^{-2}f(z)\psi''-L^{-2}\left((-d+1)z^{-d}2f(z) + z^{-d+1}2f'(z)\right)\psi' -\frac{V'(\psi)}{z^{d+1}}
-\end{split}
-\end{equation}
-This gives a second order differential equation for $\psi(z)$
-\begin{equation}
-\begin{split}
-0=-z^22f(z)\psi''-\left((-d+1)z2f(z) + z^22f'(z)\right)\psi' -L^2V'(\psi)
-\end{split}
-\end{equation}
-Now consider the boundary, $z=0$. Our metric is required to be asymptotically AdS so $f(0)\rightarrow1, zf'(0)\rightarrow0$. $\psi$ can be expanded at the boundary as a Laurent series. Call the lowest exponent in this series $\Delta$. $\psi$ will then behave as $z^\Delta$ near the boundary. This should solve the differential equation in the near boundary limit. Insertion of $z^\Delta$ into the differential equation and taking the limit of small $z$ gives
-\begin{equation}
-\begin{split}
-0&=-z^22\Delta(\Delta-1)z^{\Delta-2}-\left((-d+1)2z + z^22f'(z)\right)\Delta z^{\Delta-1} -L^2V'(z^{\Delta})\\
-&=z^{\Delta}\left(-2\Delta(\Delta-1)-2(-d+1)\Delta\right)-L^2V'(z^{\Delta}).
-\end{split}
-\end{equation}
-Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2+\mathcal{O}(\psi^3)$. We then get the following equation for $\Delta$
-\begin{equation}
-\begin{split}
-%0=\Delta(\Delta-1)-(d-1)\Delta-L^2m^2=\\
-0=\Delta^2-d\Delta-L^2m^2
-\end{split}
-\end{equation}
-in the limit $z\rightarrow0$. This has solutions
-\begin{equation}
-\begin{split}
-\Delta=\frac{d\pm\sqrt{d^2+4L^2m^2}}{2}.
-\end{split}
-\end{equation}
-$\psi$ thus goes as $z^{\Delta_0}$ where $\Delta_0$ is the smaller solution and $\Delta_1$ the larger. The leading behaviour of $\psi$ near $z=0$ is
-\begin{equation}
- \psi=\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}
-\end{equation}
-unless $\Delta_1-\Delta_0>=1$ and further terms from the series corresponding to $\Delta_0$ must be included.\\
-
-What will the contribution to the action from this solution be? Consider the action contribution from the region $z\in[\epsilon,\delta]$ where $\delta$ is small and $\epsilon\rightarrow0$.
-\begin{equation}
-\begin{split}
- S_{[\epsilon,\delta]}=&\int_{z\in[\epsilon,\delta]}\d^{d+1} x\sqrt{g}\L=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2\psi^2-(\partial_a\psi)^2\right)=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2( \psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1} )^2-(\partial_a(\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}))^2\right)=\\
-=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right) \\
-&-g^{zz}L^{-2}(\Delta_0\psi_0\left(\frac{z}{L}\right)^{\Delta_0-1}+\Delta_1\psi_1\left(\frac{z}{L}\right)^{\Delta_1-1})^2\Big]=\\
-=&V\int_\epsilon^\delta\d z\left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right)\\
-&-g^{zz}L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2(\Delta_0-1)}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2(\Delta_1-1)}+
-2\Delta_0\Delta_1\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1-2}\right)\Big]=\\
-=&V\int_\epsilon^\delta\d z\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\\
-&-L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}-
-2L^2m^2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\Big]=\\
-=&V\int_\epsilon^\delta\d z \left((-m^2-\Delta_0^2L^{-2})\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+(-m^2-\Delta_1^2L^{-2})\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
-=&VL^{-2}(\Delta_1-\Delta_0)\int_\epsilon^\delta\d z \left(\Delta_0\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}-\Delta_1\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
-=&VL^{-1}(\Delta_1-\Delta_0)\left(-\frac{ \Delta_0\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}+
-\frac{\Delta_1 \psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}\\
-=&VL^{-1}\left(\Delta_0\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}-
-\Delta_1\psi_1^2\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
-\end{split}
-\end{equation}
-Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=-L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. The term with $\psi_0$ diverges since $2\Delta_0-d=-\sqrt{d^2+4L^2m^2}$. The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence.\\
-The boundary term must thus evaluate to
-\begin{equation}
--\Delta_0VL^{-1}\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}
-\end{equation}
-near the boundary. A boundary term like this can be constructed using $\psi=\psi_0L^{-\Delta_0}\epsilon^{\Delta_0}$ near the boundary and $\sqrt{\gamma}=L^dz^{-d}$ where $\gamma$ is the determinant of the metric induced on the boundary by $g_{ab}$.
-The boundary term then becomes
-\begin{equation}
-\begin{split}
- S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dx\Delta_0L^{-1}\psi^2\sqrt{\gamma}
-\label{Sbdy}
-\end{split}
-\end{equation}
-This is addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
 \\
 Consider another possible term in the Lagrangian, an electromagnetic field $A_\mu$. The Lagrangian is $-\frac{1}{4}F_{ab}F^{ab}$ where $F_{ab}=\partial_aA_b-\partial_bA_a$. Consider fields with $t$, $x_1$, and $x_2$ symmetry.
 \\
@@ -590,28 +553,7 @@ The free energy of the trivial solution \eqref{trivial} can be found analyticall
 \fig{A}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:A}}
 \subsection{Interpretation of Multiple Solutions}
 The multiple solutions obtained 
-\section{Expectation Values of Field Theory Operators}
-These expectation values are calculated using \eqref{expectation} and \eqref{classical}.
-\begin{equation}
-\begin{split}
-\langle O(\psi(x))\rangle=-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{GKPW}}{=}-i\frac{\delta}{\delta J(x)}\log(Z[J])|_{J=0}\stackrel{\mathrm{classical}}{=}\frac{\delta}{\delta J(x)}S_c|_{J=0}
-\end{split}
-\end{equation}
-The functional derivative is thus the change in the classical action when the boundary value of the fields are changed. The total change in the partition function is needed and the whole field solutions change when changing the boundary conditions so this must be taken into account. The derivative becomes
-\begin{equation}
-\begin{split}
-\frac{\delta}{\delta J(x)}S_c|_{J=0}=\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \At_i(y)}\frac{\partial \At_i(y)}{\partial J(x)}+\frac{\partial\L(y)}{\partial (\partial_a\At_i(y))}\frac{\partial (\partial_a\At_i(y))}{\partial J(x)}\right)
-\end{split}
-\end{equation}
-where $i$ goes over all fields. Here the Lagrangian is assumed to only depend on the fields and their first derivatives. Now let $\L^\prime=\sqrt{g}\L$ and integrate by parts
-\begin{equation}
-\begin{split}
-\frac{\delta}{\delta J(x)}S_c|=&\int \d^{d+1}y\left(\frac{\partial\L^\prime(y)}{\partial \At_i(y)}-\partial_a\frac{\partial\L^\prime(y)}{\partial (\partial_a\At_i(y))}\right)\frac{\partial (\At_i(y))}{\partial J(x)}\\
-+&\int_{\partial\mathrm{AdS}} \d^{d}yn_a\frac{\partial\L^\prime(y)}{\partial (\partial_a\At_i(y))}\frac{\partial (\At_i(y))}{\partial J(x)}
-\end{split}
-\end{equation}
-where $n_a$ is an outward normal to the boundary of AdS.
-The first integral vanishes since the fields obey the Euler-Lagrange equation.
+
 
 
 
@@ -761,6 +703,94 @@ The action is calculated from the Lagrangian as
  S=\int\d^{d+1} x\sqrt{g}\L+S_\mathrm{boundary}.
 \end{equation}
 This is independent of coordinates but makes us use covariant derivatives for finding the equations of motion. The square root could instead be absorbed in the Lagrangian and the space time be considered flat. This has been done in computer-aided calculations of the equations of motion.
+\section{Boundary Behavior of Bulk Fields}
+The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
+\begin{equation}
+ S=\int\d^{d+1} x\sqrt{|\det g_{ab}|}\L\equiv\int\d^{d+1} x\sqrt{g}\L.
+\end{equation}
+The Euler-Lagrange equation is obtained by varying the action. The integration measure can then be regarded as part of the Lagrangian or covariant derivatives can be used in the derivation of the Euler-Lagrange equation. The measure becomes when using the metric \eqref{metric} $L^{d+1}z^{-d-1}$. The Euler-Lagrange equation gives
+\begin{equation}
+\begin{split}
+ 0=\partial_a\left(\frac{\partial (z^{-d-1}(V(\psi)-(\partial_b\psi)^2)) }{\partial(\partial_a\At)}\right)-\frac{\partial  (z^{-d-1}(V(\psi)-(\partial_b\psi)^2) )}{\partial\At}=\\
+ =-\partial_a\left(z^{-d-1}2\partial^a\psi\right)-z^{-d-1}V'(\psi)\\
+\end{split}
+\end{equation}
+We will be interested in boundary systems with translational symmetry so $\psi$ is assumed to be a function of $z$, TODO motivate more. The equation of motion then becomes
+\begin{equation}
+\begin{split}
+0=-\partial_z\left(z^{-d-1}2g^{zz}\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
+-\partial_z\left(z^{-d-1}2(z^2L^{-2}f(z))\partial_z\psi\right)  -\frac{V'(\psi)}{z^{d+1}}=\\
+-z^{-d-1}2z^2L^{-2}f(z)\psi''-L^{-2}\left((-d+1)z^{-d}2f(z) + z^{-d+1}2f'(z)\right)\psi' -\frac{V'(\psi)}{z^{d+1}}
+\end{split}
+\end{equation}
+This gives a second order differential equation for $\psi(z)$
+\begin{equation}
+\begin{split}
+0=-z^22f(z)\psi''-\left((-d+1)z2f(z) + z^22f'(z)\right)\psi' -L^2V'(\psi)
+\end{split}
+\end{equation}
+Now consider the boundary, $z=0$. Our metric is required to be asymptotically AdS so $f(0)\rightarrow1, zf'(0)\rightarrow0$. $\psi$ can be expanded at the boundary as a Laurent series. Call the lowest exponent in this series $\Delta$. $\psi$ will then behave as $z^\Delta$ near the boundary. This should solve the differential equation in the near boundary limit. Insertion of $z^\Delta$ into the differential equation and taking the limit of small $z$ gives
+\begin{equation}
+\begin{split}
+0&=-z^22\Delta(\Delta-1)z^{\Delta-2}-\left((-d+1)2z + z^22f'(z)\right)\Delta z^{\Delta-1} -L^2V'(z^{\Delta})\\
+&=z^{\Delta}\left(-2\Delta(\Delta-1)-2(-d+1)\Delta\right)-L^2V'(z^{\Delta}).
+\end{split}
+\end{equation}
+Now consider a potential for a massive scalar field, $V(\psi)=-m^2\psi^2+\mathcal{O}(\psi^3)$. We then get the following equation for $\Delta$
+\begin{equation}
+\begin{split}
+%0=\Delta(\Delta-1)-(d-1)\Delta-L^2m^2=\\
+0=\Delta^2-d\Delta-L^2m^2
+\end{split}
+\end{equation}
+in the limit $z\rightarrow0$. This has solutions
+\begin{equation}
+\begin{split}
+\Delta=\frac{d\pm\sqrt{d^2+4L^2m^2}}{2}.
+\end{split}
+\end{equation}
+$\psi$ thus goes as $z^{\Delta_0}$ where $\Delta_0$ is the smaller solution and $\Delta_1$ the larger. The leading behaviour of $\psi$ near $z=0$ is
+\begin{equation}
+ \psi=\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}
+\end{equation}
+unless $\Delta_1-\Delta_0>=1$ and further terms from the series corresponding to $\Delta_0$ must be included.\\
+
+What will the contribution to the action from this solution be? Consider the action contribution from the region $z\in[\epsilon,\delta]$ where $\delta$ is small and $\epsilon\rightarrow0$.
+\begin{equation}
+\begin{split}
+ S_{[\epsilon,\delta]}=&\int_{z\in[\epsilon,\delta]}\d^{d+1} x\sqrt{g}\L=\\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2\psi^2-(\partial_a\psi)^2\right)=\\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\left(-m^2( \psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1} )^2-(\partial_a(\psi_0\left(\frac{z}{L}\right)^{\Delta_0}+\psi_1\left(\frac{z}{L}\right)^{\Delta_1}))^2\right)=\\
+=&V\int_\epsilon^\delta\d z \left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right) \\
+&-g^{zz}L^{-2}(\Delta_0\psi_0\left(\frac{z}{L}\right)^{\Delta_0-1}+\Delta_1\psi_1\left(\frac{z}{L}\right)^{\Delta_1-1})^2\Big]=\\
+=&V\int_\epsilon^\delta\d z\left(\frac{z}{L}\right)^{-d-1}\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1}\right)\\
+&-g^{zz}L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2(\Delta_0-1)}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2(\Delta_1-1)}+
+2\Delta_0\Delta_1\psi_0\psi_1\left(\frac{z}{L}\right)^{\Delta_0+\Delta_1-2}\right)\Big]=\\
+=&V\int_\epsilon^\delta\d z\Big[-m^2 \left(\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}+2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\\
+&-L^{-2}\left(\Delta_0^2\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+\Delta_1^2\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}-
+2L^2m^2\psi_0\psi_1\left(\frac{z}{L}\right)^{-1}\right)\Big]=\\
+=&V\int_\epsilon^\delta\d z \left((-m^2-\Delta_0^2L^{-2})\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}+(-m^2-\Delta_1^2L^{-2})\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
+=&VL^{-2}(\Delta_1-\Delta_0)\int_\epsilon^\delta\d z \left(\Delta_0\psi_0^2\left(\frac{z}{L}\right)^{2\Delta_0-d-1}-\Delta_1\psi_1^2\left(\frac{z}{L}\right)^{2\Delta_1-d-1}\right)=\\
+=&VL^{-1}(\Delta_1-\Delta_0)\left(-\frac{ \Delta_0\psi_0^2}{2\Delta_0-d}\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}+
+\frac{\Delta_1 \psi_1^2}{2\Delta_1-d}\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}\\
+=&VL^{-1}\left(\Delta_0\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}-
+\Delta_1\psi_1^2\left(\frac{\epsilon}{L}\right)^{d-2\Delta_0}\right)+\mathrm{finite}
+\end{split}
+\end{equation}
+Here $\Delta_0+\Delta_1=d$ and $\Delta_0\Delta_1=-L^2m^2$ have been used. One of these two terms diverges as $\epsilon\rightarrow0$. The term with $\psi_0$ diverges since $2\Delta_0-d=-\sqrt{d^2+4L^2m^2}$. The action from the near boundary thus diverges. This can be remedied by having a boundary term in the action that exactly cancels this divergence.\\
+The boundary term must thus evaluate to
+\begin{equation}
+-\Delta_0VL^{-1}\psi_0^2\left(\frac{\epsilon}{L}\right)^{2\Delta_0-d}
+\end{equation}
+near the boundary. A boundary term like this can be constructed using $\psi=\psi_0L^{-\Delta_0}\epsilon^{\Delta_0}$ near the boundary and $\sqrt{\gamma}=L^dz^{-d}$ where $\gamma$ is the determinant of the metric induced on the boundary by $g_{ab}$.
+The boundary term then becomes
+\begin{equation}
+\begin{split}
+ S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dx\Delta_0L^{-1}\psi^2\sqrt{\gamma}
+\label{Sbdy}
+\end{split}
+\end{equation}
+This addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
 \section{Computer-Aided Analytical Calculations\label{CAS}}
 The Christoffel symbols for the AdS black hole were calculated using \sympy. All the non-zero components are shown below.
 \begin{equation}
