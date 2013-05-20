@@ -66,9 +66,9 @@ The AdS/CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates
 AdS is the maximally symmetric space of constant negative curvature. AdS spaces have many interesting properties which will not be described here in detail. A visualization of a two-dimensional AdS space can be made by embedding it as a hyperbola in a three-dimensional space-time with two time directions. The inherited metric is then that of two-dimensional AdS-space with one time direction. See figure on the front of this report. The two time directions are there in the horizontal plane. This embedding gives a periodic time which is not necessary. AdS space has, as opposed to Minkowski space, a boundary at spatial infinity. This boundary often called the \emph{conformal boundary} can be reached by a massless particle in finite time and boundary conditions must be specified here for a field theory in AdS space. The action of the isometry group of AdS space on the conformal boundary is the conformal group, thereof the name.\\
 
 The string theory in the AdS space is gravitational and thus perturbs the AdS space. The correspondence only requires an asymptotically AdS space. The boundary of the AdS space where the CFT lives is a Minkowski space of one spatial dimension lower. This difference in dimension is why this approach is called \emph{holographic}. The AdS isometry group requires conformal symmetry of the boundary theory which thus is a conformal field theory.
-A conformal field theory is a quantum field theory with invariance under conformal transformations. The conformal group is the Poincar\'{e} group with dilations and special conformal transformations added. Dilations are scaling transformations. The word \emph{conformal} comes from the angle-preserving property of these transformations.\\ This means that the CFT can be scaled by a factor $s$, TODO write.
+A conformal field theory is a quantum field theory with invariance under conformal transformations. The conformal group is the Poincar\'{e} group with dilations and special conformal transformations added. Dilations are scaling transformations. The word \emph{conformal} comes from the angle-preserving property of these transformations.\\
 
-There is no proof of the correspondence but it has been extensively tested. The field theory of the original conjecture\cite{Maldacena:1997re} was a supersymmetric Yang-Mills theory. Extensions of the conjecture has later been made and we will here use a field theory without supersymmetry. That the extended correspondence also holds is motivated in for example \cite{McGreevy:2009xe}.\\
+There is no proof of the correspondence but it has been extensively tested. The field theory of the original conjecture\cite{Maldacena:1997re} was a supersymmetric Yang-Mills theory. Extensions of the conjecture have later been made and we will here use a field theory without supersymmetry. That the extended correspondence also holds is motivated in for example \cite{McGreevy:2009xe}.\\
 
 The strength of the duality comes from that the bulk theory is weakly coupled when the boundary theory is strongly coupled and vice versa. This lets us solve otherwise computationally unavailable problems on the strongly coupled side by solving them on the weakly coupled side.\\
 
@@ -81,31 +81,69 @@ The strength of the duality comes from that the bulk theory is weakly coupled wh
 \section{The Correspondence\label{correspondence}}
 The correspondence can be formulated through
 \begin{equation}
- Z_{bulk}(\phi_0)=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}\label{fulCorr}
+ Z_{\mathrm{bulk}}(\phi_0)=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{\mathrm{CFT}}\label{fulCorr}
 \end{equation}
  \cite{hartnoll8}. Here $Z_{bulk}(\phi_0)$ is the partition function for the bulk theory with boundary condition at the conformal boundary $\phi_0$. The partition function is defined as TODO.\\
-The expectation value on the right-hand side is of a field theory at a temperature given by the periodicity of the path integral for the partition function. The field $\phi_0$ is source to the operator $\mathcal{O}$,
+The expectation value on the right-hand side is of a field theory at a temperature given by the periodicity of the path integral for the partition function. The boundary field $\phi_0$ is source to the operator $\mathcal{O}$,
 \begin{equation}
-\mathcal{O}= \frac{\delta S_{CFT}}{\delta \phi_0}
+\mathcal{O}= \frac{\delta S_{\mathrm{CFT}}}{\delta \phi_0}
 \end{equation}
-where $S_{CFT}$ is the CFT action.
+ where $S_{\mathrm{CFT}}$ is the CFT action.% The bulk theory contains a field $\phi$ which has a leading boundary behaviour
+% \begin{equation}
+%  \phi=
+% \end{equation}
 \\
-The boundary theory becomes classical for a gauge boundary theory with a large number of colors, a large $N$. We do not have a large-$N$ theory but a similar effect is expected for strongly coupled boundary theories so a classical bulk theory is assummed. See for example \cite{McGreevy:2009xe} for a thorough treatment of when the bulk theory can be considered classical. The partition function is then given in a semi-classical limit by
+The bulk theory becomes classical for a boundary gauge theory with a large number of colors, a large $N$. We do not have a large-$N$ theory but a similar effect is expected for strongly coupled boundary theories so a classical bulk theory is assummed. See for example \cite{McGreevy:2009xe} for a thorough treatment of when the bulk theory can be considered classical. The partition function is then given in a semi-classical limit by
 \begin{equation}
- Z_{bulk}(\phi_0)=C\exp(\i S_c)
+ Z_{\mathrm{bulk}}(\phi_0)=C\exp(\i S_c)\label{semi}
 \end{equation}
-where $S_c$ is the bulk theory action for the classical periodic path in Euclidean time\cite{hartnoll8} and $C$ is a constant. This path has boundary condition at the conformal boundary described by $\phi_0$.\\
+where $S_c$ is the bulk theory action for the classical periodic path in Euclidean time and $C$ is a constant\cite{hartnoll8}. This path has boundary condition at the conformal boundary described by $\phi_0$.\\
 Expectation values of the CFT operator $\mathcal{O}(x)$ can be calculated by
 \begin{equation}
 \begin{split}
-\frac{\delta S_c(\phi_0)}{\delta\phi_0(x)}|_{\phi_0=0}&=
--\i\frac{\delta\log Z_{bulk}(\phi_0)}{\delta\phi_0(x)}|_{\phi_0=0}\\
-&=-\i\frac{\delta\log\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}{\delta\phi_0(x)}|_{\phi_0=0}\\
-&=\frac{\left\langle\sqrt{g_0}\phi_0\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}{\left\langle\exp(\i\int\d^dx\sqrt{g_0}\phi_0\mathcal{O})\right\rangle_{FT}}|_{\phi_0=0}\\
-&=\langle \sqrt{g_0}\mathcal{O}(x) \rangle_{FT}
+\frac{\delta S_c(\phi_{(0)})}{\delta\phi_{(0)}(x)}|_{\phi_{(0)}=0}&=
+-\i\frac{\delta\log Z_{\mathrm{bulk}}(\phi_{(0)})}{\delta\phi_{(0)}(x)}|_{\phi_{(0)}=0}\\
+&=-\i\frac{\delta\log\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\phi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\delta\phi_{(0)}(x)}|_{\phi_{(0)}=0}\\
+&=\frac{\left\langle\mathcal{O}(x)\exp(\i\int\d^dx\sqrt{g_{(0)}}\phi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\phi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}|_{\phi_{(0)}=0}\\
+&=\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}
 \end{split}
 \end{equation}
-where the first equality comes from the semi-classical approximation and the second equality from \eqref{fulCorr}.
+where the first equality comes from the semi-classical approximation \eqref{semi} and the second equality comes from the correspondence \eqref{fulCorr}. The same correspondence holds for tensor fields with more indices, we e.g. similarly have for a vector field $A_a$ that source $J^a$
+\begin{equation}
+J^a= \frac{\delta S_{\mathrm{CFT}}}{\delta A_{(0)a}}
+\end{equation}
+the following scheme for extracting a CFT expectation value from the classical bulk
+\begin{equation}
+\langle J(x)\rangle_{\mathrm{CFT}}=\frac{\delta S_c(\phi_0)}{\delta A_{(0)a}(x)}|_{A_{(0)a}=0}.
+\end{equation}\\
+The functional derivative needed to calculate these CFT expectation values is the change in total on-shell action when the boundary value of the source field is changed. This can in the case of the operator $\mathcal{O}$ and the source $\phi$ be calculated as follows. All fields of the on-shell bulk theory are in general changed by a change of a boundary value. Denote all the fields in the bulk theory by $\phi_i$. The bulk action $S_c$ is made up of two parts, a bulk Lagrangian density $\L$ and possibly a boundary term with a boundary density $\L_{\mathrm{bdy}}$.
+\begin{equation}
+ %S_c=\int \d^{d}y\sqrt{g_{(0)}}\L_{\mathrm{bdy}}+\int \d^{d+1}y\sqrt{g}\L
+S_c=S_{\mathrm{bdy}}+\int \d^{d+1}y\sqrt{g}\L
+\end{equation}
+The derivative becomes
+\begin{equation}
+\begin{split}
+\frac{\delta S_c(\phi_{(0)})}{\delta \phi_{(0)}(x)}|_{\phi_{(0)}=0}=&\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}\frac{\partial \phi_i(y)}{\partial \phi_{(0)}(x)}+\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\nabla_a\phi_i(y))}{\partial \phi_{(0)}(x)}\right)\\
+&+\frac{\delta S_{\mathrm{bdy}}}{\delta \phi_{(0)}(x)}|_{\phi_{(0)}=0}
+%&+\int \d^{d}y\sqrt{g_{(0)}}\left(\frac{\partial\L_{\mathrm{bdy}}(y)}{\partial \phi_i(y)}\frac{\partial \phi_i(y)}{\partial \phi_{(0)}(x)}+\frac{\partial\L_{\mathrm{bdy}}(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\nabla_a\phi_i(y))}{\partial \phi_{(0)}(x)}\right)
+\end{split}
+\end{equation}
+where $i$ goes over all fields and summation is implied. Here the bulk Lagrangian is assumed to only depend on the fields and their first derivatives. Now integrate by parts
+\begin{equation}
+\begin{split}
+\frac{\delta S_c(\phi_{(0)})}{\delta \phi_{(0)}(x)}|_{\phi_{(0)}=0}=&\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}-\nabla_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\right)\frac{\partial \phi_i(y)}{\partial \phi_{(0)}(x)}\\
++&\int_{\partial\mathrm{AdS}} \d^{d}y\sqrt{g_{(0)}}n_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial \phi_i(y)}{\partial \phi_{(0)}(x)}+\frac{\delta S_{\mathrm{bdy}}}{\delta \phi_{(0)}(x)}|_{\phi_{(0)}=0}
+\end{split}
+\end{equation}
+where $n_a$ is an outward normal to the boundary of AdS.
+The first integral vanishes since the fields obey the Euler-Lagrange equation. The CFT expectation value can thus be read off from the boundary behaviour of the bulk fields through this relation
+\begin{equation}
+\begin{split}
+\langle\mathcal{O}\rangle_{\mathrm{CFT}}=&\int_{\partial\mathrm{AdS}} \d^{d}y\sqrt{g_{(0)}}n_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial \phi_i(y)}{\partial \phi_{(0)}(x)}+\frac{\delta S_{\mathrm{bdy}}}{\delta \phi_{(0)}(x)}|_{\phi_{(0)}=0}\label{expFromBdy}
+\end{split}
+\end{equation}
+A CFT expectation value can like this be obtained from each of the bulk fields once the boundary behaviour of the on-shell bulk fields are known. This also works for tensor fields. This relation will be used in the coming chapters but the boundary behaviour of the bulk fields must first be found.
 % The correspondence can be formulated by the GKPW equation \cite{Witten:1998qj}
 % \begin{equation}
 %  Z_{\text{CFT}}(h)=Z_{\text{strings}}(h)
@@ -139,7 +177,7 @@ where the first equality comes from the semi-classical approximation and the sec
 % The partition functions of the bulk and boundary theories are the same even for a perturbed Lagrangian. Both Lagrangians are then perturbed. Expectation values of operators of the boundary theory can thus be calculated using the partition function for the bulk theory. %It is though not trivial to figure out what fields in the bulk theory corresponds to what operators in the boundary theory. 
 % %The next chapter will show how to solve the bulk theory and obtain CFT observables.
 \section{Applications}
-The correspondence can be used both ways but we will consider a strongly coupled boundary theory. Conformal field theories are characterized by not having any specific length scale. Physics at critical points often have this property. A critical point can be a thermodynamic phase transition or a quantum phase transition. The characteristic length goes to infinity as the critical point is approached and the length scale disappears. The physics near a critical point can be expected to be similar to the critical system and finding the critical behaviour is then of interest.\\
+The correspondence can be used both ways but we will consider a strongly coupled boundary theory. Conformal field theories are characterised by not having any specific length scale. Physics at critical points often have this property. A critical point can be a thermodynamic phase transition or a quantum phase transition. The characteristic length goes to infinity as the critical point is approached and the length scale disappears. The physics near a critical point can be expected to be similar to the critical system and finding the critical behaviour is then of interest.\\
 
 Examples of strongly coupled systems exhibiting critical behaviour are, quark-gluon plasmas\cite{PhysRevD.73.045013}, high $T_c$ superconductors\cite{hartnoll8}, and possibly graphene \cite{hartnoll8}.\\
 
@@ -164,11 +202,11 @@ The action $S$ is calculated from this Lagrangian from
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{g}\L+S_\mathrm{boundary}.
 \end{equation}
-where $g$ is the absolute value of the determinant of the metric tensor, $g=|\det g_{ab}|$. $S_\mathrm{boundary}$ is a boundary term that is needed to cancel divergences when integrating the action towards the boundary. It does not affect the equations of motion but is needed to get normalizeable modes.\\
+where $g$ is the absolute value of the determinant of the metric tensor, $g=|\det g_{ab}|$. $S_\mathrm{boundary}$ is a boundary term that is needed to cancel divergences when integrating the action towards the boundary. It does not affect the equations of motion but is needed to get normaliseable modes.\\
 
 The first term of the Lagrangian is an Einstein-Hilbert term with a cosmological constant $\Lambda$. A negative cosmological constant gives a asymptotically anti-de-Sitter space as required. $R$ is the Ricci scalar curvature obtained from the metric $g_{ab}$. The constant $\kappa$ determines the coupling between the metric and the other fields.\\
 
-The second term is an ordinary Maxwell term where the electromagnetic tensor $F_{ab}$ is the exterior derivative of the electromegnatic field tensor, $F_{ab}=\partial_aA_b-\partial_bA_a$.\\
+The second term is an ordinary Maxwell term where the electromagnetic tensor $F_{ab}$ is the exterior derivative of the electromagnetic field tensor, $F_{ab}=\partial_aA_b-\partial_bA_a$.\\
 
 The third and fourth terms are the kinetic and mass terms for the scalar field respectively. $D_a$ is the gauge covariant derivative $D_a=\nabla_a-iqA_a$. $\nabla_a$ is the covariant derivative, see Appendix \ref{conventions}. This minimal gauge coupling makes the Lagrangian invariant under a U(1) gauge transformation
 \begin{eqnarray}
@@ -436,36 +474,14 @@ The two possible $\Upsilon_{A_x}$ represent solutions going into or coming out o
 The phase is constant for $s=\exp(\mp3t)$ so the plus sign in \eqref{inout} gives the ingoing solution.
 \section{Expectation Values of Field Theory Operators}
 These expectation values are calculated using \eqref{expectation} and \eqref{classical}.
-\begin{equation}
-\begin{split}
-\langle \mathcal{O}(\psi(x))\rangle&=-\i\frac{\delta}{\delta J(x)}\log(Z_{\mathrm{CFT}}[J])|_{J=0}\\
-&\stackrel{\mathrm{GKPW}}{=}-\i\frac{\delta}{\delta J(x)}\log(Z_{\mathrm{Bulk}}[J])|_{J=0}\\
-&\stackrel{\mathrm{classical}}{=}\frac{\delta}{\delta J(x)}S_c|_{J=0}
-\end{split}
-\end{equation}
-where $J$ is the field coupling to the operator $\mathcal{O}$ in the field theory. $S_c$ here is the on-shell action. 
-The functional derivative is thus the change in the classical action when the boundary value of the fields are changed. The total change in the partition function is needed and the whole field solutions change when changing the boundary conditions so this must be taken into account. The derivative becomes
-\begin{equation}
-\begin{split}
-\frac{\delta}{\delta J(x)}S_c|_{J=0}=\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}\frac{\partial \phi_i(y)}{\partial J(x)}+\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\nabla_a\phi_i(y))}{\partial J(x)}\right)
-\end{split}
-\end{equation}
-where $i$ goes over all fields. Here the Lagrangian is assumed to only depend on the fields and their first derivatives. Now integrate by parts
-\begin{equation}
-\begin{split}
-\frac{\delta}{\delta J(x)}S_c|_{J=0}=&\int \d^{d+1}y\sqrt{g}\left(\frac{\partial\L(y)}{\partial \phi_i(y)}-\nabla_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\right)\frac{\partial (\phi_i(y))}{\partial J(x)}\\
-+&\int_{\partial\mathrm{AdS}} \d^{d}y\sqrt{g_0}n_a\frac{\partial\L(y)}{\partial (\nabla_a\phi_i(y))}\frac{\partial (\phi_i(y))}{\partial J(x)}
-\end{split}
-\end{equation}
-where $n_a$ is an outward normal to the boundary of AdS.
-The first integral vanishes since the fields obey the Euler-Lagrange equation.
+
 
 \subsection{Choice of scalar mass $m$}
 The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman bound (BF) is a lower bound on $m^2$ of a massive scalar field in AdS space with . It requires
 \begin{equation}
  L^2m^2\geq-\frac{d^2}{4}\label{BF}
 \end{equation}
-for stability\cite{Kleban:2004bv}. The scalar field $\psi$ should obey this bound far away from the black-hole for normalizeable modes, TODO explain. We would though like a spontanous symmetry breaking of $\psi$ near the black hole (low energies) corresponding to the electron condensate \cite{Gubser:2008px}. This can happen because the coupling of $\psi$ to $A_a$ gives $\psi$ an effective mass that might break the BF bound near the black hole. \\The effective mass is given by:
+for stability\cite{Kleban:2004bv}. The scalar field $\psi$ should obey this bound far away from the black-hole for normaliseable modes, TODO explain. We would though like a spontanous symmetry breaking of $\psi$ near the black hole (low energies) corresponding to the electron condensate \cite{Gubser:2008px}. This can happen because the coupling of $\psi$ to $A_a$ gives $\psi$ an effective mass that might break the BF bound near the black hole. \\The effective mass is given by:
 \begin{equation}
  m_{\mathrm{eff}}^2=m^2+A_aA^a
 %=m^2+g^{tt}\At^2
@@ -574,7 +590,7 @@ The chemical potential of the numerical solutions can be obtained from the bound
 TODO
 \section{Field Theory Scalar Operator}
 TODO, write in more detail. TODO, write in some clear way about the dimensionless quantities.
-The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\At=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read of at the boundary.\\
+The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\At=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read off at the boundary.\\
 
 The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
 
@@ -704,7 +720,7 @@ The action is calculated from the Lagrangian as
 \end{equation}
 This is independent of coordinates but makes us use covariant derivatives for finding the equations of motion. The square root could instead be absorbed in the Lagrangian and the space time be considered flat. This has been done in computer-aided calculations of the equations of motion.
 \section{Boundary Behavior of Bulk Fields}
-The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremizes the action. The action integral contains the metric as an integration measure
+The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Consider a field $\psi$ with a kinetic term $-(\partial_a\psi)^2$ and a potential term $V(\psi)$. The classical solution is the one that extremises the action. The action integral contains the metric as an integration measure
 \begin{equation}
  S=\int\d^{d+1} x\sqrt{|\det g_{ab}|}\L\equiv\int\d^{d+1} x\sqrt{g}\L.
 \end{equation}
