@@ -47,7 +47,7 @@ def plot(bbs,ind,As=None,name='',verbose=False):
     if As!=None:
         fig(7)
         pl.xlabel('$\\frac{T}{T_c}$')
-        pl.ylabel('$\\frac{A}{V_{SC}T_c^3}$')
+        pl.ylabel('$\\frac{A}{V_{2}T_c^3}$')
         Atriv=4*np.pi*T/3*mu**2/2
         pl.plot(T/Tc, Atriv/Tc**3,c='k',ls='-',lw=1)
         pl.xlim([0,2])

@@ -9,7 +9,7 @@
 \usepackage[tc]{titlepic}
 \usepackage[toc,page]{appendix}
 \usepackage{amsmath,empheq}
-
+\usepackage{grffile}
 %\usepackage{bbm}
 %\usepackage[swedish]{babel}
 \newcommand{\N}{\ensuremath{\mathbbm{N}}}
@@ -247,7 +247,7 @@ removes the last term in the parenthesis of the equation of motion for $\psi$. T
 after choosing the Lorentz gauge and a real $\psi$.
 \section{Parameters}
 There are multiple free parameters in the bulk Lagrangian. These must be investigated to find values that give us the boundary theory we are interested in. The Lagrangian contains the parameters $\kappa$, $\Lambda$, $m^2$, $q$. Some of these parameters might be redundant since we can make different symmetry transformations of fields and coordinates. The physics of the bulk are treated in the classical limit and the Lagrangian can thus be changed as long as the equations of motion for $\psi$ and $A_a$ are left unchanged.
-\subsection{$\kappa$}
+\subsection{$\kappa$\label{s:kappa}}
 The Einstein-Hilbert term of the Lagrangian makes the theory gravitational. $\kappa$ is proportional to Newton's gravitational constant. A small $\kappa$ gives the probe limit where the metric equations of motion can be solved independently of the other fields. This can be understood by varying the Lagrangian with respect to the metric; the Einstein-Hilbert part gives a term inversely proportional to $\kappa$ and the rest of the Lagrangian gives the stress-energy tensor independent of $\kappa$.\\
 
 This greatly simplifies calculations and will therefore be used throughout this work. It is though not guaranteed that the interesting boundary theories are dual to bulk theories in the probe limit. Earlier studies have though found that interesting boundary systems can be obtained by treating a bulk in the probe limit. A superconducting condensate developes for low temperatures in the work by S. Hartnoll, C. Herzog and G. Horowitz \cite{hartnoll9} where the bulk is treated in the probe limit. $\kappa\rightarrow0$ is a fixed-point of the theory so the physics is independent of the exact value of $\kappa$ as long as we are in the probe limit.
@@ -310,7 +310,7 @@ We wish to compute expectation values of the CFT. This will be done through the 
 \section{Definitions}
 The Lagrangian describes a general system so there are many solutions to the equations of motion. We wish to investigate two properties of a superconductor, the development of a condensate at low temperatures and the conductivity at different frequencies. We are interested in a superconductor subject to spatially uniform conditions, the applied electric field is uniform and the chemical potential is uniform. The atomic lattice and its imperfections are thus not accounted for but interesting superconductivity behaviour has been obtained anyway \cite{hartnoll9}. It is thus enough to look at a system with translational symmetry in the $x$ and $y$ directions. A rotationally invariant superconductor will further be studied. The system is subject to conditions constant in time, e.g.~no time-dependent chemical potential. This lets us assume time-independence while solving the non-linear field equations.\\
 
-The conductivity is the linear electrical current response to an applied transverse electrical field. We can apply this in the $x$ direction due to the rotational symmetry. We let the applied field have a harmonic time dependence $\exp(\i t \omega)$ so we can get the response function in the frequency domain. The linear response is sought so the applied field should be infinitesimal. The applied field breaks the rotational and time symmetries but since it is infinitesimal and we are not interested in the effect is has on the other fields it can be neglected while calculating them. The applied field is later added with the other fields as background solutions.\\
+The conductivity is the linear electrical current response to an applied transverse electrical field. We can apply this in the $x$ direction due to the rotational symmetry. We let the applied field have a harmonic time dependence $\exp(\i t \omega)$ so we can get the response function in the frequency domain. The linear response is sought so the applied field should be infinitesimal. The applied field breaks the rotational and time symmetries but since it is infinitesimal and we are not interested in the effect is has on the other fields it can be neglected while calculating them. The applied field is later added with the other fields as a background solution.\\
 The electrical field in the $x$-direction is $E_x=F_{xt}=\nabla_xA^t-\nabla_tA^x$. Translational symmetry gives $E_x=\nabla_tA^x$.
 
 These limitations lets us do the following definitions
@@ -326,15 +326,15 @@ The gauge condition requires
 \begin{equation}
  \nabla_aA^a=\partial_aA^a+\Gamma^a_{\ ba}A^b=0
 \end{equation}
-this gives a homogeneous first-order linear ordinary differential equation for $A_z(z)$. The remaining gauge symmetry can be used to set $A_z(z)=0$ for a $z$ and $A_z(z)$ can thus be taken to be identically 0 for all $z$.\\
+this gives a homogeneous first-order linear ordinary differential equation for $A_z(z)$ since the contracted Christoffel symbol only has a $z$ component. The remaining gauge symmetry lets us add a function to $A_z$ and can be used to set $A_z(z)=0$ for a $z$. The above differential equation then requires $A_z(z)$ to be identically 0 for all $z$. We will hereafter work with $A_z(z)=0$.\\
 
 The explicit $z$ and $t$-dependence of these functions will hereafter be ommited. 
 \section{Metric\label{s:metric}}
-We wish to find the metric saddle-point of the periodic imaginary time path integral. The bulk equation of motion for the metric $g_{ab}$ is the Einstein equation with a cosmological constant
+The path integral for the bulk partition function is approximated in a semi-classical approximation where we need the saddle-point of the action. We first wish to find the \emph{metric} saddle-point of the periodic imaginary time path integral. The bulk equation of motion for the metric $g_{ab}$ is the Einstein equation with a cosmological constant
 \begin{equation}
 R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\lambda=\kappa T_{ab}\label{einstein}
 \end{equation}
-where $R_{ab}$ is the Ricci curvature tensor and $T_{ab}$ is the stress-energy tensor. We assumed the probe limit in Section \ref{kappa} and therefore neglect the right hand side of this equation. We want a translationally invariant solution in the $t$, $x$, and $y$ directions that is asymptotically AdS. The solution is known to be a black hole\cite{McGreevy:2009xe}, the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
+where $R_{ab}$ is the Ricci curvature tensor and $T_{ab}$ is the stress-energy tensor. We assumed the probe limit in Section \ref{s:kappa} and therefore neglect the right hand side of this equation. We want a translationally invariant solution in the $t$, $x$, and $y$ directions that is asymptotically AdS. The solution is known to be a black hole \cite{McGreevy:2009xe}, the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
  g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d x^2+\d y^2\right).\label{metric}
 \end{equation}
@@ -403,7 +403,7 @@ The equations of motion for $\psi(z)$, $\At(z)$ and $A_x(z)$ can now be obtained
 \end{empheq}
 The formulas in Appendix \ref{CAS} have here been used.
 \subsection{Field behaviour at Conformal Boundary\label{s:bb}}
-A Frobenious expansion of these equations can be done at the boundary, $z=0$. The leading behaviours of the functions are
+A Frobenious expansion \cite{teschl2012ordinary} of these equations can be done at the boundary, $z=0$. The leading behaviour of the functions is
 \begin{empheq}[left=\empheqlbrace]{align}
  &\psi=\psi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\psi}\\
  &\phi=\phi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\phi}\\
@@ -416,7 +416,7 @@ where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to 
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2+f\Delta_\phi(\Delta_\phi-1)=0\label{ind2}\\
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2f+z^2\omega^2+zff^\prime\Delta_{A_x}+f^2\Delta_{A_x}(\Delta_{A_x}-1)=0.
  \end{empheq}
-where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$. Assume the strict inequalities. The leading order behaviour is then
+where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$ since the first terms otherwise diverges at the horizon where the other terms are finite. First consider the case of the strict inequalities. The leading order behaviour is then
  \begin{empheq}[left=\empheqlbrace]{align}
   &-L^2m^2-2\Delta_\psi+\Delta_\psi(\Delta_\psi-1) =0\\
   &\Delta_\phi(\Delta_\phi-1)=0\\
@@ -442,41 +442,41 @@ with solutions $\Delta_{A_x}=-1,2$.
 First assuming $\Delta_\phi=-1$ yields the same result. There are though no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
 All useful solutions are thus given by equation \ref{indicialSo1} to \ref{indicialSol3}.
 \subsection{Field behaviour at Horizon\label{s:hb}}
-The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)$ must be zero because a finite $A_t(z_h)$ would give a finite Wilson loop around the periodic imaginary time circle whose length in time is 0. A Wilson loop is contrary to $A_t$ a physical quantity ($A_t$ is gauge-dependent). This gives a singular gauge connection which is unwanted\cite{hartnoll8}. We thus have $\At(z_h)=0$. Expand the fields as 
+The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)$ must be zero because a finite $A_t(z_h)$ would give a finite Wilson loop around the periodic imaginary time circle whose length in time is 0. A Wilson loop is contrary to $A_t$ a physical quantity ($A_t$ is gauge-dependent). This gives a singular gauge connection which is unphysical \cite{hartnoll8}. We thus have $\At(z_h)=0$. Expand the fields as 
 \begin{empheq}[left=\empheqlbrace]{align}
- &\psi=\psi_{(h)}s^{\Upsilon_\psi}\\
- &\phi=\phi_{(h)}s^{\Upsilon_\phi}\\
- &A_x=A_{x(h)}s^{\Upsilon_{A_x}}
+ &\psi=\psi_{(h)}s^{\Delta^{(h)}_\psi}\\
+ &\phi=\phi_{(h)}s^{\Delta^{(h)}_\phi}\\
+ &A_x=A_{x(h)}s^{\Delta^{(h)}_{A_x}}
 \end{empheq}
-where $s$ now is $(1-z/z_h)$ and $\Upsilon_\phi>0$. The function $f$ can be expanded as $f=3s-3s^2+s^3$.
+where $s$ now is $(1-z/z_h)$ and $\Delta^{(h)}_\phi>0$. The notation $\Delta^{(h)}$ is used to signify that these exponents describe the \emph{horizon} behaviour, $\Delta$ was earlier used for the conformal boundary behaviour. The function $f$ can be expanded as $f=3s-3s^2+s^3$.
 % \begin{empheq}[left=\empheqlbrace]{align}
-%  &q^2z^2\phi_{(1)}^2s^{2\Upsilon_\phi}-L^2m^2f-zf(zf^\prime-2f)s^{-1}\Upsilon_\psi+z^2f^2s^{-2}\Upsilon_\psi(\Upsilon_\psi-1)=0\\
-%  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2+z^2fs^{-2}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
-%  &-2q^2\psi_{(1)}^2s^{2\Upsilon_\psi}L^2f+z^2\omega^2-z^2ff^\prime s^{-1}\Upsilon_{A_x}+z^2f^2s^{-2}\Upsilon_{A_x}(\Upsilon_{A_x}-1)=0
+%  &q^2z^2\phi_{(1)}^2s^{2\Delta^{(h)}_\phi}-L^2m^2f-zf(zf^\prime-2f)s^{-1}\Delta^{(h)}_\psi+z^2f^2s^{-2}\Delta^{(h)}_\psi(\Delta^{(h)}_\psi-1)=0\\
+%  &-2q^2\psi_{(1)}^2s^{2\Delta^{(h)}_\psi}L^2+z^2fs^{-2}\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
+%  &-2q^2\psi_{(1)}^2s^{2\Delta^{(h)}_\psi}L^2f+z^2\omega^2-z^2ff^\prime s^{-1}\Delta^{(h)}_{A_x}+z^2f^2s^{-2}\Delta^{(h)}_{A_x}(\Delta^{(h)}_{A_x}-1)=0
 % \end{empheq}
 Insert these leading terms in the equations of motion. We get
 \begin{empheq}[left=\empheqlbrace]{align}
- &q^2z^2\phi_{(h)}^2s^{2\Upsilon_\phi}+9z_h^2\Upsilon_\psi+z_h^2 9\Upsilon_\psi(\Upsilon_\psi-1)=0\\
- &-2q^2\psi_{(h)}^2s^{2\Upsilon_\psi}L^2+z_h^2 3s^{-1}\Upsilon_\phi(\Upsilon_\phi-1)=0\\
- &-6q^2\psi_{(h)}^2s^{2\Upsilon_\psi+1}L^2+z_h^2\omega^2+z_h^2 9\Upsilon_{A_x}+z_h^2 9\Upsilon_{A_x}(\Upsilon_{A_x}-1)=0.
+ &q^2z^2\phi_{(h)}^2s^{2\Delta^{(h)}_\phi}+9z_h^2\Delta^{(h)}_\psi+z_h^2 9\Delta^{(h)}_\psi(\Delta^{(h)}_\psi-1)=0\\
+ &-2q^2\psi_{(h)}^2s^{2\Delta^{(h)}_\psi}L^2+z_h^2 3s^{-1}\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
+ &-6q^2\psi_{(h)}^2s^{2\Delta^{(h)}_\psi+1}L^2+z_h^2\omega^2+ 9\Delta^{(h)}_{A_x}+9\Delta^{(h)}_{A_x}(\Delta^{(h)}_{A_x}-1)=0.
 \end{empheq}
 Solving for the leading terms of these equations gives
 % \begin{empheq}[left=\empheqlbrace]{align}
-%  &\Upsilon_\psi=0\\
-%  &\Upsilon_\phi(\Upsilon_\phi-1)=0\\
-%  &\omega^2+  9\Upsilon_{A_x}^2=0.
+%  &\Delta^{(h)}_\psi=0\\
+%  &\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
+%  &\omega^2+  9\Delta^{(h)}_{A_x}^2=0.
 % \end{empheq}
 % This has solutions
 \begin{empheq}[left=\empheqlbrace]{align}
- &\Upsilon_\psi=0\\
- &\Upsilon_\phi=1\\
- &\Upsilon_{A_x}=\pm\frac{\i\omega}{3}\label{inout}.
+ &\Delta^{(h)}_\psi=0\\
+ &\Delta^{(h)}_\phi=1\\
+ &\Delta^{(h)}_{A_x}=\pm\frac{\i\omega z_h}{3}\label{inout}.
 \end{empheq}
-The two possible $\Upsilon_{A_x}$ represent solutions going into or coming out of the horizon. $A_x(z,t)$ is close to the horizon
+The two possible $\Delta^{(h)}_{A_x}$ represent solutions going into or coming out of the horizon. Close to the horizon is $A_x(z,t)$ given by
 \begin{equation}
- s^{\pm\frac{\i\omega}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{\log s}{3})\big).
+ A_x(z,t)=s^{\pm\frac{\i\omega z_h}{3}}\exp(\i\omega t)=\exp\big(\i\omega(t\pm\frac{z_h\log s}{3})\big).
 \end{equation}
-The phase is constant for $s=\exp(\mp3t)$ so the plus sign in \eqref{inout} gives the ingoing solution.
+The phase is constant for $s=\exp(\mp3t/z_h)$ so the plus sign in \eqref{inout} gives the ingoing solution.
 
 \subsection{Boundary Conditions}
 The equations of motion, \eqref{eqm1} to \eqref{eqm3}, can be integrated numerically. Just one leading horizon behaviour is allowed for $\psi$ and $\At$ so only two horizon conditions are needed for them, $\psi(z_h)$ and $\At'(z_h)$. The derivative $\psi'(z_h)$ needed for starting a numerical integration from the horizon can be obtained directly from the equations of motion as $z\rightarrow0$
@@ -489,18 +489,20 @@ The field theory operator $\mathcal{O}$ corresponding to the background field $\
 
 The time component of the electromagnetic potential $A_a$ corresponds to the electrical potential in the Lorentz gauge. The electrical potential gives the energy per charge needed to add a charge to the system and the chemical potential for the electrons $\mu$ can thus be expressed as $\mu=q\phi_{(0)}$.\\
 
-The horizon parameters can now be varied to find solutions to these two boundary values and there are no free parameters. See Appendix \ref{num} for a description of the numerical integration.\\
+Just one of the two horizon behaviours of the Maxwell perturbation $A_x$ is wanted. We want a casual response from the perturbation of the background field. This corresponds to the solution going \emph{into} the horizon as time passes \cite{hartnoll8}. We thus choose the ingoing horizon behaviour. The equation for $A_x$ is linear and we are only interested in the linear response at the conformal boudary so the horizon amplitude of the ingoing solution can be choosen arbitrarily.\\
 
-There is an analytical trivial solution of the equations of motion and boundary conditions.
+The horizon parameters $\psi(z_h)$ and $\At'(z_h)$ can now be varied to find solutions to the two boundary conditions $\psi_{(0)}=0$ and $\mu=q\phi_{(0)}$. See Appendix \ref{a:num} for a description of the numerical integration. The Maxwell perturbation can afterwards be integrated from the horizon to the boundary for a range of values of $\omega$.\\
+
+There is a trivial analytical solution of the equations of motion with the above boundary conditions.
 \begin{equation}
 \begin{split}
  &\psi(z)=0\\
  &\phi(z)=\mu(1-z/z_h)\\
  &A_x(z)=
 \left[
-\exp\left(  \sqrt{3}\tan^{-1} \frac{z_h+2z}{z_h\sqrt{3}} \right)
-\frac{\sqrt{z^2+zz_h+z_h^2}}{z_h-z}
-\right]^{\pm\frac{\i\omega z_h}{3} }   \label{trivial}
+\exp\left( - \sqrt{3}\tan^{-1} \frac{z_h+2z}{z_h\sqrt{3}} \right)
+\frac{z_h-z}{\sqrt{z^2+zz_h+z_h^2}}
+\right]^{\frac{\i\omega z_h}{3} }   \label{trivial}
 \end{split}
 \end{equation}
 The field $\psi$ is here identically zero and there is no spontanous symmetry breaking. This solution thus corresponds to the physics above the critical temperature, $T_c$, of the superconductor. We will now make a choice of $m$ to be able to investigate solutions with $\psi\neq0$
@@ -534,7 +536,7 @@ The effective mass breaks the BF-bound at $z_0$ when
 \end{equation}
 where \eqref{T} has been used. We will, following \cite{hartnoll8, horowitz}, choose $m^2L^2=-2$. This does not break the BF bound but it is relatively close. It gives integer scalings for the scalar field at the conformal boundary which is convenient.%Write about near horizon AdS geometry instead and ...?
 \section{Expectation Values of Field Theory Operators}
-Expectation values of field theory operators can now be calculated using these solutions and \eqref{expectation}. Not just the leading behaviour of the fields is needed to calculate the expectation values but also the first subleading behaviour. Therefore we expand the fields as
+Expectation values of field theory operators can now be calculated using these solutions and \eqref{expFromBdy}. Not just the leading behaviour of the fields is needed to calculate the expectation values but also the first subleading behaviour. Therefore we expand the fields as
 \begin{empheq}[left=\empheqlbrace]{align}
  &\psi=\psi_{(0)}\frac{z}{L}+\psi_{(1)}\left(\frac{z}{L}\right)^{2}\\
  &\phi=\phi_{(0)}+\phi_{(1)}\frac{z}{L}\\
@@ -556,115 +558,86 @@ n_a\frac{\partial\L(y)}{\partial (\nabla_a\psi(y))}
 -2L^{-1}\psi
 \right)\frac{\delta \psi(y)}{\delta \psi_{(0)}(x)}=\\
 &=
-\left(
+\frac{L^3}{z^3}\left(
 \frac{z}{L}2\nabla_z\psi(y)
 -2L^{-1}\psi
-\right)  \frac{L}{z}\\
+\right)  \frac{z}{L}\\
 &=
+\frac{L^2}{z^2}
 \left(
 \frac{z}{L}2(\psi_{(0)}\frac{1}{L}+\psi_{(1)}\frac{2z}{L^{2}})
 -2L^{-1}(\psi_{(0)}\frac{z}{L}+\psi_{(1)}\left(\frac{z}{L}\right)^{2})
-\right)  \frac{L}{z}\\
+\right)  \\
 &=
-2\left(
-\psi_{(1)}\frac{z^2}{L^3}
-\right)  \frac{L}{z}WORKINPROGRESS
-\label{expFromBdy}
+\frac{2\psi_{(1)}}{L}
 \end{split}
 \end{equation}
+This simple relation thus gives us the expectation value of the scalar operator. A similar derivation can be made for the other fields. A general expression is shown in \cite{hartnoll8}, equation 91\footnote{The difference of a factor 2 is due to their kinetic term having a factor $1/2$ we do not.}. We have for the current $J^a$ sourced by the background field $A_a$
+\begin{equation}
+ \langle J^a\rangle_{\mathrm{CFT}}=A_{a(1)}
+\end{equation}
+The current gives us the charge density $\rho=-\At_{(1)}$ and the transverse current $J_x=A_{x(1)}$. The minus sign is a convention to get a positive charge density.\\
 
+We are now in a position to numerically solve the bulk theory and obtain these expectation values. We do this by sweeping over different horizon values of $\psi$ and for each value find all solutions to the boundary condition $\psi_{(0)}=0$. This yields many different solutions $\rho/T$ at the boundary. Scale invariance lets us interpret this as systems of constant $\rho$ but at different temperatures $T$. We then get a variation in the chemical potential $\mu$, see Figure \ref{f:mu}. The chemical potential of the trivial solution there shown is calculated through
+\begin{equation}
+ \rho=\mu/z_h.
+\end{equation}
+Alternatively one can let $\mu$ be constant while varying the temperature and get a variation in $\rho$. Figure \ref{f:O} shows the expectation value of $\mathcal{O}$ at different temperatures. The solid line at the bottom is the trivial solution $\psi=0$. The temperature $T_c$ is defined as the temperature where the first non-trivial solution is obtained. Multiple solutions are obtained as the temperature is lowered. The different solutions correspond to different phases of the system and which one is physical can be found by finding which has the lowest free energy.
 
+\fig{O_constRho_a2_0.0.pdf}{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have negative expectation values of $\mathcal{O}$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:O}}
 
-\section{Thermodynamic Variables}
-TODO, compare with experiments.
-The free energy, $A=-T\log{Z}$, is through the GKPW equation the same for the bulk and the boundary theory. This can be calculated in the classical limit in the bulk.
+\fig{mu_constRho_a2_0.0.pdf}{
+Chemical potential needed for constant $\rho$ at different $T$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have negative expectation values of $\mathcal{O}$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:mu}
+}
+
+\section{Free Energy}
+The free energy, $A=-T\log{Z}$, is the same for the bulk and the boundary theory since their partition functions are the same. This can be calculated in the classical limit in the bulk.
 \begin{equation}
  A=-T\log{Z}\stackrel{\mathrm{classical}}{=}-\i T S_c
 \end{equation}
-Here $S_c$ is the classical periodic time action. The classical field solutions only depend on the $z$ coordinate and are thus proportional to $V=-\i\beta V_2$ where $V_2$ is the area considered in coordinats $x_1$, $x_2$. This gives the free energy per surface area
+Here $S_c$ is the classical periodic time action. The classical field solutions only depend on the $z$ coordinate and are thus proportional to $V=-\i\beta V_2$ where $V_2$ is the area considered in coordinates $x_1$, $x_2$. This gives the free energy per surface area
 \begin{equation}
  \frac{A}{V_2}=-\int_0^{z_h}\d z \sqrt{-g}\L+V^{-1}S_{\mathrm{bdy}}
 \end{equation}
-Consider the case where $m^2=-2$. Then $\Delta_0=1$ and the boundary term is given by \eqref{Sbdy}.\\
-\subsection{Gravitational Free Energy and Entropy}
-The action is dominated by the gravitational part since we are in the probe limit. 
-The expression for the temperature \eqref{T} can be used to calculate the free energy from the action at finite temperature
-\begin{equation}
-\begin{split}
- \frac{A_\mathrm{grav}}{V_2}&=-T\frac{-1}{\kappa}\sqrt{\frac{-2\Lambda}{d(d-1)}}\left(\frac{d}{4\pi TL}\right)^{-d}\\
-&=\frac{(4\pi)^dT^dL^{d-1}}{d^{d}\kappa}
-\end{split}
-\end{equation}
-\\
-The entropy $H$ can now be calculated from the free energy
-\begin{equation}
- H=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
-\end{equation}
-TODO, Beckenstein-Hawking
+%Consider the case where $m^2=-2$. Then $\Delta_0=1$ and the boundary term is given by \eqref{Sbdy}.\\
+% \subsection{Gravitational Free Energy and Entropy}
+% The action is dominated by the gravitational part since we are in the probe limit. 
+% The expression for the temperature \eqref{T} can be used to calculate the free energy from the action at finite temperature
+% \begin{equation}
+% \begin{split}
+%  \frac{A_\mathrm{grav}}{V_2}&=-T\frac{-1}{\kappa}\sqrt{\frac{-2\Lambda}{6}}\left(\frac{3}{4\pi TL}\right)^{-3}\\
+% &=\frac{(4\pi)^3T^3L^{2}}{3^{3}\kappa}
+% \end{split}
+% \end{equation}
+% \\
+% The entropy $H$ can now be calculated from the free energy
+% \begin{equation}
+%  H=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
+% \end{equation}
 \subsection{Free Energy of Scalar and Electromagnetic Fields}
-It is important to calculate the free energy not only of the gravitational part of the Lagrangian since we have multiple solutions of the field equations and boundary values at the same temperature. Which solution is physical can be found by finding the one of lowest free energy. Here we neglect the contribution from any back-reaction on the metric following our argument in Section \ref{s:metric}.\\
-
-The free energy of the trivial solution \eqref{trivial} can be found analytically. For this solution we have
-\begin{equation}
- \begin{split}
-  \psi&=0\\
-  \psi'&=0\\
-  \At&=\mu-\mu\left(\frac{z}{z_h}\right)^{d-2}\\
-  \At'&=-(d-2)\frac{\mu}{z_h}\left(\frac{z}{z_h}\right)^{d-3}
- \end{split}
-\end{equation}TODO, explain d-3
+Only the free energy difference of the different solutions shown in Figure \ref{f:O} is needed. We therefore calculate the free energy contribution from the scalar and electromagnetic fields and neglect the contribution from the Einstein-Hilbert term of the action. We do not need to account for the contribution from any back-reaction on the metric following our argument in Section \ref{s:metric}. First consider the trivial solution \eqref{trivial}.
 \begin{equation}
 \begin{split}
- \frac{A}{V_\mathrm{SC}}=&-\int_0^{z_h}\d z \sqrt{-g}\L+V_\mathrm{SC}^{-1}S_{\mathrm{bdy}}\\
-=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1}\frac{1}{4}F_{ab}F^{ab}\\
-=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
-=&-\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-d-1+4}\left(\frac{z}{z_h}\right)^{2(d-3)}(d-2)^2\frac{\mu^2}{2z_h^2}\\
-=&-L^{d-3}z_h^{-2d+4}(d-2)^2\frac{\mu^2}{2} \int_0^{z_h}\d z z^{d-3}\\
-=&-L^{d-3}z_h^{-d+2}(d-2)\frac{\mu^2}{2}\\
-=&-L^{d-3}\left(\frac{4\pi T}{d}\right)^{d-2}(d-2)\frac{\mu^2}{2}
+ \frac{A}{V_\mathrm{2}}=&-\int_0^{z_h}\d z \sqrt{-g}\L+V_\mathrm{2}^{-1}S_{\mathrm{bdy}}\\
+=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{4}F_{ab}F^{ab}\\
+=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
+=&-\int_0^{z_h}\d z \frac{\mu^2}{2z_h^2}\\
+=&-z_h^{-1}\frac{\mu^2}{2}\\
+=&-\left(\frac{4\pi T}{3}\right)\frac{\mu^2}{2}
 \end{split}
 \end{equation}
-\fig{A}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:A}}
-\subsection{Interpretation of Multiple Solutions}
-The multiple solutions obtained 
+The free energy for the numerical solutions has been calculated and the result together with this analytical result is shown in Figure \ref{f:A}. It can there be seen that the trivial solution is the physical solution for temperatures above $T_c$ and that the solution appearing at the temperature $T_c$ is the physical solution for all lower temperatures. We will hereafter only work with these two solutions.
 
+\fig{A}{The free energy for the different solutions are shown here for constant $\rho$ and varying $T$. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the solution appearing at $T=T_c$ and the other roots follow in order.\label{f:A}}
 
-
-
-\section{Field Theory Electrical Potential}
-TODO, introduce $\rho$, $\mu$...
-The charge density $\rho$ of the trivial solution \eqref{trivial} is through \eqref{opExp} given by
-\begin{equation}
- \rho=\frac{\mu}{z_h}.
-\end{equation}
-The chemical potential of the trivial solution can thus be calculated given the temperature and charge density
-\begin{equation}
- \mu=\frac{d\rho}{4\pi T}.
-\end{equation}
-The chemical potential of the numerical solutions can be obtained from the boundary values. The result is seen in Fig. \ref{f:mu}.
-
-\fig{muTzeros}{Curves corresponding to different solutions at the same temperature. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the first root and the other roots follow in order.\label{f:mu}}
-\subsection{Comparison with Experiments Results}
-TODO
-\section{Field Theory Scalar Operator}
-TODO, write in more detail. TODO, write in some clear way about the dimensionless quantities.
-The $\psi$ condensate should be obtained without any source. Boundary conditions without source, $\psi_i=0$, are chosen at the boundary. $\psi_1$, $\mu$, and $\rho$ are then unknown. The boundary condition that $\At=0$ at the horizon is actually a double boundary condition due to the singular form of the equations of motion there. There are thus only two free parameters and it is easiest to start integrating from there. A numerical integrator is used to integrate from the horizon to the boundary. The source term is read off and the horizon conditions are adapted until the source term is zero. This leaves a one dimensional space of solutions since we have two parameters to vary at the horizon but just one constraint on the boundary. $\mu$, $\rho$ and $\epsilon_{ij}\psi_j$ can be read off at the boundary.\\
-
-The fields all have the unit of inverse length and $\rho$ thus has unit inverse length squared. Solutions can be obtained at any temperature by choosing different values of $z_h$. The temperature can be chosen such that the charge density $\rho$ is constant for all solutions. The numerical solution gives $\rho z_h^2$. Choosing a constant $\rho=1$ gives $z_h$ and thus the temperature. We call the highest temperature obtained $T_c$.
-
-\fig{O2Tzeros}{Curves corresponding to different solutions at the same temperature.}
-\subsection{Comparison with Experiments Results}
-TODO
 \section{Electrical Conductivity}
 The conductivity of a superconductor can easily be measured experimentally for a wide range of frequencies and it is therefore an interesting property to calculate from our model of a superconductor. The agreement in different frequency ranges tells us about similarities and differences between our model and the experimental superconductors.\\
 \subsection{Definition of Electrical Conductivity and its Properties}
-TODO, def from L
-The current density, $\mathbf{J}$ is a vector quantity defined as the flow of charge. The rate of charge passing through a surface at $x$ of length $\d l$ and with normal $\mathbf{n}$ is given by $\d l\mathbf{n}\cdot \mathbf{J}(x)$.
 We define conductivity $\sigma$ as the linear response function for the current density $J_x$ with the applied electrical field $E_x$ as source
 \begin{equation}
  \sigma(\omega)=\frac{J_x(\omega)}{E_x(\omega)}\label{sigma}.
 \end{equation}
-Here the direction $x$ has been chosen for concreteness but since we consider two-dimensional systems with rotational symmetry we need only consider one direction. These functions of $\omega$ are the Fourier transforms of the time-dependent quantities. The considered electrical field $E_x$ is further assumed to be translationally symmetric giving a still translationally symmetric system. The current in the time domain can be obtained from the conductivity and the applied field through a inverse Fourier transform
+Here the direction $x$ has been chosen for concreteness but since we consider two-dimensional systems with rotational symmetry we need only consider one direction. These functions of $\omega$ are the Fourier transforms of the time-dependent quantities. The current in the time domain can be obtained from the conductivity and the applied field through a inverse Fourier transform
 \begin{equation}
  J_x(t)=\int_{-\infty}^\infty E_x(t-\tau)\sigma(\tau)\d \tau.
 \end{equation}
@@ -768,7 +741,7 @@ TODO
 TODO
 \begin{appendices}
 \chapter{Conventions in this Report\label{conventions}}
-The AdS space will be refered to as the bulk and the boundary conformal field theory will be referred to as the boundary theory or the superconductor.\\
+The AdS space will be refered to as the bulk and the boundary conformal field theory will be referred to as the boundary theory or the superconductor or just CFT. We use $z$ for the ``radial'' coordinate in AdS space, it is 0 at the conformal boundary and $z_h$ at the horizon. This is the same coordinate as the one called $r$ in \cite{hartnoll8}, there with horizon at $r=r_+$.\\
 Vector quantities not involving time components will in the boundary theory be written with boldface, $\mathbf{E}, \mathbf{J}$.\\
 Tensor indices in the $d+1$-dimensional bulk theory will be TODO latin letters, $a,b,c,...8$. Tensor indices in the $d$-dimensional boundary theory will be TODO greek letters, $\mu,\nu,...$. Tensors written in component form will have it's components ordered as $\mu=t,x,y$ on the boundary and $a=z,t,x,y$ in the bulk.
 The metric sign convention for positive space-like distances will be chosen.\\
@@ -777,6 +750,26 @@ The action is calculated from the Lagrangian as
  S=\int\d^{d+1} x\sqrt{g}\L+S_\mathrm{boundary}.
 \end{equation}
 This is independent of coordinates but makes us use covariant derivatives for finding the equations of motion. The square root could instead be absorbed in the Lagrangian and the space time be considered flat. This has been done in computer-aided calculations of the equations of motion.
+\chapter{Dimensions}
+What dimension different variables have can be a bit confusing. Here is a table to clear things up
+\begin{equation}
+ \begin{split}
+[z]&=[L]\\
+[m^2]&=[L^{-2}]\\
+[q]&=[L^{0}]\\
+[\omega]&=[L^{-1}]\\
+[\mathcal{L}]&=[L^{-4}]\\
+[S]&=[L^0]\\
+[T]&=[L^{-1}]\\
+[\psi]&=[L^{-1}]\\
+[\mathcal{O}]&=[L^{-2}]\\
+[A_a]&=[L^{-1}]\\
+[F_{ab}]&=[L^{-2}]\\
+[J^a]&=[L^{-2}].
+ \end{split}
+\end{equation}
+
+
 \chapter{Boundary Term for Scalar Field Action \label{a:bound}}
 The bulk Lagrangian considered will contain different fields and depends both on the fields and their first derivatives. Here we will consider a simple Lagrangian with just one scalar field and figure out what boundary term is needed for the Lagrangian.\\
 
@@ -925,7 +918,7 @@ $\nabla_aF^{ab}$
 \begin{equation}
  \nabla_aF^{ab}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}+\Gamma^b_{\ ca}F^{ac}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}
 \end{equation}
-\chapter{Numerical Method}
+\chapter{Numerical Method\label{a:num}}
 The numerical integration of the equations of motion becomes hard close to the horizon and the boundary due to the singular behaviour of the differential equations. The boundary and horizon behaviours calculated in Subsection \ref{s:bb} and \ref{s:hb} have here been used instead to start and stop the integration right next to the singular points. The distance to the singular points have afterwards been changed some orders of magnitude to make sure this approach doesn't introduce any noticable errors. The behaviour of $A_x$ is highly oscillatory close to the horizon so this oscillatory behaviour has additionally been subtracted from the equation giving a non-homogenous equation with a solution approaching 0 at the horizon. The oscillatory behaviour could as well have benn divided out to get a homogeneous equation approaching 1 at the horizon.\\
 
 The explicit embedded Runge-Kutta Prince-Dormand (8, 9) method implemented in ``The GNU Scientific Library'' \cite{gsl} has been used and the relative error per step for all functions has been required to be smaller than at most $10^{-7}$ for all results in this report.
