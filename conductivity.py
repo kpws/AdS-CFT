@@ -161,14 +161,14 @@ def getBoundary(phiD, psi, pars, plot=False, returnSol=False):
         return [bb,osc]
 
 if __name__=='__main__':
-    hpsis=np.logspace(-7,1.4,100)
+    hpsis=np.logspace(-7,1.0,30)
 
     print('Solve for sweep of different horizon BCs...')
     from solveBC import sweep, findrho
 
-    bbs,sols=sweep(lambda x,y: getBoundary(x,y,[0,1]), hpsis, oscN=1, status=True)
+    bbs,sols=sweep(lambda x,y: getBoundary(x,y,[0,1]), hpsis, oscN=3, status=True)
 
-    if False:
+    if True:
         print('Calculating free energy...')
         from scipy.integrate import cumtrapz
         As=[]

@@ -6,8 +6,8 @@ from printStatus import printRatio
 from pickle import load, dump
 
 hpsis=np.logspace(-6,1.5,300)
-a2=0.1
-plotImag=False
+a2=0.0
+plotImag=True
 from solveBC import sweep, findrho
 
 try:

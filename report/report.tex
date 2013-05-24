@@ -308,17 +308,17 @@ $m$ is the mass of the scalar field in the bulk. What values of $m$ that are sui
 We wish to compute expectation values of the CFT. This will be done through the correspondence using relation \eqref{expFromBdy}. The bulk theory equations of motion must then be solved so that the boundary behaviour of the fields can be obtained.
 %The bulk theory was assumed to be classical in Section \ref{correspondence} so the system is solved by finding the equations of motion for the fields and solving them. This lets ut calculate the partition function and use it to find CFT expectation values through \ref{expectation}.
 \section{Definitions}
-The Lagrangian describes a general system so there are many solutions to the equations of motion. We wish to investigate two properties of a superconductor, the development of a condensate at low temperatures and the conductivity at different frequencies. We are interested in a superconductor subject to spatially uniform conditions, the applied electric field is uniform and the chemical potential is uniform. The atomic lattice and its imperfections are thus not accounted for but interesting superconductivity behaviour has been obtained anyway \cite{hartnoll9}. It is thus enough to look at a system with translational symmetry in the $x$ and $y$ directions. A rotationally invariant superconductor will further be studied. The system is subject to conditions constant in time, e.g.~no time-dependent chemical potential. This lets us assume time-independence while solving the non-linear field equations.\\
+The Lagrangian describes a general system so there are many solutions to the equations of motion. We wish to investigate two properties of a superconductor, the development of a condensate at low temperatures and the conductivity at different frequencies. We are interested in a superconductor subject to spatially uniform conditions, the applied electric field is uniform and the chemical potential is uniform. The atomic lattice and its imperfections are thus not accounted for but interesting superconductivity behaviour can be obtained anyway \cite{hartnoll9}. It is thus enough to look at a system with translational symmetry in the $x$ and $y$ directions. A rotationally invariant superconductor will further be studied. The system is subject to conditions constant in time, e.g.~no time-dependent chemical potential. This lets us assume time-independence while solving the non-linear field equations.\\
 
 The conductivity is the linear electrical current response to an applied transverse electrical field. We can apply this in the $x$ direction due to the rotational symmetry. We let the applied field have a harmonic time dependence $\exp(\i t \omega)$ so we can get the response function in the frequency domain. The linear response is sought so the applied field should be infinitesimal. The applied field breaks the rotational and time symmetries but since it is infinitesimal and we are not interested in the effect is has on the other fields it can be neglected while calculating them. The applied field is later added with the other fields as a background solution.\\
-The electrical field in the $x$-direction is $E_x=F_{xt}=\nabla_xA^t-\nabla_tA^x$. Translational symmetry gives $E_x=\nabla_tA^x$.
+The electrical field in the $x$-direction is $E_x=F_{xt}=\partial_xA_t-\partial_tA_x$. Translational symmetry gives $E_x=\partial_tA_x$.
 
 These limitations lets us do the following definitions
 \begin{equation}
  \begin{split}
-  \d s^2&=g_{tt}(z)\d t^2+g_{zz}(z)\d z^2+g_{xx}(z)(\d x^2+\d y^2)  \\
+  \d s^2&=g_{tt}(z)\d t^2+g_{xx}(z)(\d x^2+\d y^2)+g_{zz}(z)\d z^2  \\
   \psi&=\psi(z)\\
-  A_a&=(\At(z), A_z(z), A_x(z)\exp(\i t \omega), 0)
+  A_a&=(\At(z), A_x(z)\exp(\i t \omega), 0, A_z(z))
  \end{split}\label{defs}
 \end{equation}
 where $\At(z)$ is infinitesimal.
@@ -326,7 +326,7 @@ The gauge condition requires
 \begin{equation}
  \nabla_aA^a=\partial_aA^a+\Gamma^a_{\ ba}A^b=0
 \end{equation}
-this gives a homogeneous first-order linear ordinary differential equation for $A_z(z)$ since the contracted Christoffel symbol only has a $z$ component. The remaining gauge symmetry lets us add a function to $A_z$ and can be used to set $A_z(z)=0$ for a $z$. The above differential equation then requires $A_z(z)$ to be identically 0 for all $z$. We will hereafter work with $A_z(z)=0$.\\
+this gives a homogeneous first-order linear ordinary differential equation for $A_z(z)$ since the contracted Christoffel symbol only has a $z$ component, see Appendix \ref{CAS}. The remaining gauge symmetry lets us add a function to $A_z$ and can be used to set $A_z(z)=0$ for a specific $z$. The above differential equation then requires $A_z(z)$ to be identically 0 for all $z$. We will hereafter work with $A_z(z)=0$.\\
 
 The explicit $z$ and $t$-dependence of these functions will hereafter be ommited. 
 \section{Metric\label{s:metric}}
@@ -366,7 +366,7 @@ This gives the relationship between $z_h$ and the temperature
 \end{equation}
 This expression for the temperature agrees with the Beckenstein-Hawking temperature of a black hole.\\
 
-The backreaction $\delta g_{ab}$ from the non-zero fields will be of order $\kappa T_{ab}$ according to \eqref{einstein}. The Einstein equation is obtained by varying the Lagrangian with respect to $g_{ab}$ so $\delta S\propto\kappa^{-1}\delta g_{ab}^2$ for the solution. We thus have that $\delta S\propto\kappa T_{ab}^2$ and the backreaction can safely be neglected also when calculating the action from different field configurations.\\
+We have assumed $\kappa T_{ab}=0$ in finding the metric. The backreaction, $\delta g_{ab}$, from the non-zero fields will be of order $\kappa T_{ab}$ according to \eqref{einstein}. What change to the gravitational action does this give? Expand the total action around the above metric. The Einstein equation is obtained by varying the Lagrangian with respect to $g_{ab}$ and finding the saddle-point so $\delta S\propto\kappa^{-1}\delta g_{ab}^2$ for the variation around the saddle-point. We thus have that $\delta S\propto\kappa T_{ab}^2$ and the backreaction can safely be neglected also when calculating the action from different field configurations.\\
 
 This background metric can now be used instead of solving the equations of motion for the metric together with the fields. The gravitational part of the Lagrangian must be kept when calculating the value of the total action which is dominated by the gravitational part.
 % The Ricci scalar of the solution metric is
@@ -409,14 +409,14 @@ A Frobenious expansion \cite{teschl2012ordinary} of these equations can be done 
  &\phi=\phi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\phi}\\
  &A_x=A_{x(0)}\left(\frac{z}{z_h}\right)^{\Delta_{A_x}}
 \end{empheq}
-where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to be determined. This is a slight assumption since not all functions have this type of leading behaviour.
+where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to be determined. This is a slight assumption since not all functions have this type of leading behaviour\footnote{The function $\log$ for example does not allow an expansion like this, we have assumed the function does not have an essential singularity at $z=0$.}.
  Entering this in the equations of motion yields
  \begin{empheq}[left=\empheqlbrace]{align}
   &q^2z^2\phi_{(0)}^2s^{2\Delta_\phi}-L^2m^2f+f(zf^\prime-2f)\Delta_\psi+f^2\Delta_\psi(\Delta_\psi-1) =0\label{ind1}\\
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2+f\Delta_\phi(\Delta_\phi-1)=0\label{ind2}\\
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2f+z^2\omega^2+zff^\prime\Delta_{A_x}+f^2\Delta_{A_x}(\Delta_{A_x}-1)=0.
  \end{empheq}
-where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$ since the first terms otherwise diverges at the horizon where the other terms are finite. First consider the case of the strict inequalities. The leading order behaviour is then
+where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$ since the first terms otherwise diverges at the horizon where the other terms are finite. First consider the case of strict inequalities. The leading order behaviour is then
  \begin{empheq}[left=\empheqlbrace]{align}
   &-L^2m^2-2\Delta_\psi+\Delta_\psi(\Delta_\psi-1) =0\\
   &\Delta_\phi(\Delta_\phi-1)=0\\
@@ -439,8 +439,8 @@ while \eqref{ind1} gives $\Delta_\phi=-1$. We then have
   &\Delta_{A_x}(\Delta_{A_x}-1)=2.
  \end{empheq}
 with solutions $\Delta_{A_x}=-1,2$.
-First assuming $\Delta_\phi=-1$ yields the same result. There are though no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
-All useful solutions are thus given by equation \ref{indicialSo1} to \ref{indicialSol3}.
+First assuming $\Delta_\phi=-1$ yields the same result. There are however no solutions to \eqref{spurious1} for the negative $m^2$ we later will consider and infinities are encountered when calculating the action for these solutions so they will not be considered.
+All useful solutions are thus given by equation \eqref{indicialSo1} to \eqref{indicialSol3}.
 \subsection{Field behaviour at Horizon\label{s:hb}}
 The same kind of expansion can be made at the horizon but there are some simplifying conditions. The time component of the metric vanishes at the horizon, $f(z_h)=0$. This means that $A_t(z_h)$ must be zero because a finite $A_t(z_h)$ would give a finite Wilson loop around the periodic imaginary time circle whose length in time is 0. A Wilson loop is contrary to $A_t$ a physical quantity ($A_t$ is gauge-dependent). This gives a singular gauge connection which is unphysical \cite{hartnoll8}. We thus have $\At(z_h)=0$. Expand the fields as 
 \begin{empheq}[left=\empheqlbrace]{align}
@@ -448,7 +448,7 @@ The same kind of expansion can be made at the horizon but there are some simplif
  &\phi=\phi_{(h)}s^{\Delta^{(h)}_\phi}\\
  &A_x=A_{x(h)}s^{\Delta^{(h)}_{A_x}}
 \end{empheq}
-where $s$ now is $(1-z/z_h)$ and $\Delta^{(h)}_\phi>0$. The notation $\Delta^{(h)}$ is used to signify that these exponents describe the \emph{horizon} behaviour, $\Delta$ was earlier used for the conformal boundary behaviour. The function $f$ can be expanded as $f=3s-3s^2+s^3$.
+where $s$ now is $(1-z/z_h)$ and $\Delta^{(h)}_\phi>0$\footnote{The notation $\Delta^{(h)}$ is used to signify that these exponents describe the \emph{horizon} behaviour, $\Delta$ was earlier used for the conformal boundary behaviour.}. The function $f$ can be expanded as $f=3s-3s^2+s^3$.
 % \begin{empheq}[left=\empheqlbrace]{align}
 %  &q^2z^2\phi_{(1)}^2s^{2\Delta^{(h)}_\phi}-L^2m^2f-zf(zf^\prime-2f)s^{-1}\Delta^{(h)}_\psi+z^2f^2s^{-2}\Delta^{(h)}_\psi(\Delta^{(h)}_\psi-1)=0\\
 %  &-2q^2\psi_{(1)}^2s^{2\Delta^{(h)}_\psi}L^2+z^2fs^{-2}\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
@@ -495,7 +495,7 @@ The horizon parameters $\psi(z_h)$ and $\At'(z_h)$ can now be varied to find sol
 
 There is a trivial analytical solution of the equations of motion with the above boundary conditions.
 \begin{equation}
-\begin{split}
+\begin{cases} 
  &\psi(z)=0\\
  &\phi(z)=\mu(1-z/z_h)\\
  &A_x(z)=
@@ -503,11 +503,11 @@ There is a trivial analytical solution of the equations of motion with the above
 \exp\left( - \sqrt{3}\tan^{-1} \frac{z_h+2z}{z_h\sqrt{3}} \right)
 \frac{z_h-z}{\sqrt{z^2+zz_h+z_h^2}}
 \right]^{\frac{\i\omega z_h}{3} }   \label{trivial}
-\end{split}
+\end{cases}
 \end{equation}
-The field $\psi$ is here identically zero and there is no spontanous symmetry breaking. This solution thus corresponds to the physics above the critical temperature, $T_c$, of the superconductor. We will now make a choice of $m$ to be able to investigate solutions with $\psi\neq0$
+The field $\psi$ is here identically zero and there is no spontanous symmetry breaking. This solution thus corresponds to the physics above the critical temperature, $T_c$, of the superconductor. We will now make a choice of $m$ to be able to numerically investigate solutions with $\psi\neq0$.
 \subsection{Choice of scalar mass $m$}
-The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman bound (BF) is a lower bound on $m^2$ of a massive scalar field in AdS space with metric given by \eqref{metric}. It requires
+The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman (BF) bound is a lower stability bound on $m^2$ of a massive scalar field in AdS space with metric given by \eqref{metric}. It requires
 \begin{equation}
  L^2m^2\geq-\frac{d^2}{4}\label{BF}
 \end{equation}
@@ -518,7 +518,7 @@ for stability\cite{Kleban:2004bv}. The scalar field $\psi$ should obey this boun
 =m^2-\frac{z^2}{L^2(1-z^dz_h^{-d})}\At^2
 \label{meff}
 \end{equation}
-This can for large enough values of $\At$ break the BF-bound, see Fig. \ref{BF}.
+This can for large enough values of $\At$ break the BF-bound, see Figure \ref{BF}.
 \begin{figure}
 \centering
 \input{bf}
@@ -574,7 +574,7 @@ n_a\frac{\partial\L(y)}{\partial (\nabla_a\psi(y))}
 \end{equation}
 This simple relation thus gives us the expectation value of the scalar operator. A similar derivation can be made for the other fields. A general expression is shown in \cite{hartnoll8}, equation 91\footnote{The difference of a factor 2 is due to their kinetic term having a factor $1/2$ we do not.}. We have for the current $J^a$ sourced by the background field $A_a$
 \begin{equation}
- \langle J^a\rangle_{\mathrm{CFT}}=A_{a(1)}
+ \langle J^a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
 \end{equation}
 The current gives us the charge density $\rho=-\At_{(1)}$ and the transverse current $J_x=A_{x(1)}$. The minus sign is a convention to get a positive charge density.\\
 
@@ -595,9 +595,9 @@ The free energy, $A=-T\log{Z}$, is the same for the bulk and the boundary theory
 \begin{equation}
  A=-T\log{Z}\stackrel{\mathrm{classical}}{=}-\i T S_c
 \end{equation}
-Here $S_c$ is the classical periodic time action. The classical field solutions only depend on the $z$ coordinate and are thus proportional to $V=-\i\beta V_2$ where $V_2$ is the area considered in coordinates $x_1$, $x_2$. This gives the free energy per surface area
+Here $S_c$ is the on-shell periodic time action. The on-shell field solutions only depend on the $z$ coordinate and are thus proportional to $V=\i\beta V_2$ where $V_2$ is the area considered in coordinates $x_1$, $x_2$. This gives the free energy per surface area
 \begin{equation}
- \frac{A}{V_2}=-\int_0^{z_h}\d z \sqrt{-g}\L+V^{-1}S_{\mathrm{bdy}}
+ \frac{A}{V_2}=\int_0^{z_h}\d z \sqrt{-g}\L+V^{-1}S_{\mathrm{bdy}}
 \end{equation}
 %Consider the case where $m^2=-2$. Then $\Delta_0=1$ and the boundary term is given by \eqref{Sbdy}.\\
 % \subsection{Gravitational Free Energy and Entropy}
@@ -615,20 +615,20 @@ Here $S_c$ is the classical periodic time action. The classical field solutions 
 %  H=-\frac{\partial A}{\partial T}=-\frac{(4\pi)^dT^{d-1}L^{d-1}}{d^{d-1}\kappa}.
 % \end{equation}
 \subsection{Free Energy of Scalar and Electromagnetic Fields}
-Only the free energy difference of the different solutions shown in Figure \ref{f:O} is needed. We therefore calculate the free energy contribution from the scalar and electromagnetic fields and neglect the contribution from the Einstein-Hilbert term of the action. We do not need to account for the contribution from any back-reaction on the metric following our argument in Section \ref{s:metric}. First consider the trivial solution \eqref{trivial}.
+Only the free energy difference of the different solutions shown in Figure \ref{f:O} is needed. We therefore calculate the free energy contribution from the scalar and electromagnetic fields and neglect the contribution from the Einstein-Hilbert term of the action. We call this $A_\mathrm{fields}$. We do not need to account for the contribution from any back-reaction on the metric following our argument in Section \ref{s:metric}. First consider the trivial solution \eqref{trivial}.
 \begin{equation}
 \begin{split}
- \frac{A}{V_\mathrm{2}}=&-\int_0^{z_h}\d z \sqrt{-g}\L+V_\mathrm{2}^{-1}S_{\mathrm{bdy}}\\
-=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{4}F_{ab}F^{ab}\\
-=&\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
-=&-\int_0^{z_h}\d z \frac{\mu^2}{2z_h^2}\\
-=&-z_h^{-1}\frac{\mu^2}{2}\\
-=&-\left(\frac{4\pi T}{3}\right)\frac{\mu^2}{2}
+ \frac{A_\mathrm{fields}}{V_\mathrm{2}}=&\int_0^{z_h}\d z \sqrt{-g}\L+V_\mathrm{2}^{-1}S_{\mathrm{bdy}}\\
+=&-\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{4}F_{ab}F^{ab}\\
+=&-\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
+=&\int_0^{z_h}\d z \frac{\mu^2}{2z_h^2}\\
+=&z_h^{-1}\frac{\mu^2}{2}\\
+=&\left(\frac{4\pi T}{3}\right)\frac{\mu^2}{2}
 \end{split}
 \end{equation}
 The free energy for the numerical solutions has been calculated and the result together with this analytical result is shown in Figure \ref{f:A}. It can there be seen that the trivial solution is the physical solution for temperatures above $T_c$ and that the solution appearing at the temperature $T_c$ is the physical solution for all lower temperatures. We will hereafter only work with these two solutions.
 
-\fig{A}{The free energy for the different solutions are shown here for constant $\rho$ and varying $T$. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the solution appearing at $T=T_c$ and the other roots follow in order.\label{f:A}}
+\fig{A_constRho_a2_0.0.pdf}{The free energies of the different solutions are shown here for constant $\rho$ and varying $T$. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the solution appearing at $T=T_c$ and the other roots follow in order.\label{f:A}}
 
 \section{Electrical Conductivity}
 The conductivity of a superconductor can easily be measured experimentally for a wide range of frequencies and it is therefore an interesting property to calculate from our model of a superconductor. The agreement in different frequency ranges tells us about similarities and differences between our model and the experimental superconductors.\\
@@ -648,39 +648,52 @@ Causality implies that $\sigma(\tau)=0$ for $\tau<0$ since the current would oth
 and thus has an analytical extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ give the Kramers–Kronig relations
 \begin{equation}
 \begin{split}
- \re(\sigma(\omega))&=\frac{2}{\pi}\int_0^\infty\frac{\omega^\prime\im(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\\
-\im(\sigma(\omega))&=-\frac{2}{\pi}\int_0^\infty\frac{\omega\re(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\label{kk}
+ \re(\sigma(\omega))&=\frac{2}{\pi}\int_0^\infty\frac{\omega^\prime\im(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\d \omega^\prime\\
+\im(\sigma(\omega))&=-\frac{2}{\pi}\int_0^\infty\frac{\omega\re(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\d \omega^\prime\label{kk}
 \end{split}
 \end{equation}
 These relations state that the real part of the conductivity uniquely determines the imaginary part and vice versa.
 \subsection{Calculating the Holographic Conductivity}
-We want to apply a homogeneous but time-varying electrical field on the superconductor and measure the induced current. The two-dimensional superconductor is rotationally symmetric so we can apply the field in any direction. We choose
+We earlier solved the bulk equations of motion with an infinitesimal applied electrical field in the $x$ direction. The field was oscillating with a frequency $\omega$. The conductivity can now be calculated from the obtained current in the $x$ direction.
 \begin{equation}
- E_x=E_0\exp(-\i\omega t).
+ \sigma=\frac{J_x}{-\partial_tA_x}=-\frac{A_{x(1)}}{\i\omega A_{x(0)}L}
 \end{equation}
-The response function can be obtained by using this time-dependence. This electrical field corresponds to the electromagnetic potential
+The electrical conductivity for the normal phase can now be found using \eqref{trivial}. The boundary behaviour is
 \begin{equation}
- A=(A_z,\At,A_x,A_y)
+    A_{x(0)}=\lim_{z\rightarrow0} A_x(z) =  \exp\left(-\frac{\i\pi z_h\omega}{6\sqrt{3}}\right),                                                                                 
 \end{equation}
+and
+\begin{equation}
+    A_{x(1)}=\lim_{z\rightarrow0} \partial_zA_x(z)L   = -\i\omega L\exp\left(-\frac{\i\pi z_h\omega}{6\sqrt{3}}\right).      
+\end{equation}
+The conductivity is thus 1 for all $\omega$ above $T_c$.\\
 
+The conductivity below $T_c$ can be calculated the same way using the numerical solution. The result is seen in Figure \ref{f:cond}.\\
 
-Applying an electric field in 
-The obtained conductivity for temperatures above the $T_c$ is $\sigma(\omega)=1$. This agrees with TODO. The conductivity changes when the condensate forms. An energy gap $\Delta$ forms and the conductivity for $\omega<\Delta$ goes to 0 as the temperature is lowered. The superconductivity is not immidiately evident from the obtained conductivity curves. There is a delta-function at $\omega=0$ since translational invariance of the boundary theory has been assumed.
-\fig{cond_Ts}{Real and imaginary part of the conductivity for different temperatures. Higher temperatures above $T_c$ give the same conductivity as for the $T=T_c$ case. \label{cond_Ts}}
-TODO, add DC temperature dependence? energy gap size?
-\subsection{Comparison with Experimental Results}
-TODO. graphene?
+\fig{cond_Ts_a2_0.0_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
+
+The conductivity is lowered for low $\omega$ when the condensate forms. An energy gap $\Delta$ forms and the conductivity for $\omega<\Delta$ goes to 0 as the temperature is lowered. The superconductivity is not immidiately evident from the obtained conductivity curves. There is though a $\delta$-function at $\omega=0$ since translational invariance of the boundary theory has been assumed. This can be seen through the Kramers-Kronig relations, \eqref{kk}. A $\delta$-function in the real part is equivalent to a pole in the imaginary part.
+\begin{equation}
+\begin{split}
+\im(\sigma(\omega))&=-\frac{2}{\pi}\int_0^\infty\frac{\omega\delta(\omega^\prime)}{\omega^{\prime 2}-\omega^2}\d \omega^\prime=\\
+&=\frac{1}{\pi\omega}
+\end{split}
+\end{equation}
 \section{Consistency Check using a Conductivity Sum Rule}
-The Kramers-Kroning relations and the decoupeling of the electrons from the system at high frequencies can be used to prove a sum rule for the conductivity \cite{PhysRev.109.1398}. The rule states
+The Kramers-Kronig relations and the decoupeling of the electrons from a conductor at high frequencies can be used to prove a sum rule for the conductivity \cite{PhysRev.109.1398}. The rule states
 \begin{equation}
  \int_0^\infty\re(\sigma(\omega))\d\omega=C
 \end{equation}
-where $C$ is a constant depending on what system we are considering 
-\fig{sum_rule_a20}{Integral}
+where $C$ is a constant depending on what system we are considering. This integral diverges in our case so the rule must be modified. The proof uses that the imaginary part of $\sigma(\omega)$ becomes independent of low energy properties such as the temperature at high enough frequencies. That the Kramers-Kronig relations apply to $\sigma(\omega)$ is also used. These two properties are also true for $\sigma(\omega)-1$ so the rule can be modified into
+\begin{equation}
+ \int_0^\infty\re(\sigma(\omega)-1)\d\omega=C.
+\end{equation}
+The analytical solution above $T_c$ now gives $C=0$. This rule can now be used to verify that our numerics are accurate. The integral of $\re(\sigma(\omega)-1)$ should vanish for all temperatures. It is then important to include the $\delta$-function at $\omega=0$ which our numerics do not catch. We can however find the amplitude, $\Sigma_\delta$, of the $\delta$-function from the amplitude of the pole in the imaginary part of the conductivity. The sum of the integral of the continous part of the conductivity, $\int(\sigma_n-1)\d \omega$, and $\Sigma_\delta$ should then equal 0 for all temperatures. The result is seen in Figure \ref{f:sum}. A suitable cut-off frequency has been used but since $\sigma(\omega)$ converges fast to 1 is this not a concern. No large discrepancies are observed. This is a strong check of the numerics since the real part of the conductivity at all frequencies and temperatures and the amplitude of the pole all have to match up. The largest discrepancy is observed for low temperatures, this is expected since the numerical integrator there has been observed to make smaller steps indicating a numerically more difficult problem.
 
+\fig{sum_rule_a20}{The two contributions to the integral in the modified Ferrell-Glover-Tinkham sum rule for different temperatures. The red line is expected to be precisely at 0 for perfect numerics\label{f:sum}}
 
 \chapter{Extended Lagrangian\label{higherOrder}}
-Many assumptions have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity\cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$\cite{drudeFit}.
+Many simplifications have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity\cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$\cite{drudeFit}.
 
 \section{Drude Model}
 The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
@@ -696,6 +709,8 @@ This gives the conductivity
  \sigma(\omega)=\frac{J(\omega)}{E(\omega)}=\frac{v(\omega)q\rho}{E(\omega)}=\frac{\tau\rho q^2}{m(1-\i\omega\tau)}=\frac{\sigma_0}{1-\i\tau\omega}.
 \end{equation}
 where $\rho$ is the density of charge carriers of charge $q$.
+
+
 \section{Higher Order Maxwell Term}
 Different generalizations of the standard Lagrangian $L$ have been studied, TODO cite. Tobias Wenger studied three different extensions propose by Sachdev, TODO cite. An increase in conductivity for low frequencies similar to a Drude peak, courtesy of Hugo Strand, was observed for one of the extensions. This will here be studied in more detail.\\
 The extended Lagrangian has a higher order Maxwell term and another parameter $\alpha_2$ with dimension TODO.
@@ -707,14 +722,14 @@ The equations of motion now become TODO.\\
 TODO: Boundary, Horizon behaviour.\\
 
 This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. 
-This agrees very well with what is obtained for low frequencies above the critical point, especially for high values of TODO. See Fig. \ref{drude}.
+This agrees very well with what is obtained for low frequencies above the critical point, especially for high values of TODO. See Figure \ref{drude}.
 
-
+\fig{cond_Ts_a2_0.1_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
 
 
 \fig{drude_T_1Tc_a2_1}{Conductivity for $\alpha_2=1$ and $T=T_c$. The Drude parameters have been obtained from the lowest frequency data-point. \label{drude}}
 
-The low frequency limit of the conductivity $\sigma_0$ seems to depend linearly on $\alpha_2$ for values of $\alpha_2$ larger than TODO. See Fig \ref{drudeVar2Tc}. The proportionality constant depends on the temperature, see Fig \ref{drudeVarMTc}, and seems to closely follow a power-law, see Fig \ref{drudeTdep_1e4}. $\sigma_0$ thus seems to closely follow
+The low frequency limit of the conductivity $\sigma_0$ seems to depend linearly on $\alpha_2$ for values of $\alpha_2$ larger than TODO. See Figure \ref{drudeVar2Tc}. The proportionality constant depends on the temperature, see Figure \ref{drudeVarMTc}, and seems to closely follow a power-law, see Figure \ref{drudeTdep_1e4}. $\sigma_0$ thus seems to closely follow
 \begin{equation}
  \sigma_0=C\alpha_2\left(\frac{T}{T_c}\right)^{-4/3}
 \end{equation}

@@ -36,7 +36,8 @@ except IOError:
 L=L.subs(ass)
 dofs=reduce(lambda a,b:a+b,[[f, f.diff(M.x[0])] for f in fields]) #list of fields and derivatives
 dummies=[sp.Dummy('d'+str(i)) for i in range(len(dofs))]
-Lfun=sp.lambdify([M.x[0]]+varParams+dummies, L.subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0))
+Le=L.subs(A[2],0).subs(zip(dofs, dummies)[::-1]).subs(M.x[1],0).doit()
+Lfun=sp.lambdify([M.x[0]]+varParams+dummies, Le)
 
 
 print('Calculating equations of motion...')
@@ -140,7 +141,7 @@ unTrans=sp.lambdify(dummies,
 def getBoundary(phiD, psi, pars, plot=False, returnSol=False):
     f=horizonSol(phiD,psi,1-epsH)
     fD=horizonSolD(phiD,psi,1-epsH)
-    n=150 if returnSol or plot else 60
+    n=400 if returnSol or plot else 60
     zs,y=solveBulk.solve([f[0],fD[0],f[1],fD[1], f[2], fD[2], f[3], fD[3]],  epsB, epsH, n, pars)
     osc=0
     for i in range(1,n):
