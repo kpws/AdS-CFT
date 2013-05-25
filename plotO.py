@@ -48,6 +48,7 @@ fig(2)
 Trs=np.linspace(0,1.2)[1:]
 #pl.plot(Trs,rho*zh/Tc,lw=1)
 pl.plot(Trs,min([min(r) for r in rho])*(zh/Trs)/T,lw=1)
+#pl.plot(Trs,Trs*7.71285,ls=':')
 pl.ylim([0,50])
 #pl.legend(loc='upper right')
 pl.xlabel(r'$\frac{T}{T_c}$')

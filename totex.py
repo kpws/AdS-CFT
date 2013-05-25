@@ -1,9 +1,9 @@
 import sympy as sp
 
-def sumBreak(e,l=100):
+def sumBreak(e,l=100,f=str):
     part=e[0]
     for i in range(1,len(e)):
-        if len(str(sum(e[:i+1])))>l:
+        if len(f(sum(e[:i+1])))>l:
             return [sum(e[:i])]+sumBreak(e[i:],l=l)
     return [sum(e)]
 

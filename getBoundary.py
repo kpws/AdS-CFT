@@ -44,7 +44,7 @@ print('Calculating equations of motion...')
 eqm=[fieldEqn(L,f,M.x).subs(A[2],0).doit().simplify() for f in fields[:2]]
 d=sp.Dummy()
 eqm.append(series(fieldEqn(L,A[2],M.x).subs(A[2],d*Axf).doit(),d).subs(d,1).doit().simplify())
-eqm=[sp.fraction(e.cancel())[0] for e in eqm]
+oeqm=eqm=[sp.fraction(e.cancel())[0] for e in eqm]
 fields[2]=fieldsF[3](M.x[0])
 del A
 

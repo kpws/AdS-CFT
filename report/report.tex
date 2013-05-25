@@ -405,9 +405,9 @@ The formulas in Appendix \ref{CAS} have here been used.
 \subsection{Field behaviour at Conformal Boundary\label{s:bb}}
 A Frobenious expansion \cite{teschl2012ordinary} of these equations can be done at the boundary, $z=0$. The leading behaviour of the functions is
 \begin{empheq}[left=\empheqlbrace]{align}
- &\psi=\psi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\psi}\\
- &\phi=\phi_{(0)}\left(\frac{z}{z_h}\right)^{\Delta_\phi}\\
- &A_x=A_{x(0)}\left(\frac{z}{z_h}\right)^{\Delta_{A_x}}
+ &\psi=\psi_{(0)}\left(\frac{z}{L}\right)^{\Delta_\psi}\\
+ &\phi=\phi_{(0)}\left(\frac{z}{L}\right)^{\Delta_\phi}\\
+ &A_x=A_{x(0)}\left(\frac{z}{L}\right)^{\Delta_{A_x}}
 \end{empheq}
 where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to be determined. This is a slight assumption since not all functions have this type of leading behaviour\footnote{The function $\log$ for example does not allow an expansion like this, we have assumed the function does not have an essential singularity at $z=0$.}.
  Entering this in the equations of motion yields
@@ -416,7 +416,7 @@ where $\Delta_\psi$, $\Delta_\phi$ and $\Delta_{A_x}$ are constants that are to 
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2+f\Delta_\phi(\Delta_\phi-1)=0\label{ind2}\\
   &-2q^2\psi_{(0)}^2s^{2\Delta_\psi}L^2f+z^2\omega^2+zff^\prime\Delta_{A_x}+f^2\Delta_{A_x}(\Delta_{A_x}-1)=0.
  \end{empheq}
-where $s=zz_h^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$ since the first terms otherwise diverges at the horizon where the other terms are finite. First consider the case of strict inequalities. The leading order behaviour is then
+where $s=zL^{-1}$. This immidiately gives $\Delta_\psi\geq0$ and $1+\Delta_\phi\geq0$ since the first terms otherwise diverges at the horizon where the other terms are finite. First consider the case of strict inequalities. The leading order behaviour is then
  \begin{empheq}[left=\empheqlbrace]{align}
   &-L^2m^2-2\Delta_\psi+\Delta_\psi(\Delta_\psi-1) =0\\
   &\Delta_\phi(\Delta_\phi-1)=0\\
@@ -428,6 +428,7 @@ with solutions
   &\Delta_\phi=0,1\\
   &\Delta_{A_x}=0,1\label{indicialSol3}.
  \end{empheq}
+Observe that each of these three exponents have two solutions each, \emph{independently} of each other.
 Now assume $\Delta_\psi=0$. \eqref{ind2} gives
 \begin{equation}
  -2q^2\psi_{(0)}^2L^2+\Delta_\phi(\Delta_\phi-1)=0
@@ -460,7 +461,7 @@ Insert these leading terms in the equations of motion. We get
  &-2q^2\psi_{(h)}^2s^{2\Delta^{(h)}_\psi}L^2+z_h^2 3s^{-1}\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
  &-6q^2\psi_{(h)}^2s^{2\Delta^{(h)}_\psi+1}L^2+z_h^2\omega^2+ 9\Delta^{(h)}_{A_x}+9\Delta^{(h)}_{A_x}(\Delta^{(h)}_{A_x}-1)=0.
 \end{empheq}
-Solving for the leading terms of these equations gives
+Solving for the leading terms of these equations and using $\Delta^{(h)}_\phi>0$ gives
 % \begin{empheq}[left=\empheqlbrace]{align}
 %  &\Delta^{(h)}_\psi=0\\
 %  &\Delta^{(h)}_\phi(\Delta^{(h)}_\phi-1)=0\\
@@ -693,7 +694,7 @@ The analytical solution above $T_c$ now gives $C=0$. This rule can now be used t
 \fig{sum_rule_a20}{The two contributions to the integral in the modified Ferrell-Glover-Tinkham sum rule for different temperatures. The red line is expected to be precisely at 0 for perfect numerics\label{f:sum}}
 
 \chapter{Extended Lagrangian\label{higherOrder}}
-Many simplifications have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity\cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$\cite{drudeFit}.
+Many simplifications have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity \cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$ \cite{drudeFit}.
 
 \section{Drude Model}
 The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
@@ -708,23 +709,26 @@ This gives the conductivity
 \begin{equation}
  \sigma(\omega)=\frac{J(\omega)}{E(\omega)}=\frac{v(\omega)q\rho}{E(\omega)}=\frac{\tau\rho q^2}{m(1-\i\omega\tau)}=\frac{\sigma_0}{1-\i\tau\omega}.
 \end{equation}
-where $\rho$ is the density of charge carriers of charge $q$.
-
+where $\rho$ is the density of charge carriers of charge $q$. From this definition we have
+\begin{equation}
+ \frac{\sigma_0}{\tau}=\frac{\rho q^2}{m}.
+\end{equation}
 
 \section{Higher Order Maxwell Term}
-Different generalizations of the standard Lagrangian $L$ have been studied, TODO cite. Tobias Wenger studied three different extensions propose by Sachdev, TODO cite. An increase in conductivity for low frequencies similar to a Drude peak, courtesy of Hugo Strand, was observed for one of the extensions. This will here be studied in more detail.\\
-The extended Lagrangian has a higher order Maxwell term and another parameter $\alpha_2$ with dimension TODO.
+Different generalizations of the standard Lagrangian \eqref{L} have been studied, TODO cite. Tobias Wenger studied three different extensions proposed by Sachdev, TODO cite. An increase in conductivity for low frequencies similar to a Drude peak, courtesy of Hugo Strand\footnote{Chalmers University of Technology}, was observed for one of the extensions. This will here be studied in more detail.\\
+The extended Lagrangian has a higher order Maxwell term and another parameter $\alpha_2$ introducing a new scale.
 \begin{eqnarray}
  \mathcal{L}=&\frac{1}{2\kappa}\left(R-2\Lambda\right)-\frac{1}{4}F_{ab}F^{ab}-m^2\psi\overline{\psi}-D_a\psi\overline{D^a\psi}
 +\alpha_2F^a_bF^b_cF^c_dF^d_a\label{L2}
 \end{eqnarray}
-The equations of motion now become TODO.\\
-TODO: Boundary, Horizon behaviour.\\
+This gives equations of motion different from the earlier ones. They been calculated using a computer program, see Appendix \ref{a:eqm}. The exponents at the horizon and boundary are the same since the higher order term vanishes faster both at the horizon and boundary. The analytical solution found above $T_c$ for the original Lagrangian is not valid anymore and a numerical solution must now be used above $T_c$ as well. The result of the conductivity calculated using this extended model can be seen in Figure \ref{f:cond_a2}.
+
+\fig{cond_Ts_a2_0.1_v2.pdf}{Real part of the conductivity for different temperatures using the extended Lagrangian with $\alpha_2=0.1L^4$. $\rho$ is here constant.\label{f:cond_a2}}
 
 This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. 
 This agrees very well with what is obtained for low frequencies above the critical point, especially for high values of TODO. See Figure \ref{drude}.
 
-\fig{cond_Ts_a2_0.1_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
+
 
 
 \fig{drude_T_1Tc_a2_1}{Conductivity for $\alpha_2=1$ and $T=T_c$. The Drude parameters have been obtained from the lowest frequency data-point. \label{drude}}
@@ -772,6 +776,7 @@ What dimension different variables have can be a bit confusing. Here is a table 
 [z]&=[L]\\
 [m^2]&=[L^{-2}]\\
 [q]&=[L^{0}]\\
+[\alpha_2]&=[L^{4}]\\
 [\omega]&=[L^{-1}]\\
 [\mathcal{L}]&=[L^{-4}]\\
 [S]&=[L^0]\\
@@ -876,7 +881,7 @@ The boundary term then becomes
 \end{equation}
 This addition to the Lagrangian is Lorentz invariant and it also has conformal invariance.
 \chapter{Computer-Aided Analytical Calculations\label{CAS}}
-The Christoffel symbols for the AdS black hole were calculated using \sympy. All the non-zero components are shown below.
+The Christoffel symbols for the AdS black hole were calculated using the computer algebra system \sympy, \cite{sympy}. All the non-zero components are shown below.
 \begin{equation}
 \begin{split}
 &
@@ -937,6 +942,28 @@ $\nabla_aF^{ab}$
 The numerical integration of the equations of motion becomes hard close to the horizon and the boundary due to the singular behaviour of the differential equations. The boundary and horizon behaviours calculated in Subsection \ref{s:bb} and \ref{s:hb} have here been used instead to start and stop the integration right next to the singular points. The distance to the singular points have afterwards been changed some orders of magnitude to make sure this approach doesn't introduce any noticable errors. The behaviour of $A_x$ is highly oscillatory close to the horizon so this oscillatory behaviour has additionally been subtracted from the equation giving a non-homogenous equation with a solution approaching 0 at the horizon. The oscillatory behaviour could as well have benn divided out to get a homogeneous equation approaching 1 at the horizon.\\
 
 The explicit embedded Runge-Kutta Prince-Dormand (8, 9) method implemented in ``The GNU Scientific Library'' \cite{gsl} has been used and the relative error per step for all functions has been required to be smaller than at most $10^{-7}$ for all results in this report.
+\chapter{Equations of Motion for Extended Lagrangian}
+The equations of motion have been calculated using the computer algebra system \sympy, \cite{sympy}. Here $z_h=1$ and $q=1$ has been used.
+\begin{equation}
+ \begin{split}
+\left(- 4 z^{3} + 2 z^{2} \phi^2 + 4\right) \psi + \left(2 z^{7} + 2 z^{4} - 4 z\right) \psi^\prime + \left(2 z^{8} - 4 z^{5} + 2 z^{2}\right) \psi^{\prime\prime}=0
+ \end{split}
+\end{equation}
+\vspace{1cm}
+\begin{equation}
+ \begin{split}
+\left(z^{5} - z^{2}\right) \phi^{\prime\prime} + \left(24 \alpha_{2} z^{9} \phi^{\prime\prime} - 24 \alpha_{2} z^{6} \phi^{\prime\prime}\right) \phi^{\prime 2} + 2 \phi \psi^2+\\\left(32 \alpha_{2} z^{8} - 32 \alpha_{2} z^{5}\right) \phi^{\prime 3}=0
+ \end{split}
+\end{equation}
+\vspace{1cm}
+\begin{equation}
+ \begin{split}
+\left(8 \alpha_{2} z^{12} \phi^{\prime 2} - 16 \alpha_{2} z^{9} \phi^{\prime 2} + 8 \alpha_{2} z^{6} \phi^{\prime 2} + z^{8} - 2 z^{5} + z^{2}\right) A_x^{\prime\prime}+\\\left(8 \alpha_{2} \omega^{2} z^{6} \phi^{\prime 2} + \omega^{2} z^{2} + 2 z^{3} \psi^2 - 2 \psi^2\right) A_x+\\
+\big(16 \alpha_{2} z^{12} \phi^\prime \phi^{\prime\prime} + 56 \alpha_{2} z^{11} \phi^{\prime 2} - 32 \alpha_{2} z^{9} \phi^\prime \phi^{\prime\prime} - 88 \alpha_{2} z^{8} \phi^{\prime 2} + \\
+16 \alpha_{2} z^{6} \phi^\prime \phi^{\prime\prime} + 32 \alpha_{2} z^{5} \phi^{\prime 2} + 3 z^{7} - 3 z^{4}\big) A_x^\prime=0\\
+ \end{split}
+\end{equation}
+
 \end{appendices}
 \bibliographystyle{unsrt}
 \bibliography{report}
