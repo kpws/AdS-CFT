@@ -186,7 +186,7 @@ Examples of strongly coupled systems exhibiting critical behaviour are, quark-gl
 We will hereafter focus on high $T_c$ superconductors. These superconductors are in general layered and the electrons effectively moves in two dimensions. There is no accepted theory describing them possibly due to strong coupling making a theoretical understanding hard. The high $T_c$ supercondictors might be in the vicinity of a quantum critical point \cite{dome} and therefore exhibiting scale-invariance motivating the use of a CFT.
 
 \chapter{Application to Two-Dimensional Condensed Matter Systems}
-We wish to model a high $T_c$ superconductor. Conventional superconductors are well described by the BCS theory where the electrons, photons and phonons are the degrees of freedom of interest. The importance of the phonon interactions was understood from the isotope effect, the mass of the atoms in the lattice changed the superconductivity behavior. The isotope effect is though much weaker \cite{leggett2006we}, in high temperature superconductors and the phonons are thus not believed to be important for high temperature superconductivity. The important degrees of freedom are the electrons and the photons. The electrons are, just as in BCS theory, expected to form Cooper-pairs, \cite{leggett2006we}. These are pairs of electrons of opposite spin but otherwise in the same state effectively becoming spin 0 particles. Our high temperature superconductor model will thus contain two fields, a spin 1 field $A_a$ for the photons and a spin 0 field $\psi$ for the Cooper-pairs.\\
+We wish to model a high $T_c$ superconductor. Conventional superconductors are well described by the BCS theory where the electrons, photons and phonons are the degrees of freedom of interest. The importance of the phonon interactions was understood from the isotope effect, the mass of the atoms in the lattice changed the superconductivity behaviour. The isotope effect is though much weaker \cite{leggett2006we}, in high temperature superconductors and the phonons are thus not believed to be important for high temperature superconductivity. The important degrees of freedom are the electrons and the photons. The electrons are, just as in BCS theory, expected to form Cooper-pairs, \cite{leggett2006we}. These are pairs of electrons of opposite spin but otherwise in the same state effectively becoming spin 0 particles. Our high temperature superconductor model will thus contain two fields, a spin 1 field $A_a$ for the photons and a spin 0 field $\psi$ for the Cooper-pairs.\\
 
 The superconductor lives in 2+1 dimensional flat space. We will use coordinates $x$, $y$ for the spatial directions and $t$ for time. The extra dimension in the AdS dual will be parametrised by the coordinate $z$. See Appendix \ref{conventions} for details on how indices are labeled and ordered in this report. 
 \section{Symmetry Assumptions}
@@ -260,7 +260,7 @@ to which other parameters, e.g $m^2$, can be related. Scale-invariance can thus 
 
 $\Lambda$ will be set to a convenient number in numerical calculations but kept in calculations for clarity.
 \subsection{$q$}
-$q$ sets the strength of the gauge coupling and is thus the charge of the scalar field. Considering $\tilde{\psi}=q\psi$ and $\tilde{A}_a=qA_a$ as the fields gives a Lagrangian of the same form but divided by $q^2$ except for the term originally containing $q^2$ which is divided by $q^4$. Multiplying the Lagrangian by a constant doesn't affect the equations of motion so the system can be solved for any value of $q$. Other solutions can then be obtained by rescaling the fields.\\
+$q$ sets the strength of the gauge coupling and is thus the charge of the scalar field. Considering $\tilde{\psi}=q\psi$ and $\tilde{A}_a=qA_a$ as the fields gives a Lagrangian of the same form but divided by $q^2$ except for the term originally containing $q^2$ which is divided by $q^4$. Multiplying the Lagrangian by a constant does not affect the equations of motion so the system can be solved for any value of $q$. Other solutions can then be obtained by rescaling the fields.\\
 \subsection{$m^2$}
 $m$ is the mass of the scalar field in the bulk. What values of $m$ that are suitable will be investigated later when solving the equations of motion in the bulk.
 
@@ -581,7 +581,7 @@ The current gives us the charge density $\rho=-\At_{(1)}$ and the transverse cur
 
 We are now in a position to numerically solve the bulk theory and obtain these expectation values. We do this by sweeping over different horizon values of $\psi$ and for each value find all solutions to the boundary condition $\psi_{(0)}=0$. This yields many different solutions $\rho/T$ at the boundary. Scale invariance lets us interpret this as systems of constant $\rho$ but at different temperatures $T$. We then get a variation in the chemical potential $\mu$, see Figure \ref{f:mu}. The chemical potential of the trivial solution there shown is calculated through
 \begin{equation}
- \rho=\mu/z_h.
+ \rho=\frac{\mu}{z_h}=\mu T\frac{4\pi}{3}.\label{muTdep}
 \end{equation}
 Alternatively one can let $\mu$ be constant while varying the temperature and get a variation in $\rho$. Figure \ref{f:O} shows the expectation value of $\mathcal{O}$ at different temperatures. The solid line at the bottom is the trivial solution $\psi=0$. The temperature $T_c$ is defined as the temperature where the first non-trivial solution is obtained. Multiple solutions are obtained as the temperature is lowered. The different solutions correspond to different phases of the system and which one is physical can be found by finding which has the lowest free energy.
 
@@ -624,9 +624,15 @@ Only the free energy difference of the different solutions shown in Figure \ref{
 =&-\int_0^{z_h}\d z \left(\frac{z}{L}\right)^{-4}\frac{1}{2}F_{zt}^2g^{zz}g^{tt}\\
 =&\int_0^{z_h}\d z \frac{\mu^2}{2z_h^2}\\
 =&z_h^{-1}\frac{\mu^2}{2}\\
-=&\left(\frac{4\pi T}{3}\right)\frac{\mu^2}{2}
+=&\frac{4\pi T}{3}\frac{\mu^2}{2}
 \end{split}
 \end{equation}
+This agrees with the result from thermodynamics, $\mu$ is the change in free energy for increasing the expectation value of the number of particles by one while keeping the temperature constant.
+\begin{equation}
+ \mu=\left(\frac{\partial A}{\partial \langle N \rangle}\right)_T
+\end{equation}
+This is easily shown using $\rho=\langle N\rangle/V_\mathrm{2}$ and \eqref{muTdep} to get the $N$ dependence of $\mu$ for constant $T$. The gravitational part of the free energy can be neglected since the derivative is at constant temperature.\\
+
 The free energy for the numerical solutions has been calculated and the result together with this analytical result is shown in Figure \ref{f:A}. It can there be seen that the trivial solution is the physical solution for temperatures above $T_c$ and that the solution appearing at the temperature $T_c$ is the physical solution for all lower temperatures. We will hereafter only work with these two solutions.
 
 \fig{A_constRho_a2_0.0.pdf}{The free energies of the different solutions are shown here for constant $\rho$ and varying $T$. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the solution appearing at $T=T_c$ and the other roots follow in order.\label{f:A}}
@@ -669,17 +675,16 @@ and
 \end{equation}
 The conductivity is thus 1 for all $\omega$ above $T_c$.\\
 
-The conductivity below $T_c$ can be calculated the same way using the numerical solution. The result is seen in Figure \ref{f:cond}.\\
-
 \fig{cond_Ts_a2_0.0_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
 
-The conductivity is lowered for low $\omega$ when the condensate forms. An energy gap $\Delta$ forms and the conductivity for $\omega<\Delta$ goes to 0 as the temperature is lowered. The superconductivity is not immidiately evident from the obtained conductivity curves. There is though a $\delta$-function at $\omega=0$ since translational invariance of the boundary theory has been assumed. This can be seen through the Kramers-Kronig relations, \eqref{kk}. A $\delta$-function in the real part is equivalent to a pole in the imaginary part.
+The conductivity below $T_c$ can be calculated the same way using the numerical solution. The result is seen in Figure \ref{f:cond}. The conductivity is lowered for low $\omega$ when the condensate forms. An energy gap $\Delta_\mathrm{gap}$ forms and the conductivity for $\omega<\Delta_\mathrm{gap}$ goes to 0 as the temperature is lowered. The superconductivity is not immidiately evident from the obtained conductivity curves. There is though a $\delta$-function at $\omega=0$ since translational invariance of the boundary theory has been assumed and the charged field $\psi$ has obtained a non-zero expectation value. The $\delta$-function can be seen through the Kramers-Kronig relations, \eqref{kk}. A $\delta$-function in the real part is equivalent to a pole in the imaginary part.
 \begin{equation}
 \begin{split}
 \im(\sigma(\omega))&=-\frac{2}{\pi}\int_0^\infty\frac{\omega\delta(\omega^\prime)}{\omega^{\prime 2}-\omega^2}\d \omega^\prime=\\
 &=\frac{1}{\pi\omega}
 \end{split}
 \end{equation}
+This pole is visible in Figure \ref{f:cond}.
 \section{Consistency Check using a Conductivity Sum Rule}
 The Kramers-Kronig relations and the decoupeling of the electrons from a conductor at high frequencies can be used to prove a sum rule for the conductivity \cite{PhysRev.109.1398}. The rule states
 \begin{equation}
@@ -719,45 +724,67 @@ Different generalizations of the standard Lagrangian \eqref{L} have been studied
 The extended Lagrangian has a higher order Maxwell term and another parameter $\alpha_2$ introducing a new scale.
 \begin{eqnarray}
  \mathcal{L}=&\frac{1}{2\kappa}\left(R-2\Lambda\right)-\frac{1}{4}F_{ab}F^{ab}-m^2\psi\overline{\psi}-D_a\psi\overline{D^a\psi}
-+\alpha_2F^a_bF^b_cF^c_dF^d_a\label{L2}
++\alpha_2F^a_{\ b}F^b_{\ c}F^c_{\ d}F^d_{\ a}\label{L2}
 \end{eqnarray}
-This gives equations of motion different from the earlier ones. They been calculated using a computer program, see Appendix \ref{a:eqm}. The exponents at the horizon and boundary are the same since the higher order term vanishes faster both at the horizon and boundary. The analytical solution found above $T_c$ for the original Lagrangian is not valid anymore and a numerical solution must now be used above $T_c$ as well. The result of the conductivity calculated using this extended model can be seen in Figure \ref{f:cond_a2}.
+This gives equations of motion different from the earlier ones. They been calculated using a computer program, see Appendix \ref{a:eqm}. The exponents at the horizon and boundary are the same since the higher order term vanishes faster both at the horizon and boundary. The analytical solution found above $T_c$ for the original Lagrangian is not valid anymore and a numerical solution must now be used above $T_c$ as well. The result of the conductivity calculated using this extended model can be seen in Figure \ref{f:cond_a2_1} where  small $\alpha_2$ has been used.
 
-\fig{cond_Ts_a2_0.1_v2.pdf}{Real part of the conductivity for different temperatures using the extended Lagrangian with $\alpha_2=0.1L^4$. $\rho$ is here constant.\label{f:cond_a2}}
+\fig{cond_Ts_a2_0.01_v2.pdf}{Real part of the conductivity for different temperatures using the extended Lagrangian with $\alpha_2=0.01L^4$. $\rho$ is here constant.\label{f:cond_a2_1}}
 
-This higher order term introduces a perturbation in the low frequency conductivity above the critical point. The perturbation is very close to what is expected from the Drude model of electrical conductivity. 
-This agrees very well with what is obtained for low frequencies above the critical point, especially for high values of TODO. See Figure \ref{drude}.
+\fig{cond_Ts_a2_0.1_v2.pdf}{Real part of the conductivity for different temperatures using the extended Lagrangian with $\alpha_2=0.1L^4$. $\rho$ is here constant.\label{f:cond_a2_2}}
 
+This higher order term introduces a perturbation in the low frequency conductivity. The gap still appears at the same position, $\omega_\mathrm{gap}\approx\mu/2$. The behaviour around the transition from $\sigma=0$ to $\sigma=1$ is changed. The earlier increase in conductivity for $\omega$ slightly larger than $\omega_\mathrm{gap}$ has been changed. The increase is lower but at higher $\omega$. The conductivity for a slightly larger $\alpha_2$ is seen in Figure \ref{f:cond_a2_2}. Here the change around the transition is more pronounced. A peak developes for low temperatures and a second peak is also seen to develop. More peaks develop for higher $\alpha_2$ and lower $T$. These peaks seem to approach $\delta$-functions when the temperature is lowered further.\\
 
+The transition to higher conductivity is now seen to happen in two steps. \emph{First}, the conductivity increases to $\sigma\approx0.7$ at $\omega$ slightly lower than $\omega_\mathrm{gap}$. Now this transition also happens for higher temperatures, the conductivity approaches $0.7$ from above. \emph{Secondly}, the conductivity increases to reach $1$ at $\omega\approx2$, this second part of the transition seems to be reather independent of temperature.\\
 
-
-\fig{drude_T_1Tc_a2_1}{Conductivity for $\alpha_2=1$ and $T=T_c$. The Drude parameters have been obtained from the lowest frequency data-point. \label{drude}}
-
-The low frequency limit of the conductivity $\sigma_0$ seems to depend linearly on $\alpha_2$ for values of $\alpha_2$ larger than TODO. See Figure \ref{drudeVar2Tc}. The proportionality constant depends on the temperature, see Figure \ref{drudeVarMTc}, and seems to closely follow a power-law, see Figure \ref{drudeTdep_1e4}. $\sigma_0$ thus seems to closely follow
+The change above the $T_c$ is similar to Drude behaviour so this will be investigated in the next section.
+\section{Drude Fit}
+The conductivity behaviour above $T_c$ resembles that of the Drude model. A fit of the Drude parameters $\sigma_0$ and $\tau$ can be made to see how well this model agrees with our conductivity. One point of the complex conductivity is enough to obtain both of these real parameters. The Drude model conductivity approaches 0 at high frequencies whereas the conductivity of our holographic model approaches 1. We can thus not expect the model to work well for high frequencies. We make the Drude fit by taking the value of the conductivity in the limit $\omega\rightarrow0$. First obtain $\sigma_0$
 \begin{equation}
- \sigma_0=C\alpha_2\left(\frac{T}{T_c}\right)^{-4/3}
+ \sigma_0=\lim_{\omega\rightarrow0}\sigma(\omega).
 \end{equation}
-for values of $\alpha_2>>TODO$.
+Use this to obtain $\tau$
+\begin{equation}
+\lim_{\omega\rightarrow0}\frac{\im (\sigma)}{\omega\sigma_0}=\lim_{\omega\rightarrow0}\frac{\tau}{1+\tau^2\omega^2}=\tau
+\end{equation}
+A fit using these obtained parameters is shown in Figure \ref{f:drude}. The fit agrees well for low frequencies but a difference of 1 in the real part appears as the Drude model conductivity approaches 0 and the holographic conductivity approaches 1. This agreement might not be very impressive but the Drude peak grows when $\alpha_2$ is increased and relative error vanishes in the limit of large $\alpha_2$. See Figure \ref{f:drude2} for a Drude fit with a higher $\alpha_2$. The low frequency conductivity is here much larger but the error is still if order 1 and only appears at higher frequencies where the holographic conductivity approaches 1.
 
+\fig{drude_T_1Tc_a2_0.1}{Conductivity for $\alpha_2=0.1L^4$ and $T=T_c$ together with Drude model fit.\label{f:drude}}
 
-\section{Asymptotic Behavior for $\alpha_2>>T_c^?$,TODO}
-\fig{drudeVar2Tc}{Drude parameters as functions of $\alpha_2$ at $T=2T_c$.\label{drudeVar2Tc}}
+\fig{drude_T_1Tc_a2_10}{Conductivity for $\alpha_2=10L^4$ and $T=T_c$ together with Drude model fit.\label{f:drude2}}
 
-\fig{drudeVarMTc}{$\omega\rightarrow0$ limit of the conductivity as a function of $\alpha_2$ for different temperatures.\label{drudeVarMTc}}
+This good agreement motivates an investigation of the Drude parameters dependence on system parameters. Figure \ref{f:drudeVar} shows the dependence of the parameters on the strength of the higher order term, $\alpha_2$. A power-law was fit to both $\sigma_0$ and $\tau$ at high $\alpha_2$. $\sigma_0$ clearly approaches a linear dependence on $\alpha_2$. $\tau$ did not permit a power-law description.\\
+\fig{drudeVara2_T=2Tc}{Drude parameters as functions of $\alpha_2$ at $T=2T_c$.\label{f:drudeVar}}
 
-\fig{drudeTdep_1e4}{$\sigma_0/\alpha_2$ as a function of temperature for large $\alpha_2$.\label{drudeTdep_1e4}}
+Now we investigate the temperature dependence of $\sigma_0$ to try to see how the coefficient $C$ in the linear dependence on $\alpha_2$ depends on temperature. Figure \ref{f:drudeVarT} shows the dependence of $\sigma_0$ on both $\alpha_2$ and $T$. The coefficient $C$ also seems to follow a power-law since the separations between the curves corresponding to different temperatures are equal. A plot of the temperature dependence of $C$ is seen in Figure \ref{f:Cdep}. A formula for $\sigma_0$ valid for large $\alpha_2T_c^{-4/3}/(T^{-1/3}L)^4$ can according to these results be expressed as
+\begin{equation}
+ \sigma_0=C\frac{\alpha_2}{L^4}\left(\frac{T}{T_c}\right)^{-4/3}.
+\end{equation}
+This is valid for a large range of values of $\alpha_2$ and $T$.
+
+\fig{drudeVarMT}{$\omega\rightarrow0$ limit of the conductivity as a function of $\alpha_2$ for different temperatures.\label{f:drudeVarT}}
+
+\fig{drudeTdep_1e4}{$\sigma_0L^4/\alpha_2$ as a function of temperature for large $\alpha_2$.\label{f:Cdep}}
+
 \section{Consistency Check using a Conductivity Sum Rule}
-A test of the numerics was again performed by verifying the TODO...
-\fig{sum_rule_a20}{Integral, TODO plot new}
+A test of the numerics was again performed by verifying the sum rule. The result is seen in Figure \ref{f:sum2}.  There is a substantial error at low temperatures but it is decreased by increasing the number of samples for the numerical integral so it is believed to originate from the very sharp peaks, approaching $\delta$-functions, apearing at low temperatures making the numerical integral hard.
+
+\fig{sum_rule_a20.1}{The two contributions to the integral in the modified Ferrell-Glover-Tinkham sum rule for different temperatures. The red line is expected to be precisely at 0 for perfect numerics\label{f:sum2}}
 
 \section{Disussion}
-The peak in the Drude model is due to imperfections in the lattice
-\subsection{Comparison with Results using a Periodic Lattice}
-TODO
+The drag force in the Drude model is due to electron collisions, the electrons have a mean time $\tau$ between collisions. These collisions are mainly with imperfections in the lattice which is something our translationally invariant theory cannot model. A similar effect could though be observed for interactions between other charge-carrying excitations of different charge.\\
+The the temperature dependence of the DC-conductivity $\sigma_0$ gives the temperature dependence of the scattering rate $1/\tau$
+\begin{equation}
+  \frac{1}{\tau}=\frac{\rho q^2}{\sigma_0m}.
+\end{equation}
+Since $\rho$, $q^2$ and $m$ are temperature independent we have
+\begin{equation}
+  \frac{1}{\tau}=\frac{L^4\rho q^2}{C\alpha_2m}\left(\frac{T}{T_c}\right)^{4/3}.
+\end{equation}
+This disagrees with the linear temperature dependence of the scattering rate experimentally observed in the cuprates above $T_c$ \cite{drudeFit}. This suggests that our Drude peak originates from different processes and that our higher order term might not be a useful addition to the Lagrangian. The linear dependence found in \cite{drudeFit} is attibuted to electron-phonon interactions. Electrons might not be a suitably type of excitation for these possibly strongly coupled systems and our model might capture interactions between some other type of excitations.
 \chapter{Summary}
-TODO
+We have shown how the AdS/CFT correspondence can be used to model a high-$T_c$ superconductor, both below and above $T_c$.
 \section{Outlook}
-TODO
+A much more thorough comparison with experimental results could be made. Formula \eqref{muTdep} could for example be investigated. The conductivity can also be investigate much more thoroughly. This has though already been done, e.g.~\cite{hartnoll8}, but it would be interesting to repeat their calculations.
 \begin{appendices}
 \chapter{Conventions in this Report\label{conventions}}
 The AdS space will be refered to as the bulk and the boundary conformal field theory will be referred to as the boundary theory or the superconductor or just CFT. We use $z$ for the ``radial'' coordinate in AdS space, it is 0 at the conformal boundary and $z_h$ at the horizon. This is the same coordinate as the one called $r$ in \cite{hartnoll8}, there with horizon at $r=r_+$.\\
@@ -939,7 +966,7 @@ $\nabla_aF^{ab}$
  \nabla_aF^{ab}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}+\Gamma^b_{\ ca}F^{ac}=\partial_aF^{ab}+\Gamma^a_{\ ca}F^{cb}
 \end{equation}
 \chapter{Numerical Method\label{a:num}}
-The numerical integration of the equations of motion becomes hard close to the horizon and the boundary due to the singular behaviour of the differential equations. The boundary and horizon behaviours calculated in Subsection \ref{s:bb} and \ref{s:hb} have here been used instead to start and stop the integration right next to the singular points. The distance to the singular points have afterwards been changed some orders of magnitude to make sure this approach doesn't introduce any noticable errors. The behaviour of $A_x$ is highly oscillatory close to the horizon so this oscillatory behaviour has additionally been subtracted from the equation giving a non-homogenous equation with a solution approaching 0 at the horizon. The oscillatory behaviour could as well have benn divided out to get a homogeneous equation approaching 1 at the horizon.\\
+The numerical integration of the equations of motion becomes hard close to the horizon and the boundary due to the singular behaviour of the differential equations. The boundary and horizon behaviours calculated in Subsection \ref{s:bb} and \ref{s:hb} have here been used instead to start and stop the integration right next to the singular points. The distance to the singular points have afterwards been changed some orders of magnitude to make sure this approach does not introduce any noticable errors. The behaviour of $A_x$ is highly oscillatory close to the horizon so this oscillatory behaviour has additionally been subtracted from the equation giving a non-homogenous equation with a solution approaching 0 at the horizon. The oscillatory behaviour could as well have benn divided out to get a homogeneous equation approaching 1 at the horizon.\\
 
 The explicit embedded Runge-Kutta Prince-Dormand (8, 9) method implemented in ``The GNU Scientific Library'' \cite{gsl} has been used and the relative error per step for all functions has been required to be smaller than at most $10^{-7}$ for all results in this report.
 \chapter{Equations of Motion for Extended Lagrangian}

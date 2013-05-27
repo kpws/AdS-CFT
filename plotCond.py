@@ -6,8 +6,8 @@ from printStatus import printRatio
 from pickle import load, dump
 
 hpsis=np.logspace(-6,1.5,300)
-a2=0.0
-plotImag=True
+a2=0.1
+plotImag=False#True
 from solveBC import sweep, findrho
 
 try:
@@ -24,7 +24,7 @@ fig(11)
 if a2==0:
     Trs=[1.0,0.9,0.5,0.05]
 else:
-    Trs=[0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1]
+    Trs=[0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3]
     #Trs=[0.1,0.3,0.5,0.7,0.9,1.1]
     #Trs=np.linspace(0.23,0.4,8)
 zh=1
@@ -33,7 +33,7 @@ T=3./(zh*4.*np.pi)
 if a2==0:
     wvs= np.logspace(-1,0.3,400)
 else:
-    wvs= np.logspace(-1,0.6,1400)
+    wvs= np.logspace(-1,0.6,40)
 pl.xlim(wvs[0],wvs[-1])
 if plotImag:
     pl.ylim(-1.1,1.8)
@@ -66,7 +66,7 @@ for j in range(len(Trs)):
             bb,osc=getBoundary(rhoSol[osci][0],rhoSol[osci][1], [mu*w,a2])
             assert(osc==osci)
             return -1j*bb[2][1]/( bb[2][0]*(mu*w) )
-        nwvs,_,nsigmas=getPlotY(np.log(wvs[0]),np.log(wvs[-1]),f,lambda s:s.real,minN=150)
+        nwvs,_,nsigmas=getPlotY(np.log(wvs[0]),np.log(wvs[-1]),f,lambda s:s.real,minN=150,maxTurn=0.1)
         sigmas.append((np.exp(nwvs),nsigmas))
     for s in sigmas:
         pl.plot(s[0],[i.real for i in s[1]],ls='-',c='k',label=r'$\mathrm{Re}(\sigma)$'if first else '')
@@ -75,7 +75,9 @@ for j in range(len(Trs)):
         else:
             if (j/2)*2==j or len(Trs)<8:
                 B=1e6
-                printText(s[0],[i.real for i in s[1]],B,-B/(0.35 if j==0 else 0.27),'$'+str(Tr)+'T_c$')
+                #printText(s[0],[i.real for i in s[1]],B,-B/(0.35 if j==0 else 0.27),'$'+str(Tr)+'T_c$')
+                #printText(s[0],[i.real for i in s[1]],1/(1-0.25/0.4),-1/(0.4-0.25),'$'+str(Tr)+'T_c$')
+                printText(s[0],[i.real for i in s[1]],1/(1-0.23/0.308),-1/(0.308-0.23),'$'+str(Tr)+'T_c$')
         if plotImag:
             pl.plot(s[0],[i.imag for i in s[1]],ls='--',c='k',label=r'$\mathrm{Im}(\sigma)$'if first else '')
             printText(s[0],[i.imag for i in s[1]],[1,0.25,1.25,-0.7][j],[-1/.58,0,0,0][j],'$'+str(Tr)+'T_c$')

@@ -1,4 +1,4 @@
-from conductivity import getBoundary
+from getBoundary import getBoundary
 from solveBC import sweep, findrho
 from printStatus import printRatio
 import numpy as np
@@ -40,7 +40,7 @@ for j in range(len(Trs)):
         y1s[-1].append(1/d)
         y2s[-1].append(m/d*Tc)
 #drude=1/(d-m*1j*w)
-fig(0)
+fig(0,size=11)
 pl.xscale('log')
 pl.yscale('log')
 for j in range(len(Trs)):
@@ -63,10 +63,10 @@ m=y2s[0]/a2s[0]**k
 print(k)
 print(m)
 pl.plot([a2s[0], a2s[hn]], [a2s[0]**k*m, a2s[hn]**k*m],ls='-',c='b')#,label=r'$\mathrm{Power\ fit}$')'''
-pl.xlabel(r'$\alpha_2$')
+pl.xlabel(r'$\frac{\alpha_2}{L^4}$')
 pl.ylabel(r'$\sigma_0$')
 ai=50
 #pl.legend(loc='upper left')
 pl.xlim(a2s[0],a2s[-1])
-saveFig('drudeVarMTc')
+saveFig('drudeVarMT')
 pl.show()

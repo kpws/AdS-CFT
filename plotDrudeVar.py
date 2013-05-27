@@ -5,7 +5,7 @@ import numpy as np
 import pylab as pl
 from fig import fig, saveFig, printText
 
-a2s=np.logspace(-4,4,40)
+a2s=np.logspace(-4,4,60)
 y1s,y2s=[],[]
 Tr=2
 for i in range(len(a2s)):
@@ -43,14 +43,14 @@ pl.xscale('log')
 pl.yscale('log')
 pl.plot([a2 for a2 in a2s],y1s,ls='-',c='k',label=r'$\sigma_0$')
 pl.plot(a2s,y2s,ls='--',c='k',label=r'$\tau T_c$')
-hn=len(a2s)/4
+hn=len(a2s)/3.5
 k=np.log(y1s[-1]/y1s[-2])/np.log(a2s[-1]/a2s[-2])
 m=y1s[-1]/a2s[-1]**k
 print(k)
 print(m)
 pl.plot([a2s[hn], a2s[-1]], [a2s[hn]**k*m, a2s[-1]**k*m],ls='--',c='r')#,label=r'$\mathrm{Power\ fit}$')
-pl.annotate(r'$C\alpha_2^{'+('%.3f'%k)+'}$',xy=(a2s[hn],a2s[hn]**k*m), xycoords='data',
-                                  xytext=(-60, -10), textcoords='offset points', fontsize=10,
+pl.annotate(r'$C\left(\frac{\alpha_2}{L^4}\right)^{'+('%.3f'%k)+'}$',xy=(a2s[hn],a2s[hn]**k*m), xycoords='data',
+                                  xytext=(-70, -14), textcoords='offset points', fontsize=10,
                                                                      arrowprops=dict(arrowstyle="->"))
 
 '''k=np.log(y2s[-1]/y2s[-2])/np.log(a2s[-1]/a2s[-2])
@@ -58,9 +58,9 @@ m=y2s[-1]/a2s[-1]**k
 print(k)
 print(m)
 pl.plot([a2s[hn], a2s[-1]], [a2s[hn]**k*m, a2s[-1]**k*m],ls='-',c='b')#,label=r'$\mathrm{Power\ fit}$')'''
-pl.xlabel(r'$\alpha_2$')
+pl.xlabel(r'$\frac{\alpha_2}{L^4}$')
 ai=50
 pl.legend(loc='upper left')
 pl.xlim(a2s[0],a2s[-1])
-saveFig('drudeVar2Tc')
+saveFig('drudeVara2_T='+str(Tr)+'Tc')
 pl.show()

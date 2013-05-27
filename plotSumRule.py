@@ -7,7 +7,7 @@ from pickle import load, dump
 from scipy.integrate import quad
 
 hpsis=np.logspace(-6,1.5,300)
-a2=1
+a2=0.1
 
 from solveBC import sweep, findrho
 
@@ -22,7 +22,7 @@ rho=-np.array(bbs)[:,:,1,1].real
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 
 fig(11)
-Trs=[1,1.1,2]#list(np.linspace(0.15,1,4))+[1.3]
+Trs=list(np.linspace(0.15,1.3,80))#+[1.1,1.2,1.3]
 zh=1
 T=3./(zh*4.*np.pi)
 wvs= [1e-5,1e-4]#+list(np.linspace(1e-3,1,150))[1:]+list(np.logspace(0,1.5,20))[1:]
@@ -67,7 +67,7 @@ for j in range(len(Trs)):
         qsigmas.append(-1j*bb[2][1]/( bb[2][0]*(mu*wv) ))
         qws.append(wv)
         return (qsigmas[-1].real-1)*(wv+C)*mu
-    tot,_=quad(sigmaf,np.log(1e-3+C),np.log(20.+C),epsrel=0.05,epsabs=0.05)
+    tot,_=quad(sigmaf,np.log(1e-3+C),np.log(30.+C),epsrel=0.01,epsabs=0.01)
     print('tot/Tc: '+str(tot/Tc))
     s=sorted(range(len(qws)),key=lambda i:qws[i])
     qws=[qws[i] for i in s]
