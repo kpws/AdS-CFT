@@ -73,7 +73,7 @@ def getPlotY(x0,x1,f,yf,maxTurn=0.1,minN=50):
                          np.sqrt(((v[i+1][0]-v[i  ][0])**2+(v[i+1][1]-v[i  ][1])**2)*
                           ((v[i+2][0]-v[i+1][0])**2+(v[i+2][1]-v[i+1][1])**2))  )
             if cosTurn<cosMaxTurn:
-                  print(np.arccos(cosTurn))
+                  #print(np.arccos(cosTurn))
                   mx=(v[i+1][0]*1+v[i+2][0])/2
                   o=f(mx)
                   v.insert(i+2,(mx,yf(o),o))

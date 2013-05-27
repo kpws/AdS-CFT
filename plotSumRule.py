@@ -22,7 +22,7 @@ rho=-np.array(bbs)[:,:,1,1].real
 rhoc=min([min(r) for r in rho])#rho, in units used at Tc
 
 fig(11)
-Trs=list(np.linspace(0.15,1.3,80))#+[1.1,1.2,1.3]
+Trs=list(np.linspace(0.15,1,100))+list(np.linspace(1,1.3,20))[1:]
 zh=1
 T=3./(zh*4.*np.pi)
 wvs= [1e-5,1e-4]#+list(np.linspace(1e-3,1,150))[1:]+list(np.logspace(0,1.5,20))[1:]

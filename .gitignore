@@ -16,6 +16,7 @@ build
 bulkODE.h
 bulkODE.c
 solveBulk.c
+report/figs/stolen.png
 
 #latex
 *.bbl

@@ -57,20 +57,21 @@ def sweep(getBoundary, psis,oscN=1,verbose=False,status=False):
             sols[-1].append(sol)
     return (zip(*bbs), zip(*sols))
 
-def findrho(getBoundary, sols, hpsis, bbs, rho):
+def findrho(getBoundary, sols, hpsis, bbs, rho,ind=1):
     res=[]
+    if ind==1: rho=-rho
     for osci in range(len(sols)):
-        x=[bb[1][1] for bb in bbs[osci]]
+        x=[bb[1][ind] for bb in bbs[osci]]
         y=zip(sols[osci],hpsis)
         s=sorted(range(len(x)),key=lambda i:x[i])
         x=[x[i] for i in s]
         y=[y[i] for i in s]
-        if not x[0]<-rho<x[-1]:
+        if not x[0]<rho<x[-1]:
             continue
-        guess=interp1d(x,y,axis=0)(-rho)
+        guess=interp1d(x,y,axis=0)(rho)
         def f(x):
             bb,osc=getBoundary(*x)
-            return bb[0][0], bb[1][1]+rho
+            return bb[0][0], bb[1][ind]-rho
         res.append(fsolve(f,guess))
     return res
 

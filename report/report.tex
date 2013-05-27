@@ -30,7 +30,7 @@
 \newcommand{\bra}[1]{\langle#1|}
 \newcommand{\braket}[2]{\bra{#1}#2\rangle}
 \newcommand{\bracket}[3]{\bra{#1}#2\ket{#3}}
-\newcommand{\fig}[3]{
+\newcommand{\fig}[2]{
 \begin{figure}
 \centering
 \includegraphics{figs/#1}
@@ -332,7 +332,7 @@ The explicit $z$ and $t$-dependence of these functions will hereafter be ommited
 \section{Metric\label{s:metric}}
 The path integral for the bulk partition function is approximated in a semi-classical approximation where we need the saddle-point of the action. We first wish to find the \emph{metric} saddle-point of the periodic imaginary time path integral. The bulk equation of motion for the metric $g_{ab}$ is the Einstein equation with a cosmological constant
 \begin{equation}
-R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\lambda=\kappa T_{ab}\label{einstein}
+R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\Lambda=\kappa T_{ab}\label{einstein}
 \end{equation}
 where $R_{ab}$ is the Ricci curvature tensor and $T_{ab}$ is the stress-energy tensor. We assumed the probe limit in Section \ref{s:kappa} and therefore neglect the right hand side of this equation. We want a translationally invariant solution in the $t$, $x$, and $y$ directions that is asymptotically AdS. The solution is known to be a black hole \cite{McGreevy:2009xe}, the Schwarzschild metric in AdS space. The metric has the following form in a particular choice of coordinates where the radial coordinate $z$ is 0 at the boundary and $z_h$ at the horizon
 \begin{equation}
@@ -575,7 +575,7 @@ n_a\frac{\partial\L(y)}{\partial (\nabla_a\psi(y))}
 \end{equation}
 This simple relation thus gives us the expectation value of the scalar operator. A similar derivation can be made for the other fields. A general expression is shown in \cite{hartnoll8}, equation 91\footnote{The difference of a factor 2 is due to their kinetic term having a factor $1/2$ we do not.}. We have for the current $J^a$ sourced by the background field $A_a$
 \begin{equation}
- \langle J^a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
+ \langle J_a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
 \end{equation}
 The current gives us the charge density $\rho=-\At_{(1)}$ and the transverse current $J_x=A_{x(1)}$. The minus sign is a convention to get a positive charge density.\\
 
@@ -585,10 +585,10 @@ We are now in a position to numerically solve the bulk theory and obtain these e
 \end{equation}
 Alternatively one can let $\mu$ be constant while varying the temperature and get a variation in $\rho$. Figure \ref{f:O} shows the expectation value of $\mathcal{O}$ at different temperatures. The solid line at the bottom is the trivial solution $\psi=0$. The temperature $T_c$ is defined as the temperature where the first non-trivial solution is obtained. Multiple solutions are obtained as the temperature is lowered. The different solutions correspond to different phases of the system and which one is physical can be found by finding which has the lowest free energy.
 
-\fig{O_constRho_a2_0.0.pdf}{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have negative expectation values of $\mathcal{O}$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:O}}
+\fig{O_constRho_a2_0.0.pdf}{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:O}}
 
 \fig{mu_constRho_a2_0.0.pdf}{
-Chemical potential needed for constant $\rho$ at different $T$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have negative expectation values of $\mathcal{O}$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:mu}
+Chemical potential needed for constant $\rho$ at different $T$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:mu}
 }
 
 \section{Free Energy}
