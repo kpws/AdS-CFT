@@ -35,6 +35,7 @@ for osci in range(len(mu)):
     pl.plot(cConst/const[osci],np.sqrt(sign*O[osci]*np.sqrt(2))/Tc,ls='-' if sign==1 else '--',c='k')
     fig(2)
     pl.plot(cConst/const[osci],mu[osci]/Tc,ls='-' if sign==1 else '--',c='k')
+    print O[osci]
 
 fig(1)
 pl.plot([0,1.2],[0,0],lw=1)
