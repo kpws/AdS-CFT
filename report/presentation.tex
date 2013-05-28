@@ -52,6 +52,8 @@
 \frametitle{Introduction}
 The AdS/CFT correspondence was conjectured in 1998 by Juan Maldacena.\\
 
+It is a correspondence between a gravitational theory and a conformal field theory.\\
+
 It will here be used to model a high $T_c$ superconductor by a gravitational theory.\\
 
 The application will be described and the results will be presented.\\
@@ -65,7 +67,6 @@ The work initially closely follows that of Sean Hartnoll \cite{hartnoll8}.
   \item What is AdS?
   \item The AdS/CFT correspondence
   \item High $T_c$ superconductors
-  \item Bulk model of superconductor
   \item Application of the correspondence
   \item Results: condensate developement, conductivity
   \item Extended model
@@ -82,9 +83,8 @@ R_{ab}-\frac{1}{2}g_{ab}R+g_{ab}\Lambda=\kappa T_{ab}\label{einstein}
 \end{equation}
 has AdS as solution, just like $\Lambda=0$ gives flat space.
 \begin{equation}
- g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(\frac{\d z^2}{f(z)}-f(z)\d t^2+\d x^2+\d y^2\right).\label{metric}
+ g_{ab}\d x^a\d x^b=\frac{L^2}{z^2}\left(-\d t^2+\d x^2+\d y^2+\d z^2\right).\label{metric}
 \end{equation}
-where $f(z)=1-z^3z_h^{-3}$.
 \end{frame}
 
 \begin{frame}
@@ -92,11 +92,6 @@ where $f(z)=1-z^3z_h^{-3}$.
 Gravitational theory in AdS space / Conformal field theory
 \begin{equation}
  Z_{\mathrm{bulk}}(\delta\psi_{(0)})=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\delta\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}\label{fulCorr}
-\end{equation}
-The equations of motion in the bulk give the following boundary behaviour
-\begin{equation}
- \psi(z)=\left(\frac{z}{L}\right)^{\Delta_{(0)}}\psi_{(0)}+
-\left(\frac{z}{L}\right)^{\Delta_{(1)}}\psi_{(1)}+...
 \end{equation}
 \end{frame}
 
@@ -114,23 +109,6 @@ The equations of motion in the bulk give the following boundary behaviour
 \end{frame}
 
 \begin{frame}
-\frametitle{CFT operators}
-Background fields in the CFT are sources to operators
-\begin{equation}
-\mathcal{O}= \frac{\delta S_{\mathrm{CFT}}}{\delta \psi_{(0)}}
-\end{equation}
-Expectation values of these can be calculated as
-\begin{equation}
-\begin{split}
-&-\i\frac{\delta\log Z_{\mathrm{bulk}}(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}\\
-&=-\i\frac{\delta\log\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}\\
-&=\frac{\left\langle\mathcal{O}(x)\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}|_{\psi_{(0)}=0}\\
-&=\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}
-\end{split}
-\end{equation}
-\end{frame}
-
-\begin{frame}
 \frametitle{Classical approximation}
 Boundary gauge theory with many colors, large $N$.\\
 $\implies$\\
@@ -143,35 +121,7 @@ This is a major headache for AdS/CFT, the bulk theory should be a stringy quantu
 The strength of the AdS/CFT approach to condensed matter physics comes from that we can do otherwise intractable calculations on strongly coupled systems.
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Classical Approximation for Obtaining Expectation Values}
-The way to calculate expectation values shown earlier needed the bulk partition function.\\
-This can be obtained in a classical limit as
-\begin{equation}
- Z_{\mathrm{bulk}}(\psi_{(0)})=C\exp(\i S_c)\label{semi}
-\end{equation}
-$S_c$ is the saddle point action of the Lagrangian. We then have 
-\begin{equation}
-\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}=\frac{\delta S_c(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}
-\end{equation}
-This lets us calculate CFT expectation values by solving the bulk equations of motion.
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Expectation Values from Boundary Behaviour of Bulk Fields}
-Using the equations of motion and boundary behaviour of fields one arrives at
-\begin{equation}
-\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}=\frac{\delta S_c(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}
-=\frac{2\psi_{(1)}}{L}
-\end{equation}
-Suitable boundary terms to the Lagrangian must be considered for arriving at this expression. Read my report for more details :).\\
-Similar expressions can be obtained for tensor fields, e.g.\\
- \begin{equation}
- \langle J_a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
-\end{equation}
-\end{frame}
+%oldframes
 
 
 \begin{frame}
@@ -200,11 +150,11 @@ The solution to the Einstein equation satisfying this boundary condition is a bl
 
 \begin{frame}
 \frametitle{High $T_c$ Superconductors}
-Two-dimensional layered materials.\\
 Much higher $T_c$ ($>$130K) than what is allowed by BCS theory ($\approx$ 30K).\\
 No satisfying explanation of the phenomenon yet, possibly due to strong coupling preventing a perturbative description and numerical simulations.\\
 Strongly coupled systems can be modeled by AdS/CFT.\\
 \vspace{0.3cm}
+Two-dimensional layered materials.\\
 Effect not expected to depend on lattice vibrations, pure electromagnetic phenomenon?\\
 Superconductivity possibly occurs near quantum critical point and thus exhibits scale invariance.\\
 Breaking of U(1) gauge symmetry as in BCS case.
@@ -298,7 +248,7 @@ Finding an analytical solution with $\psi\neq0$ is hard so a numerical integrato
 \begin{figure}
 \centering
 \includegraphics[width=8cm]{figs/O_constRho_a2_0.0.pdf}
-\caption{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.}
+\caption{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\rho$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.}
 \end{figure}
 \end{frame}
 
@@ -306,11 +256,13 @@ Finding an analytical solution with $\psi\neq0$ is hard so a numerical integrato
 \begin{frame}
 \frametitle{Results of Conductivity}
 \fig{cond_Ts_a2_0.0_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
+%$\delta$-function at $\omega=0$
+%The Kramers-Kronig relation relates the real and imaginary part of response functions of causal systems. This can be used to show that there is a $\delta$-function in the conductivity at $\omega=0$.
 \end{frame}
 
 \begin{frame}
-\frametitle{$\delta$-function at $\omega=0$}
-The Kramers-Kronig relation relates the real and imaginary part of response functions of causal systems. This can be used to show that there is a $\delta$-function in the conductivity at $\omega=0$.
+\frametitle{Sum Rule}
+
 \begin{figure}
 \centering
 \includegraphics[width=7.5cm]{figs/sum_rule_a20}
@@ -332,20 +284,12 @@ The Kramers-Kronig relation relates the real and imaginary part of response func
 \begin{column}{6cm}
 \begin{figure}
 \centering
-\includegraphics[width=4.5cm]{figs/graphene2_cond_re_a2_0.0.pdf}\\
-\includegraphics[width=4.5cm]{figs/graphene2_cond_im_a2_0.0.pdf}\\
-$\mu_0=1.9T$
+\includegraphics[width=5cm]{figs/graphene2_cond_re_a2_0.0-crop.pdf}\\
+\includegraphics[width=5cm]{figs/graphene2_cond_im_a2_0.0-crop.pdf}\\
 \end{figure}
 \end{column}
 \end{columns}
 \footnote{Image stolen from \emph{Dirac charge dynamics in graphene by infrared spectroscopy}, Li et al.~,Nature Physics}
-\end{frame}
-
-\begin{frame}
-\frametitle{Motivating Extension to Lagrangian}
-Horowitz et al.~\cite{horowitz} have studied the same Lagrangian but with a varying background electrical potential to model a periodic lattice.\\
-\vspace{1cm }
-They obtained a Drude peak for low frequencies.
 \end{frame}
 
 \begin{frame}
@@ -358,6 +302,13 @@ This gives the conductivity
 \begin{equation}
   \sigma(\omega)=\frac{J(\omega)}{E(\omega)}=\frac{\sigma_0}{1-\i\tau\omega}.
 \end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Motivating Extension to Lagrangian}
+Horowitz et al.~\cite{horowitz} have studied the same Lagrangian but with a varying background electrical potential to model a periodic lattice.\\
+\vspace{1cm }
+They obtained a Drude peak for low frequencies.
 \end{frame}
 
 \begin{frame}
@@ -413,13 +364,27 @@ Our way of obtaining the Drude peak is computationally much simpler than the per
 \begin{itemize}
 \item We have modeled a high $T_c$ superconductor using the AdS/CFT correspondence.
 \item An scalar field coupled to an electromagnetic field has been used.
-\item A superconducting phase and conductance gap is shown to appear below $T_c$
-\item The conductivity sum rule is satisfied indicating correct and accurate calculations
-\item An addition is made to the Lagrangian giving a peak in the conductivity
-\item The extended Lagrangian gives a conductivity closer to experiments above $T_c$ since we have a conductivity peak around $\omega=0$
-\item The Drude model gives a surprisingly accurate fit to this peak
+\item A superconducting phase and conductance gap is shown to appear below $T_c$.
+\item The conductivity sum rule is satisfied indicating correct and accurate calculations.
+\item An addition is made to the Lagrangian giving a peak in the conductivity.
+\item The extended Lagrangian gives a conductivity closer to experiments above $T_c$ since we have a conductivity peak around $\omega=0$.
+\item The Drude model gives a surprisingly accurate fit to this peak.
 \end{itemize}
+\end{frame}
 
+\begin{frame}
+\frametitle{Outlook}
+\begin{itemize}
+\item Compare with Horowitz et al.~$T$-dependence.
+\item Compare with experiments below $T_c$.
+\item Understand graphene model.
+\item Understand ODEs better.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\bibliographystyle{unsrt}
+\bibliography{report}
 \end{frame}
 
 \begin{frame}
@@ -427,9 +392,67 @@ Our way of obtaining the Drude peak is computationally much simpler than the per
 \end{frame}
 
 \begin{frame}
-\bibliographystyle{unsrt}
-\bibliography{report}
+\frametitle{The AdS/CFT correspondence}
+Gravitational theory in AdS space / Conformal field theory
+\begin{equation}
+ Z_{\mathrm{bulk}}(\delta\psi_{(0)})=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\delta\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}\label{fulCorr}
+\end{equation}
+The equations of motion in the bulk give the following boundary behaviour
+\begin{equation}
+ \psi(z)=\left(\frac{z}{L}\right)^{\Delta_{(0)}}\psi_{(0)}+
+\left(\frac{z}{L}\right)^{\Delta_{(1)}}\psi_{(1)}+...
+\end{equation}
 \end{frame}
+
+\begin{frame}
+\frametitle{CFT operators}
+Background fields in the CFT are sources to operators
+\begin{equation}
+\mathcal{O}= \frac{\delta S_{\mathrm{CFT}}}{\delta \psi_{(0)}}
+\end{equation}
+Expectation values of these can be calculated as
+\begin{equation}
+\begin{split}
+&-\i\frac{\delta\log Z_{\mathrm{bulk}}(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}\\
+&=-\i\frac{\delta\log\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}\\
+&=\frac{\left\langle\mathcal{O}(x)\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}{\left\langle\exp(\i\int\d^dx\sqrt{g_{(0)}}\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}}|_{\psi_{(0)}=0}\\
+&=\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}
+\end{split}
+\end{equation}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Classical Approximation for Obtaining Expectation Values}
+The way to calculate expectation values shown earlier needed the bulk partition function.\\
+This can be obtained in a classical limit as
+\begin{equation}
+ Z_{\mathrm{bulk}}(\psi_{(0)})=C\exp(\i S_c)\label{semi}
+\end{equation}
+$S_c$ is the saddle point action of the Lagrangian. We then have 
+\begin{equation}
+\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}=\frac{\delta S_c(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}
+\end{equation}
+This lets us calculate CFT expectation values by solving the bulk equations of motion.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Expectation Values from Boundary Behaviour of Bulk Fields}
+Using the equations of motion and boundary behaviour of fields one arrives at
+\begin{equation}
+\langle \mathcal{O}(x) \rangle_{\mathrm{CFT}}=\frac{\delta S_c(\psi_{(0)})}{\delta\psi_{(0)}(x)}|_{\psi_{(0)}=0}
+=\frac{2\psi_{(1)}}{L}
+\end{equation}
+Suitable boundary terms to the Lagrangian must be considered for arriving at this expression. Read my report for more details :).\\
+Similar expressions can be obtained for tensor fields, e.g.\\
+ \begin{equation}
+ \langle J_a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
+\end{equation}
+\end{frame}
+
 
 \end{document}
 

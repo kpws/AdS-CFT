@@ -57,7 +57,7 @@ def fill_between(x, y1, y2=0, ax=None, **kwargs):
     ax.add_patch(p)
     return p
 
-def getPlotY(x0,x1,f,yf,maxTurn=0.1,minN=50):
+def getPlotY(x0,x1,f,yf,maxTurn=0.1,minN=50,maxN=0):
     xs=np.linspace(x0,x1,minN)
     v=[]
     for x in xs:
@@ -72,7 +72,7 @@ def getPlotY(x0,x1,f,yf,maxTurn=0.1,minN=50):
             cosTurn=(  ((v[i+1][0]-v[i][0])*(v[i+2][0]-v[i+1][0])+ (v[i+1][1]-v[i][1])*(v[i+2][1]-v[i+1][1]))/
                          np.sqrt(((v[i+1][0]-v[i  ][0])**2+(v[i+1][1]-v[i  ][1])**2)*
                           ((v[i+2][0]-v[i+1][0])**2+(v[i+2][1]-v[i+1][1])**2))  )
-            if cosTurn<cosMaxTurn:
+            if cosTurn<cosMaxTurn and (maxN==0 or maxN>len(v)):
                   #print(np.arccos(cosTurn))
                   mx=(v[i+1][0]*1+v[i+2][0])/2
                   o=f(mx)
