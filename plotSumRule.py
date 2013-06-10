@@ -5,6 +5,7 @@ from fig import fig, saveFig, printText, fill_between
 from printStatus import printRatio
 from pickle import load, dump
 from scipy.integrate import quad
+from scipy.integrate import quadrature
 
 hpsis=np.logspace(-6,1.5,300)
 a2=0.1
@@ -67,7 +68,8 @@ for j in range(len(Trs)):
         qsigmas.append(-1j*bb[2][1]/( bb[2][0]*(mu*wv) ))
         qws.append(wv)
         return (qsigmas[-1].real-1)*(wv+C)*mu
-    tot,_=quad(sigmaf,np.log(1e-3+C),np.log(30.+C),epsrel=0.01,epsabs=0.01)
+    tot,_=quad(sigmaf,np.log(1e-3+C),np.log(30.+C),epsrel=0.003,epsabs=0.003)
+    #tot,_=quadrature(sigmaf,np.log(1e-3+C),np.log(30.+C),rtol=0.01,tol=0.01,vec_func=False)
     print('tot/Tc: '+str(tot/Tc))
     s=sorted(range(len(qws)),key=lambda i:qws[i])
     qws=[qws[i] for i in s]
@@ -92,7 +94,7 @@ fig(0)
 #pl.plot(Trs,[y1s[i]+y2s[i] for i in range(len(Trs))],c='k',ls='-')
 ymin=min(y1s)*1.2
 fill_between(Trs, [ymin for i in Trs], y1s,hatch='/',facecolor='white',label=r'$\int_0^\infty\mathrm{Re}(\sigma_n(\omega)-1)\mathrm{d}\omega$')#, facecolor='blue', alpha=0.5)
-fill_between(Trs, y1s, [y1s[i]+y2s[i] for i in range(len(Trs))], hatch='\\\\', facecolor='white',label=r'$\Sigma_\delta$')#, facecolor='red', alpha=0.5)
+fill_between(Trs, y1s, [y1s[i]+y2s[i] for i in range(len(Trs))], hatch=r'\\', facecolor='white',label=r'$\Sigma_\delta$')#, facecolor='red', alpha=0.5)
 pl.plot(Trs,[y1s[i]+y2s[i] for i in range(len(Trs))],c='r',ls='-',label=r'$\Sigma_\delta+\int_0^\infty\mathrm{Re}(\sigma_n(\omega)-1)\mathrm{d}\omega$',lw=1)
 pl.ylim(ymin,-ymin*0.8)
 pl.xlim(Trs[0],Trs[-1])

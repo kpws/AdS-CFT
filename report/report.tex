@@ -59,7 +59,11 @@ Another way to introduce a Drude peak is by introducing a periodic lattice \cite
 \end{abstract}
 
 \section*{Acknowledgements}
-Thanks Mum.
+First and foremost, I wish to thank my supervisor Ulf Gran at Chalmers University of Technology for making this project possible. He was always available for discussions.\\
+
+Secondly, I wish to thank the developers of the many free softwares I have used. Especially I thank the developers of Sympy, NumPy, SciPy, Matplotlib and the GNU Scientific Library.
+
+
 \tableofcontents
 \chapter{Introduction}
 The AdS/CFT correspondence was conjectured in 1997 by Juan Maldacena. It relates the physics of a string theory in Anti de Sitter space (AdS) to a conformal field theory (CFT) on the boundary of the AdS space.\\
@@ -508,15 +512,15 @@ There is a trivial analytical solution of the equations of motion with the above
 \end{equation}
 The field $\psi$ is here identically zero and there is no spontanous symmetry breaking. This solution thus corresponds to the physics above the critical temperature, $T_c$, of the superconductor. We will now make a choice of $m$ to be able to numerically investigate solutions with $\psi\neq0$.
 \subsection{Choice of scalar mass $m$}
-The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman (BF) bound is a lower stability bound on $m^2$ of a massive scalar field in AdS space with metric given by \eqref{metric}. It requires
+The mass squared of a scalar field in flat space must be non-negative for stability. This is though not the case in a space with negative curvature. The Breitenlohner-Freedman (BF) bound is a lower stability bound on $m^2$ of a massive scalar field in AdS space with metric given by \eqref{metric}. It requires \cite{Kleban:2004bv}
 \begin{equation}
  L^2m^2\geq-\frac{d^2}{4}\label{BF}
 \end{equation}
-for stability\cite{Kleban:2004bv}. The scalar field $\psi$ should obey this bound far away from the black-hole for normaliseable modes. We would though like a spontanous symmetry breaking of $\psi$ near the black hole\footnote{The physics close to the black hole in the bulk corresponds to low energy physics of the boundary theory, see e.g.~\cite{McGreevy:2009xe}.} corresponding to the electron condensate \cite{Gubser:2008px}. This can happen because the coupling of $\psi$ to $A_a$ gives $\psi$ an effective mass that might break the BF bound near the black hole. \\The effective mass is given by:
+The scalar field $\psi$ should obey this bound far away from the black-hole for normaliseable modes. We would though like a spontanous symmetry breaking of $\psi$ near the black hole\footnote{The physics close to the black hole in the bulk corresponds to low energy physics of the boundary theory, see e.g.~\cite{McGreevy:2009xe}.} corresponding to the electron condensate \cite{Gubser:2008px}. This can happen because the coupling of $\psi$ to $A_a$ gives $\psi$ an effective mass that might break the BF bound near the black hole. The effective mass is given by
 \begin{equation}
  m_{\mathrm{eff}}^2=m^2+A_aA^a
 %=m^2+g^{tt}\At^2
-=m^2-\frac{z^2}{L^2(1-z^dz_h^{-d})}\At^2
+=m^2-\frac{z^2}{L^2(1-z^dz_h^{-d})}\At^2.
 \label{meff}
 \end{equation}
 This can for large enough values of $\At$ break the BF-bound, see Figure \ref{BF}.
@@ -537,14 +541,14 @@ The effective mass breaks the BF-bound at $z_0$ when
 \end{equation}
 where \eqref{T} has been used. We will, following \cite{hartnoll8, horowitz}, choose $m^2L^2=-2$. This does not break the BF bound but it is relatively close. It gives integer scalings for the scalar field at the conformal boundary which is convenient.%Write about near horizon AdS geometry instead and ...?
 \section{Expectation Values of Field Theory Operators}
-Expectation values of field theory operators can now be calculated using these solutions and \eqref{expFromBdy}. Not just the leading behaviour of the fields is needed to calculate the expectation values but also the first subleading behaviour. Therefore we expand the fields as
+Expectation values of field theory operators can now be calculated using solutions of \eqref{eqm1} to \eqref{eqm3} and \eqref{expFromBdy}. Not just the leading behaviour of the fields is needed to calculate the expectation values but also the first subleading behaviour. Therefore we expand the fields as
 \begin{empheq}[left=\empheqlbrace]{align}
  &\psi=\psi_{(0)}\frac{z}{L}+\psi_{(1)}\left(\frac{z}{L}\right)^{2}\\
  &\phi=\phi_{(0)}+\phi_{(1)}\frac{z}{L}\\
  &A_x=A_{x(0)}+A_{x(1)}\frac{z}{L}
 \end{empheq}
 and obtain $\psi_{(i)}$, $\phi_{(i)}$ and $A_{x(i)}$ from the numerical solution.
-For this the boundary terms to the action are required. The boundary term needed for the scalar field is calculated in Appendix \ref{a:bound}.
+For this the boundary terms of the action are required. The boundary term needed for the scalar field is calculated in Appendix \ref{a:bound}.
 \begin{equation}
 \begin{split}
  S_{\mathrm{bdy}}&=-\int_{z=\epsilon}\d^dxL^{-1}\psi^2\sqrt{g_{(0)}}
@@ -573,7 +577,7 @@ n_a\frac{\partial\L(y)}{\partial (\nabla_a\psi(y))}
 \frac{2\psi_{(1)}}{L}
 \end{split}
 \end{equation}
-This simple relation thus gives us the expectation value of the scalar operator. A similar derivation can be made for the other fields. A general expression is shown in \cite{hartnoll8}, equation 91\footnote{The difference of a factor 2 is due to their kinetic term having a factor $1/2$ we do not.}. We have for the current $J^a$ sourced by the background field $A_a$
+This simple relation thus gives us the expectation value of the scalar operator. A similar derivation can be made for the other fields. A general expression is shown in \cite{hartnoll8}, equation 91\footnote{The difference of a factor 2 between our expressions is due to their kinetic term having a factor $1/2$ we do not have.}. We have for the current $J^a$ sourced by the background field $A_a$
 \begin{equation}
  \langle J_a\rangle_{\mathrm{CFT}}=\frac{A_{a(1)}}{L}
 \end{equation}
@@ -585,11 +589,11 @@ We are now in a position to numerically solve the bulk theory and obtain these e
 \end{equation}
 Alternatively one can let $\mu$ be constant while varying the temperature and get a variation in $\rho$. Figure \ref{f:O} shows the expectation value of $\mathcal{O}$ at different temperatures. The solid line at the bottom is the trivial solution $\psi=0$. The temperature $T_c$ is defined as the temperature where the first non-trivial solution is obtained. Multiple solutions are obtained as the temperature is lowered. The different solutions correspond to different phases of the system and which one is physical can be found by finding which has the lowest free energy.
 
-\fig{O_constRho_a2_0.0.pdf}{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:O}}
-
 \fig{mu_constRho_a2_0.0.pdf}{
 Chemical potential needed for constant $\rho$ at different $T$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:mu}
 }
+
+\fig{O_constRho_a2_0.0.pdf}{Expectation value of CFT operator $\mathcal{O}$ at different $T$ and constant $\mu$. The multiple curves correspond to multiple solutions at the same temperature. The dashed lines have different signs of the expectation value of $\mathcal{O}$ and the horizon boundary condition $\psi(z_h)$. Further solutions (here ommited) are obtained for lower temperature following the trend shown here.\label{f:O}}
 
 \section{Free Energy}
 The free energy, $A=-T\log{Z}$, is the same for the bulk and the boundary theory since their partition functions are the same. This can be calculated in the classical limit in the bulk.
@@ -633,7 +637,7 @@ This agrees with the result from thermodynamics, $\mu$ is the change in free ene
 \end{equation}
 This is easily shown using $\rho=\langle N\rangle/V_\mathrm{2}$ and \eqref{muTdep} to get the $N$ dependence of $\mu$ for constant $T$. The gravitational part of the free energy can be neglected since the derivative is at constant temperature.\\
 
-The free energy for the numerical solutions has been calculated and the result together with this analytical result is shown in Figure \ref{f:A}. It can there be seen that the trivial solution is the physical solution for temperatures above $T_c$ and that the solution appearing at the temperature $T_c$ is the physical solution for all lower temperatures. We will hereafter only work with these two solutions.
+The free energy for the numerical solutions has been calculated and the result together with this analytical result is shown in Figure \ref{f:A}. It can there be seen that the trivial solution is the physical solution for temperatures above $T_c$ and that the solution appearing at the temperature $T_c$ is the physical solution for all lower temperatures. We will hereafter only work with these two solutions. The graph is in line with the phase transition being a second-order phase transition though this has not been investigated mathematically.
 
 \fig{A_constRho_a2_0.0.pdf}{The free energies of the different solutions are shown here for constant $\rho$ and varying $T$. The trivial solution is shown as the thick solid line. The other curves correspond to numerical solutions. The lowest one corresponds to the solution appearing at $T=T_c$ and the other roots follow in order.\label{f:A}}
 
@@ -652,7 +656,7 @@ Causality implies that $\sigma(\tau)=0$ for $\tau<0$ since the current would oth
 \begin{equation}
  \sigma(\omega)=\int_0^\infty\sigma(\tau)\exp(\i\tau\omega)\d\tau
 \end{equation}
-and thus has an analytical extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ give the Kramers–Kronig relations
+and thus has an analytic extension to the upper half of the complex plane. Both the current, $J_x(t)$, and applied field, $E_x(t)$, are real quantities which makes $\sigma(\tau)$ also real and thus $\re(\sigma(w))$ an even function and $\im(\sigma(\omega))$ odd. These properties of $\sigma(\omega)$ give the Kramers–Kronig relations
 \begin{equation}
 \begin{split}
  \re(\sigma(\omega))&=\frac{2}{\pi}\int_0^\infty\frac{\omega^\prime\im(\sigma(\omega^\prime))}{\omega^{\prime 2}-\omega^2}\d \omega^\prime\\
@@ -694,12 +698,13 @@ where $C$ is a constant depending on what system we are considering. This integr
 \begin{equation}
  \int_0^\infty\re(\sigma(\omega)-1)\d\omega=C.
 \end{equation}
-The analytical solution above $T_c$ now gives $C=0$. This rule can now be used to verify that our numerics are accurate. The integral of $\re(\sigma(\omega)-1)$ should vanish for all temperatures. It is then important to include the $\delta$-function at $\omega=0$ which our numerics do not catch. We can however find the amplitude, $\Sigma_\delta$, of the $\delta$-function from the amplitude of the pole in the imaginary part of the conductivity. The sum of the integral of the continous part of the conductivity, $\int(\sigma_n-1)\d \omega$, and $\Sigma_\delta$ should then equal 0 for all temperatures. The result is seen in Figure \ref{f:sum}. A suitable cut-off frequency has been used but since $\sigma(\omega)$ converges fast to 1 this is not a concern. No large discrepancies are observed. This is a strong check of the numerics since the real part of the conductivity at all frequencies and temperatures and the amplitude of the pole all have to match up. The largest discrepancy is observed for low temperatures, this is expected since the numerical integrator there has been observed to make smaller steps indicating a numerically more difficult problem.
+The analytical solution above $T_c$ now gives $C=0$. This rule can now be used to verify that our numerics are accurate. The integral of $\re(\sigma(\omega)-1)$ should vanish for all temperatures. It is then important to include the $\delta$-function at $\omega=0$ which our numerics do not catch. We can however find the amplitude, $\Sigma_\delta$, of the $\delta$-function from the amplitude of the pole in the imaginary part of the conductivity. The sum of the integral of the continous part of the conductivity, $\int(\sigma_n-1)\d \omega$, and $\Sigma_\delta$ should then equal 0 for all temperatures. The result is seen in Figure \ref{f:sum}. A suitable cut-off frequency has been used but since $\sigma(\omega)$ converges fast to 1 this is not a concern. No large discrepancies are observed. This is a strong check of the numerics since the real part of the conductivity at all frequencies and temperatures and the amplitude of the pole all have to match up. The largest discrepancy is observed for low temperatures, 
+this is expected since the numerical integrator there has been observed to make smaller steps indicating a numerically more difficult problem.
 
 \fig{sum_rule_a20}{The two contributions to the integral in the modified Ferrell-Glover-Tinkham sum rule for different temperatures. The red line is expected to be precisely at 0 for perfect numerics\label{f:sum}}
 
 \chapter{Extended Lagrangian\label{higherOrder}}
-Many simplifications have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals that can be well modeled by the Drude model of conductivity \cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$ \cite{drudeFit}.
+Many simplifications have been made in the previous study. The most simple Lagrangian \eqref{L} has been used and translational symmetry has been assumed. This has given us a boundary theory with a scalar field that condeses below a critical temperature as expected for a superconductor. The conductivity shows both similarities and differences with that of high-$T_c$ superconductors. A $\delta$-function developes at $\omega=0$ for $T<T_c$ giving infinite DC conductivity. An evident difference is the lack of a so-called Drude peak at low frequencies. A Drude peak is an increase in conductivity for low frequencies in metals due to impurities that can be well modeled by the Drude model of conductivity \cite{drude}, thereof the name. The Drude model agrees with experiments on cuprates above $T_c$ \cite{drudeFit}.
 
 \section{Drude Model}
 The Drude model is obtained by treating the charge carriers classically. They are expected to obey the differential equation
@@ -766,7 +771,7 @@ This is valid for a large range of values of $\alpha_2$ and $T$.
 \fig{drudeTdep_1e4}{$\sigma_0L^4/\alpha_2$ as a function of temperature for large $\alpha_2$.\label{f:Cdep}}
 
 \section{Consistency Check using a Conductivity Sum Rule}
-A test of the numerics was again performed by verifying the sum rule. The result is seen in Figure \ref{f:sum2}.  There is a substantial error at low temperatures but it is decreased by increasing the number of samples for the numerical integral so it is believed to originate from the very sharp peaks, approaching $\delta$-functions, apearing at low temperatures making the numerical integral hard.
+A test of the numerics was again performed by verifying the sum rule. The result is seen in Figure \ref{f:sum2}.  There is a substantial error at low temperatures but it is decreased by increasing the number of samples for the numerical integral so it is believed to originate from the very sharp peaks, approaching $\delta$-functions, appearing at low temperatures making the numerical integral hard.
 
 \fig{sum_rule_a20.1}{The two contributions to the integral in the modified Ferrell-Glover-Tinkham sum rule for different temperatures. The red line is expected to be precisely at 0 for perfect numerics\label{f:sum2}}
 
@@ -776,15 +781,18 @@ The temperature dependence of the DC-conductivity $\sigma_0$ gives the temperatu
 \begin{equation}
   \frac{1}{\tau}=\frac{\rho q^2}{\sigma_0m}.
 \end{equation}
-Since $\rho$, $q^2$ and $m$ are temperature independent we have
+Assuming the parameters of the Drude model, $\rho$, $q^2$ and $m$, are temperature independent we have
 \begin{equation}
   \frac{1}{\tau}=\frac{L^4\rho q^2}{C\alpha_2m}\left(\frac{T}{T_c}\right)^{4/3}.
 \end{equation}
-This disagrees with the linear temperature dependence of the scattering rate experimentally observed in the cuprates above $T_c$ \cite{drudeFit}. This suggests that our Drude peak originates from different processes. The linear dependence found in \cite{drudeFit} is attibuted to electron-phonon interactions. Electrons might not be a suitably type of excitation for these possibly strongly coupled systems and our model might capture interactions between some other type of excitations.
+This disagrees with the linear temperature dependence of the scattering rate experimentally observed in the cuprates above $T_c$ \cite{drudeFit}. The linear dependence found in \cite{drudeFit} is attibuted to electron-phonon interactions. Electrons might not be a suitable type of excitation for these possibly strongly coupled systems and our model might capture interactions between some other type of excitations. The assumptions of temperature independent Drude model parameters, $\rho$, $q^2$ and $m$, might then not be valid. The true temperature dependence of the scattering rate can easily be obtained directly from the Drude fit but this has not been done. This can then be compared with the linear experimental observations. The temperature dependence of the Drude model parameters can then be found. This might give important insights as to what types of excitations the Drude model describes with such high accuracy.
 \chapter{Summary}
-We have shown how the AdS/CFT correspondence can be used to model a high-$T_c$ superconductor, both below and above $T_c$.
+We have shown how the AdS/CFT correspondence can be used to model a high-$T_c$ superconductor, both below and above $T_c$. This was initially done using the simplest possible Lagrangian and the frequency-dependent conductivity was calculated. A higher order term was added to the Lagrangian and a conductivity peak was obtained at low frequencies. The Drude model described this peak very well in certain limits. The behaviour of the Drude model parameter $\sigma_0$ was investigated in certain limits. Our extended Lagrangian seems to give an effective description of the lattice introduced in \cite{horowitz} but further investigations are needed.
 \section{Outlook}
-A much more thorough comparison with experimental results could be made. Formula \eqref{muTdep} could for example be investigated. The conductivity can also be investigated much more thoroughly. This has however already been done, e.g.~\cite{hartnoll8}, but it would be interesting to repeat their calculations. A thorough treatment of the differential equations would also be interesting. All curves in Figure \ref{f:O} approach the same value, this is because .. . The differential equation has been numerically investigated and it seems to have the same boundary behaviour regardless of initial conditions so it seems possible to find a mathematical explanation for the behaviour. It might be possible to see the $\delta$-function in the conductivity as a spontanous symmetry breaking just like for the operator $\mathcal{O}$, an expectation value appearing without a source. The infinite conductivity should appear when $\omega=0$ and $\psi>0$. This is precisely when the terms without derivatives in the differential equation \eqref{eqm3} becomes negative near the boundary.
+A much more thorough comparison with experimental results could be made. Formula \eqref{muTdep} could for example be investigated. The conductivity can also be investigated much more thoroughly. This has however already been done, e.g.~\cite{hartnoll8}, but it would be interesting to repeat their calculations. A thorough treatment of the differential equations would also be interesting. All curves in Figure \ref{f:O} approach the same value. The differential equation has been numerically investigated and it has the same boundary behaviour regardless of initial conditions so it seems possible to find a mathematical explanation for the behaviour by looking at the boundary behaviour of the equations.\\
+
+The results from the extended Lagrangian can be investigated further. A physical interpretation of the conductivity peaks for low temperatures is needed. The temperature dependence of the scattering rate $1/\tau$ can be found and compared to experiments. A linear temperature dependence would agree with experiments and thus indicate that our extended Lagrangian really captures the physics giving rise to the conductivity peak. A more thorough comparison with the results of \cite{horowitz} is of interest since we could hope to have found an effective desciption of their system. The power law behaviour of the conductivity at intermediate frequencies could for example be investigated.
+%It might be possible to see the $\delta$-function in the conductivity as a spontanous symmetry breaking just like for the operator $\mathcal{O}$, an expectation value appearing without a source. The symmetry would be invariance The infinite conductivity should appear when $\omega=0$ and $\psi>0$. This is precisely when the terms without derivatives in the differential equation \eqref{eqm3} becomes negative near the boundary.
 \begin{appendices}
 \chapter{Conventions in this Report\label{conventions}}
 The AdS space will be refered to as the bulk and the boundary conformal field theory will be referred to as the boundary theory or the superconductor or just CFT. We use $z$ for the ``radial'' coordinate in AdS space, it is 0 at the conformal boundary and $z_h$ at the horizon. This is the same coordinate as the one called $r$ in \cite{hartnoll8}, there with horizon at $r=r_+$.\\

@@ -5,6 +5,7 @@
 \usetikzlibrary{shapes}
 \usepackage{grffile}
 \usepackage{amsmath,empheq}
+\usepackage{url}
 
 \usepackage[utf8]{inputenc}
 \newcommand{\N}{\ensuremath{\mathbbm{N}}}
@@ -93,6 +94,8 @@ Gravitational theory in AdS space / Conformal field theory
 \begin{equation}
  Z_{\mathrm{bulk}}(\delta\psi_{(0)})=\left\langle\exp(\i\int\d^dx\sqrt{g_0}\delta\psi_{(0)}\mathcal{O})\right\rangle_{\mathrm{CFT}}\label{fulCorr}
 \end{equation}
+Weak coupling/Strong coupling\\
+The strength of the AdS/CFT approach to condensed matter physics comes from that we can do otherwise intractable calculations on strongly coupled systems.
 \end{frame}
 
 \begin{frame}
@@ -118,7 +121,6 @@ We do not even have an $N$. A similar effect is expected for certain strongly co
 \vspace{0.5cm}
 This is a major headache for AdS/CFT, the bulk theory should be a stringy quantum gravity theory without the large $N$ and not very useful.\\
 \vspace{0.5cm}
-The strength of the AdS/CFT approach to condensed matter physics comes from that we can do otherwise intractable calculations on strongly coupled systems.
 \end{frame}
 
 %oldframes
@@ -326,6 +328,13 @@ One induced what looked like a Drude peak at low frequencies.
 \end{frame}
 
 \begin{frame}
+\frametitle{Results of Conductivity}
+\fig{cond_Ts_a2_0.0_v2.pdf}{Real and imaginary part of the conductivity for different temperatures. $\rho$ is here constant.\label{f:cond}}
+%$\delta$-function at $\omega=0$
+%The Kramers-Kronig relation relates the real and imaginary part of response functions of causal systems. This can be used to show that there is a $\delta$-function in the conductivity at $\omega=0$.
+\end{frame}
+
+\begin{frame}
 \fig{cond_Ts_a2_0.1_v2.pdf}{Real part of the conductivity for different temperatures using the extended Lagrangian with $\alpha_2=0.1L^4$. $\rho$ is here constant.\label{f:cond_a2_2}}
 \end{frame}
 
@@ -389,6 +398,14 @@ Our way of obtaining the Drude peak is computationally much simpler than the per
 
 \begin{frame}
 \frametitle{Questions? (Please not too hard\footnote{large N...})}
+Code for all simulations: \url{github.com/kpws/AdS-CFT}
+\end{frame}
+
+\begin{frame}
+\frametitle{DC-conductivity}
+\begin{equation}
+ \frac{\sigma_0}{\tau}=\frac{\rho q^2}{m}.
+\end{equation}
 \end{frame}
 
 \begin{frame}

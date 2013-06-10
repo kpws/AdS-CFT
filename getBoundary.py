@@ -11,7 +11,6 @@ from sympy.utilities.codegen import codegen
 
 
 print('Defining Lagrangian...')
-name='massTest'
 #parameters
 params=m2,alpha1,alpha3=sp.symbols(['m2','alpha1','alpha3'],real=True)
 varParams=w,alpha2=[sp.Symbol('w',positive=True),sp.Symbol('alpha2',real=True)]

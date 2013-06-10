@@ -92,6 +92,12 @@ f=1-(x[0]/zh)**(len(x)-1)
 AdSBHz=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2,'AdSBHz')
 AdSBHz.zh,AdSBHz.L=(zh,L)
 
+zh,L=sp.symbols(['zh','L'],positive=True)
+x=[sp.Symbol('z',positive=True)]+sp.symbols(['tau','x1','x2'])
+f=1-(x[0]/zh)**(len(x)-1)
+AdSBHzE=Metric(x,sp.diag(1/f,f,1,1)*(L/x[0])**2,'AdSBHzE')
+AdSBHzE.zh,AdSBHzE.L=(zh,L)
+
 f=sp.Symbol('f')(x[0])
 AdSBHf=Metric(x,sp.diag(1/f,-f,1,1)*(L/x[0])**2)
 AdSBHf.L=L
