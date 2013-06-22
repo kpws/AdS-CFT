@@ -42,10 +42,10 @@ Lfun=sp.lambdify([M.x[0]]+varParams+dummies, sp.I*LEe)
 
 
 hpsis=np.logspace(-6,1.5,300)
-a2=0.
+a2=0.0001
 plotImag=False
 from solveBC import sweep, findrho
-oscN=6
+oscN=4
 try:
     bbs,sols=load(open('cache/sols_oscN='+str(oscN)+'_a2='+str(a2)))
     print len(sols[0])

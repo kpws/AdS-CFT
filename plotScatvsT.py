@@ -5,8 +5,8 @@ import numpy as np
 import pylab as pl
 from fig import fig, saveFig, printText
 
-a2s=np.logspace(-4,4,60)
-Trs=[5**i for i in range(7)]
+a2s=np.logspace(-4,4,9)
+Trs=np.logspace(-1,3,35)
 y1s,y2s=[],[]
 for j in range(len(Trs)):
     Tr=Trs[j]
@@ -39,31 +39,17 @@ for j in range(len(Trs)):
         tauTc=sigma.imag/(w*sigma0)
         y1s[-1].append(sigma0)
         y2s[-1].append(1/tauTc)
-#drude=1/(d-m*1j*w)
-fig(0,size=11)
+fig(0,size=12)
 pl.xscale('log')
 pl.yscale('log')
-for j in range(len(Trs)):
-    pl.plot([a2 for a2 in a2s],y1s[j],ls='-',c='k',label=r'$\sigma_0$')
-    printText(a2s,y1s[j],100.,0,'$'+str(Trs[j])+'T_c$')
-pl.xlabel(r'$\frac{\alpha_2}{L^4}$')
-pl.ylabel(r'$\sigma_0$')
-ai=50
-#pl.legend(loc='upper left')
-pl.xlim(a2s[0],a2s[-1])
-saveFig('drudeVarMT_sigma0')
-
-fig(1,size=11)
-pl.xscale('log')
-pl.yscale('log')
-pl.xlim(a2s[0],a2s[-1])
-for j in range(len(Trs)):
-    pl.plot(a2s,y2s[j],ls='-',c='k',label=r'$\sigma_0$')
-    printText(a2s,y2s[j],10.,0,'$'+str(Trs[j])+'T_c$')
-pl.xlabel(r'$\frac{\alpha_2}{L^4}$')
+pl.xlim(Trs[0],Trs[-1])
+pl.ylim(5e-3,2e4)
+for j in range(len(a2s)):
+    pl.plot(Trs,[y[j] for y in y2s],ls='-',c='k',label=r'$\frac{1}{\tau T_c}$')
+    printText(Trs,[y[j] for y in y2s],10.,-0.03,'$10^{'+str(j-4)+'}L^4$')
+pl.xlabel(r'$\frac{T}{T_c}$')
 pl.ylabel(r'$\frac{1}{\tau T_c}$')
-ai=50
 #pl.legend(loc='upper left')
-saveFig('drudeVarMT_tau')
+saveFig('scatvsT_2')
 
 pl.show()
